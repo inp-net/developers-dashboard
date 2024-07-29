@@ -22,24 +22,24 @@ export type Scalars = {
   Int: { input: number; output: number; }
   /** The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point). */
   Float: { input: number; output: number; }
-  BooleanMap: { input: any; output: any; }
-  Counts: { input: any; output: any; }
+  ChurrosBooleanMap: { input: any; output: any; }
+  ChurrosCounts: { input: any; output: any; }
   DateTime: { input: any; output: any; }
-  File: { input: any; output: any; }
-  LocalID: { input: any; output: any; }
-  UID: { input: any; output: any; }
+  ChurrosFile: { input: any; output: any; }
+  ChurrosLocalID: { input: any; output: any; }
+  ChurrosUID: { input: any; output: any; }
 };
 
 /** Announcement is a way to get a message accross the entire site, such as for maintenance announcements. */
-export type Announcement = Node & {
+export type ChurrosAnnouncement = ChurrosNode & {
   body: Scalars['String']['output'];
   bodyHtml: Scalars['String']['output'];
-  by?: Maybe<User>;
+  by?: Maybe<ChurrosUser>;
   createdAt: Scalars['DateTime']['output'];
   endsAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
   /** L'identifiant local de la ressource (sans préfixe) */
-  localID: Scalars['LocalID']['output'];
+  localID: Scalars['ChurrosLocalID']['output'];
   startsAt: Scalars['DateTime']['output'];
   title: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
@@ -48,46 +48,46 @@ export type Announcement = Node & {
 };
 
 /** Une réponse à un formulaire. Les réponses peuvent être de plusieurs types différents (en fonction de la question). */
-export type Answer = {
+export type ChurrosAnswer = {
   answerString: Scalars['String']['output'];
   /** Réservation associée à la réponse */
-  booking?: Maybe<Registration>;
+  booking?: Maybe<ChurrosRegistration>;
   checkboxIsMarked?: Maybe<Scalars['Boolean']['output']>;
   /** Date de création de la réponse */
   createdAt: Scalars['DateTime']['output'];
   /** Utilisateur ayant répondu à la question */
-  createdBy?: Maybe<User>;
+  createdBy?: Maybe<ChurrosUser>;
   /** Formulaire auquel appartient la question */
-  form: Form;
+  form: ChurrosForm;
   /** Préfixe de l'identifiant: `answer:` */
   id: Scalars['ID']['output'];
-  question: Question;
+  question: ChurrosQuestion;
   /** Section du formulaire auquel appartient la question */
-  section: FormSection;
+  section: ChurrosFormSection;
   /** Date de dernière mise à jour de la réponse */
   updatedAt: Scalars['DateTime']['output'];
 };
 
 /** Réponse de type `Date` (voir [`QuestionKind`](#QuestionKind)) */
-export type AnswerDate = Answer & {
+export type ChurrosAnswerDate = ChurrosAnswer & {
   answerString: Scalars['String']['output'];
   /** Réservation associée à la réponse */
-  booking?: Maybe<Registration>;
+  booking?: Maybe<ChurrosRegistration>;
   checkboxIsMarked?: Maybe<Scalars['Boolean']['output']>;
   /** Date de création de la réponse */
   createdAt: Scalars['DateTime']['output'];
   /** Utilisateur ayant répondu à la question */
-  createdBy?: Maybe<User>;
+  createdBy?: Maybe<ChurrosUser>;
   /** Formulaire auquel appartient la question */
-  form: Form;
+  form: ChurrosForm;
   /** Préfixe de l'identifiant: `answer:` */
   id: Scalars['ID']['output'];
   /** Question à laquelle la réponse est associée */
-  question: QuestionScalar;
+  question: ChurrosQuestionScalar;
   /** Réponse donnée, brute (sous forme de texte) */
   rawValue?: Maybe<Scalars['String']['output']>;
   /** Section du formulaire auquel appartient la question */
-  section: FormSection;
+  section: ChurrosFormSection;
   /** Date de dernière mise à jour de la réponse */
   updatedAt: Scalars['DateTime']['output'];
   /** Réponse donnée */
@@ -95,30 +95,30 @@ export type AnswerDate = Answer & {
 };
 
 /** Réponse de type `FileUpload` (voir [`QuestionKind`](#QuestionKind)) */
-export type AnswerFileUpload = Answer & {
+export type ChurrosAnswerFileUpload = ChurrosAnswer & {
   answerString: Scalars['String']['output'];
   /** Réservation associée à la réponse */
-  booking?: Maybe<Registration>;
+  booking?: Maybe<ChurrosRegistration>;
   checkboxIsMarked?: Maybe<Scalars['Boolean']['output']>;
   /** Date de création de la réponse */
   createdAt: Scalars['DateTime']['output'];
   /** Utilisateur ayant répondu à la question */
-  createdBy?: Maybe<User>;
+  createdBy?: Maybe<ChurrosUser>;
   /** Formulaire auquel appartient la question */
-  form: Form;
+  form: ChurrosForm;
   /** Préfixe de l'identifiant: `answer:` */
   id: Scalars['ID']['output'];
   /** Question à laquelle la réponse est associée */
-  question: QuestionFileUpload;
+  question: ChurrosQuestionFileUpload;
   /** Section du formulaire auquel appartient la question */
-  section: FormSection;
+  section: ChurrosFormSection;
   /** Date de dernière mise à jour de la réponse */
   updatedAt: Scalars['DateTime']['output'];
   /** Réponse donnée */
   value?: Maybe<Scalars['String']['output']>;
 };
 
-export type AnswerInput = {
+export type ChurrosAnswerInput = {
   /**
    *
    * Réponse à la question. Pour les questions à une seule réponse, ne mettre qu'un seul élément.
@@ -135,23 +135,23 @@ export type AnswerInput = {
 };
 
 /** Réponse de type `LongText` (voir [`QuestionKind`](#QuestionKind)) */
-export type AnswerLongText = Answer & {
+export type ChurrosAnswerLongText = ChurrosAnswer & {
   answerString: Scalars['String']['output'];
   /** Réservation associée à la réponse */
-  booking?: Maybe<Registration>;
+  booking?: Maybe<ChurrosRegistration>;
   checkboxIsMarked?: Maybe<Scalars['Boolean']['output']>;
   /** Date de création de la réponse */
   createdAt: Scalars['DateTime']['output'];
   /** Utilisateur ayant répondu à la question */
-  createdBy?: Maybe<User>;
+  createdBy?: Maybe<ChurrosUser>;
   /** Formulaire auquel appartient la question */
-  form: Form;
+  form: ChurrosForm;
   /** Préfixe de l'identifiant: `answer:` */
   id: Scalars['ID']['output'];
   /** Question à laquelle la réponse est associée */
-  question: QuestionScalar;
+  question: ChurrosQuestionScalar;
   /** Section du formulaire auquel appartient la question */
-  section: FormSection;
+  section: ChurrosFormSection;
   /** Date de dernière mise à jour de la réponse */
   updatedAt: Scalars['DateTime']['output'];
   /** Réponse donnée */
@@ -159,23 +159,23 @@ export type AnswerLongText = Answer & {
 };
 
 /** Réponse de type `Number` (voir [`QuestionKind`](#QuestionKind)) */
-export type AnswerNumber = Answer & {
+export type ChurrosAnswerNumber = ChurrosAnswer & {
   answerString: Scalars['String']['output'];
   /** Réservation associée à la réponse */
-  booking?: Maybe<Registration>;
+  booking?: Maybe<ChurrosRegistration>;
   checkboxIsMarked?: Maybe<Scalars['Boolean']['output']>;
   /** Date de création de la réponse */
   createdAt: Scalars['DateTime']['output'];
   /** Utilisateur ayant répondu à la question */
-  createdBy?: Maybe<User>;
+  createdBy?: Maybe<ChurrosUser>;
   /** Formulaire auquel appartient la question */
-  form: Form;
+  form: ChurrosForm;
   /** Préfixe de l'identifiant: `answer:` */
   id: Scalars['ID']['output'];
   /** Question à laquelle la réponse est associée */
-  question: QuestionScalar;
+  question: ChurrosQuestionScalar;
   /** Section du formulaire auquel appartient la question */
-  section: FormSection;
+  section: ChurrosFormSection;
   /** Date de dernière mise à jour de la réponse */
   updatedAt: Scalars['DateTime']['output'];
   /** Réponse donnée */
@@ -183,56 +183,56 @@ export type AnswerNumber = Answer & {
 };
 
 /** Réponse de type `Scale` (voir [`QuestionKind`](#QuestionKind)) */
-export type AnswerScale = Answer & {
+export type ChurrosAnswerScale = ChurrosAnswer & {
   answerString: Scalars['String']['output'];
   /** Réservation associée à la réponse */
-  booking?: Maybe<Registration>;
+  booking?: Maybe<ChurrosRegistration>;
   checkboxIsMarked?: Maybe<Scalars['Boolean']['output']>;
   /** Date de création de la réponse */
   createdAt: Scalars['DateTime']['output'];
   /** Utilisateur ayant répondu à la question */
-  createdBy?: Maybe<User>;
+  createdBy?: Maybe<ChurrosUser>;
   /** Formulaire auquel appartient la question */
-  form: Form;
+  form: ChurrosForm;
   /** Préfixe de l'identifiant: `answer:` */
   id: Scalars['ID']['output'];
   /** Réponse donnée, entre 0 et 1 */
   normalizedValue?: Maybe<Scalars['Float']['output']>;
   /** Question à laquelle la réponse est associée */
-  question: QuestionScale;
+  question: ChurrosQuestionScale;
   /** Section du formulaire auquel appartient la question */
-  section: FormSection;
+  section: ChurrosFormSection;
   /** Date de dernière mise à jour de la réponse */
   updatedAt: Scalars['DateTime']['output'];
   /** Réponse donnée */
   value?: Maybe<Scalars['Int']['output']>;
 };
 
-export type AnswerSearchResult = {
-  answer: Answer;
+export type ChurrosAnswerSearchResult = {
+  answer: ChurrosAnswer;
   id: Scalars['ID']['output'];
   rank?: Maybe<Scalars['Float']['output']>;
   similarity: Scalars['Float']['output'];
 };
 
 /** Réponse de type `SelectMultiple` (voir [`QuestionKind`](#QuestionKind)) */
-export type AnswerSelectMultiple = Answer & {
+export type ChurrosAnswerSelectMultiple = ChurrosAnswer & {
   answerString: Scalars['String']['output'];
   /** Réservation associée à la réponse */
-  booking?: Maybe<Registration>;
+  booking?: Maybe<ChurrosRegistration>;
   checkboxIsMarked?: Maybe<Scalars['Boolean']['output']>;
   /** Date de création de la réponse */
   createdAt: Scalars['DateTime']['output'];
   /** Utilisateur ayant répondu à la question */
-  createdBy?: Maybe<User>;
+  createdBy?: Maybe<ChurrosUser>;
   /** Formulaire auquel appartient la question */
-  form: Form;
+  form: ChurrosForm;
   /** Préfixe de l'identifiant: `answer:` */
   id: Scalars['ID']['output'];
   /** Question à laquelle la réponse est associée */
-  question: QuestionSelectMultiple;
+  question: ChurrosQuestionSelectMultiple;
   /** Section du formulaire auquel appartient la question */
-  section: FormSection;
+  section: ChurrosFormSection;
   /** Date de dernière mise à jour de la réponse */
   updatedAt: Scalars['DateTime']['output'];
   /** Réponse donnée */
@@ -240,23 +240,23 @@ export type AnswerSelectMultiple = Answer & {
 };
 
 /** Réponse de type `SelectOne` (voir [`QuestionKind`](#QuestionKind)) */
-export type AnswerSelectOne = Answer & {
+export type ChurrosAnswerSelectOne = ChurrosAnswer & {
   answerString: Scalars['String']['output'];
   /** Réservation associée à la réponse */
-  booking?: Maybe<Registration>;
+  booking?: Maybe<ChurrosRegistration>;
   checkboxIsMarked?: Maybe<Scalars['Boolean']['output']>;
   /** Date de création de la réponse */
   createdAt: Scalars['DateTime']['output'];
   /** Utilisateur ayant répondu à la question */
-  createdBy?: Maybe<User>;
+  createdBy?: Maybe<ChurrosUser>;
   /** Formulaire auquel appartient la question */
-  form: Form;
+  form: ChurrosForm;
   /** Préfixe de l'identifiant: `answer:` */
   id: Scalars['ID']['output'];
   /** Question à laquelle la réponse est associée */
-  question: QuestionSelectOne;
+  question: ChurrosQuestionSelectOne;
   /** Section du formulaire auquel appartient la question */
-  section: FormSection;
+  section: ChurrosFormSection;
   /** Date de dernière mise à jour de la réponse */
   updatedAt: Scalars['DateTime']['output'];
   /** Réponse donnée */
@@ -264,23 +264,23 @@ export type AnswerSelectOne = Answer & {
 };
 
 /** Réponse de type `Text` (voir [`QuestionKind`](#QuestionKind)) */
-export type AnswerText = Answer & {
+export type ChurrosAnswerText = ChurrosAnswer & {
   answerString: Scalars['String']['output'];
   /** Réservation associée à la réponse */
-  booking?: Maybe<Registration>;
+  booking?: Maybe<ChurrosRegistration>;
   checkboxIsMarked?: Maybe<Scalars['Boolean']['output']>;
   /** Date de création de la réponse */
   createdAt: Scalars['DateTime']['output'];
   /** Utilisateur ayant répondu à la question */
-  createdBy?: Maybe<User>;
+  createdBy?: Maybe<ChurrosUser>;
   /** Formulaire auquel appartient la question */
-  form: Form;
+  form: ChurrosForm;
   /** Préfixe de l'identifiant: `answer:` */
   id: Scalars['ID']['output'];
   /** Question à laquelle la réponse est associée */
-  question: QuestionScalar;
+  question: ChurrosQuestionScalar;
   /** Section du formulaire auquel appartient la question */
-  section: FormSection;
+  section: ChurrosFormSection;
   /** Date de dernière mise à jour de la réponse */
   updatedAt: Scalars['DateTime']['output'];
   /** Réponse donnée */
@@ -288,26 +288,26 @@ export type AnswerText = Answer & {
 };
 
 /** Réponse de type `Time` (voir [`QuestionKind`](#QuestionKind)) */
-export type AnswerTime = Answer & {
-  answer: Answer;
+export type ChurrosAnswerTime = ChurrosAnswer & {
+  answer: ChurrosAnswer;
   answerString: Scalars['String']['output'];
   /** Réservation associée à la réponse */
-  booking?: Maybe<Registration>;
+  booking?: Maybe<ChurrosRegistration>;
   checkboxIsMarked?: Maybe<Scalars['Boolean']['output']>;
   /** Date de création de la réponse */
   createdAt: Scalars['DateTime']['output'];
   /** Utilisateur ayant répondu à la question */
-  createdBy?: Maybe<User>;
+  createdBy?: Maybe<ChurrosUser>;
   /** Formulaire auquel appartient la question */
-  form: Form;
+  form: ChurrosForm;
   /** Préfixe de l'identifiant: `answer:` */
   id: Scalars['ID']['output'];
   /** Question à laquelle la réponse est associée */
-  question: QuestionScalar;
+  question: ChurrosQuestionScalar;
   /** Réponse donnée, brute (sous forme de texte) */
   rawValue?: Maybe<Scalars['String']['output']>;
   /** Section du formulaire auquel appartient la question */
-  section: FormSection;
+  section: ChurrosFormSection;
   /** Date de dernière mise à jour de la réponse */
   updatedAt: Scalars['DateTime']['output'];
   /** Réponse donnée */
@@ -315,22 +315,22 @@ export type AnswerTime = Answer & {
 };
 
 /** Formats d'export des réponses */
-export type AnswersExportFormats =
+export type ChurrosAnswersExportFormats =
   /** Format CSV (séparateur de colonnes: virgule, séparateur de lignes: saut de ligne) */
   | 'CSV'
   /** Format TSV (séparateur de colonnes: tabulation, séparateur de lignes: saut de ligne) */
   | 'TSV';
 
 /** Représente toutes les réponses d'un·e utilisateur·ice à un formulaire. Pratique pour grouper les réponses afin de les afficher dans un tableau */
-export type AnswersOfUser = {
-  answers: Array<Answer>;
+export type ChurrosAnswersOfUser = {
+  answers: Array<ChurrosAnswer>;
   /** Correspond à la date de dernière réponse parmis les réponses */
   date: Scalars['DateTime']['output'];
-  user: User;
+  user: ChurrosUser;
 };
 
 /** Des données temporelles pour construire des graphiques d'atteintes de rate limiting. La résolution temporelle est d'une minute. */
-export type ApiRateLimitHits = {
+export type ChurrosApiRateLimitHits = {
   /** Le nombre d'erreurs de rate-limiting à cette date */
   count: Scalars['Int']['output'];
   /** La date à laquelle les requêtes ont été faites */
@@ -340,11 +340,11 @@ export type ApiRateLimitHits = {
   /** Le type de requête effectuée */
   queryType: Scalars['String']['output'];
   timestamp: Scalars['Int']['output'];
-  user?: Maybe<User>;
+  user?: Maybe<ChurrosUser>;
 };
 
 /** Des données temporelles pour construire des graphiques d'utilisation de l'API au cours du temps. La résolution temporelle est d'une minute. */
-export type ApiUsage = {
+export type ChurrosApiUsage = {
   /** Le nombre de requêtes faites à cette date */
   count: Scalars['Int']['output'];
   /** La date à laquelle les requêtes ont été faites */
@@ -352,13 +352,13 @@ export type ApiUsage = {
   /** Le nom de la query ou mutation ou subscription */
   queryName: Scalars['String']['output'];
   /** Le type de requête effectuée */
-  queryType: ApiUsageQueryType;
+  queryType: ChurrosApiUsageQueryType;
   timestamp: Scalars['Int']['output'];
-  user?: Maybe<User>;
+  user?: Maybe<ChurrosUser>;
 };
 
 /** Type de requête effectuée sur l'API */
-export type ApiUsageQueryType =
+export type ChurrosApiUsageQueryType =
   /** Modification de données, ou autre action diverses */
   | 'Mutation'
   /** Récupération de données */
@@ -367,25 +367,25 @@ export type ApiUsageQueryType =
   | 'Subscription';
 
 /** An article is a post in a group */
-export type Article = Commentable & Node & Pictured & Reactable & {
-  author?: Maybe<User>;
+export type ChurrosArticle = ChurrosCommentable & ChurrosNode & ChurrosPictured & ChurrosReactable & {
+  author?: Maybe<ChurrosUser>;
   authorId?: Maybe<Scalars['ID']['output']>;
   body: Scalars['String']['output'];
   bodyHtml: Scalars['String']['output'];
   bodyPreview: Scalars['String']['output'];
   /** Vrai si l'utilisateur·ice connecté·e peut éditer le post (en considérant qu'iel ne va pas changer l'auteur·ice ou le groupe du post) */
   canBeEdited: Scalars['Boolean']['output'];
-  comments: CommentsConnection;
+  comments: ChurrosCommentsConnection;
   createdAt: Scalars['DateTime']['output'];
-  event?: Maybe<Event>;
+  event?: Maybe<ChurrosEvent>;
   eventId?: Maybe<Scalars['ID']['output']>;
-  group: Group;
+  group: ChurrosGroup;
   groupId: Scalars['ID']['output'];
   id: Scalars['ID']['output'];
-  links: Array<Link>;
+  links: Array<ChurrosLink>;
   /** L'identifiant local de la ressource (sans préfixe) */
-  localID: Scalars['LocalID']['output'];
-  myReactions: Scalars['BooleanMap']['output'];
+  localID: Scalars['ChurrosLocalID']['output'];
+  myReactions: Scalars['ChurrosBooleanMap']['output'];
   notifiedAt?: Maybe<Scalars['DateTime']['output']>;
   pictureFile: Scalars['String']['output'];
   /** Le nom du fichier de l'image, en thème sombre */
@@ -395,19 +395,19 @@ export type Article = Commentable & Node & Pictured & Reactable & {
   published: Scalars['Boolean']['output'];
   publishedAt: Scalars['DateTime']['output'];
   reacted: Scalars['Boolean']['output'];
-  reactionCounts: Scalars['Counts']['output'];
+  reactionCounts: Scalars['ChurrosCounts']['output'];
   reactions: Scalars['Int']['output'];
   /** Un nom lisible sans espaces, adaptés pour des URLs. */
   slug: Scalars['String']['output'];
   title: Scalars['String']['output'];
   /** @deprecated Use `slug` instead. This field was never universally unique. */
   uid: Scalars['String']['output'];
-  visibility: Visibility;
+  visibility: ChurrosVisibility;
 };
 
 
 /** An article is a post in a group */
-export type ArticlecommentsArgs = {
+export type ChurrosArticlecommentsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -416,43 +416,43 @@ export type ArticlecommentsArgs = {
 
 
 /** An article is a post in a group */
-export type ArticlepictureURLArgs = {
+export type ChurrosArticlepictureURLArgs = {
   dark?: Scalars['Boolean']['input'];
 };
 
 
 /** An article is a post in a group */
-export type ArticlereactedArgs = {
+export type ChurrosArticlereactedArgs = {
   emoji: Scalars['String']['input'];
 };
 
 
 /** An article is a post in a group */
-export type ArticlereactionsArgs = {
+export type ChurrosArticlereactionsArgs = {
   emoji: Scalars['String']['input'];
 };
 
-export type ArticleSearchResultType = {
-  article: Article;
+export type ChurrosArticleSearchResultType = {
+  article: ChurrosArticle;
   highlightedTitle: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   rank?: Maybe<Scalars['Float']['output']>;
   similarity: Scalars['Float']['output'];
 };
 
-export type AwaitingValidationError = {
+export type ChurrosAwaitingValidationError = {
   message: Scalars['String']['output'];
 };
 
 /** A bar week is a week during which some groups takeover the bar staff */
-export type BarWeek = Node & {
+export type ChurrosBarWeek = ChurrosNode & {
   description: Scalars['String']['output'];
   descriptionHtml: Scalars['String']['output'];
   endsAt: Scalars['DateTime']['output'];
-  groups: Array<Group>;
+  groups: Array<ChurrosGroup>;
   id: Scalars['ID']['output'];
   /** L'identifiant local de la ressource (sans préfixe) */
-  localID: Scalars['LocalID']['output'];
+  localID: Scalars['ChurrosLocalID']['output'];
   /** Un nom lisible sans espaces, adaptés pour des URLs. */
   slug: Scalars['String']['output'];
   startsAt: Scalars['DateTime']['output'];
@@ -460,7 +460,7 @@ export type BarWeek = Node & {
   uid: Scalars['String']['output'];
 };
 
-export type BuildInfo = {
+export type ChurrosBuildInfo = {
   /** Le hash du commit utilisé pour build l'API */
   commit: Scalars['String']['output'];
   /** La version actuelle de l'API (et de l'application) */
@@ -468,9 +468,9 @@ export type BuildInfo = {
 };
 
 /** A release in the changelog */
-export type ChangelogRelease = {
+export type ChurrosChangelogRelease = {
   /** The changes of the release, grouped by category */
-  changes: ReleaseChangesMaps;
+  changes: ChurrosReleaseChangesMaps;
   /** The date of the release */
   date?: Maybe<Scalars['DateTime']['output']>;
   /** A short description of the release */
@@ -481,103 +481,103 @@ export type ChangelogRelease = {
   version: Scalars['String']['output'];
 };
 
-export type Comment = Node & Reactable & {
-  author?: Maybe<User>;
+export type ChurrosComment = ChurrosNode & ChurrosReactable & {
+  author?: Maybe<ChurrosUser>;
   authorId?: Maybe<Scalars['ID']['output']>;
   body: Scalars['String']['output'];
   bodyHtml: Scalars['String']['output'];
   createdAt: Scalars['DateTime']['output'];
-  document?: Maybe<Document>;
+  document?: Maybe<ChurrosDocument>;
   documentId?: Maybe<Scalars['ID']['output']>;
   id: Scalars['ID']['output'];
-  inReplyTo?: Maybe<Comment>;
+  inReplyTo?: Maybe<ChurrosComment>;
   inReplyToId?: Maybe<Scalars['ID']['output']>;
   /** L'identifiant local de la ressource (sans préfixe) */
-  localID: Scalars['LocalID']['output'];
+  localID: Scalars['ChurrosLocalID']['output'];
   reacted: Scalars['Boolean']['output'];
   reactions: Scalars['Int']['output'];
-  replies: Array<Comment>;
+  replies: Array<ChurrosComment>;
   updatedAt: Scalars['DateTime']['output'];
 };
 
 
-export type CommentreactedArgs = {
+export type ChurrosCommentreactedArgs = {
   emoji: Scalars['String']['input'];
 };
 
 
-export type CommentreactionsArgs = {
+export type ChurrosCommentreactionsArgs = {
   emoji: Scalars['String']['input'];
 };
 
 /** Une resource pouvant être commentée par les utilisateur·ice·s */
-export type Commentable = {
-  comments: CommentsConnection;
+export type ChurrosCommentable = {
+  comments: ChurrosCommentsConnection;
   /** L’identifiant de la resource commentée */
   id: Scalars['ID']['output'];
 };
 
 
 /** Une resource pouvant être commentée par les utilisateur·ice·s */
-export type CommentablecommentsArgs = {
+export type ChurrosCommentablecommentsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
 };
 
-export type CommentsConnection = {
-  edges: Array<CommentsEdge>;
-  nodes: Array<Comment>;
-  pageInfo: PageInfo;
+export type ChurrosCommentsConnection = {
+  edges: Array<ChurrosCommentsEdge>;
+  nodes: Array<ChurrosComment>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type CommentsEdge = {
+export type ChurrosCommentsEdge = {
   cursor: Scalars['String']['output'];
-  node: Comment;
+  node: ChurrosComment;
 };
 
-export type CompleteSignupResult = User | UserCandidate;
+export type ChurrosCompleteSignupResult = ChurrosUser | ChurrosUserCandidate;
 
-export type ContributionOption = {
+export type ChurrosContributionOption = {
   descriptionHtml: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
-  offeredIn: School;
-  paysFor: Array<StudentAssociation>;
+  offeredIn: ChurrosSchool;
+  paysFor: Array<ChurrosStudentAssociation>;
   price: Scalars['Float']['output'];
 };
 
 /** A credential is a way to authenticate a user */
-export type Credential = {
+export type ChurrosCredential = {
   active: Scalars['Boolean']['output'];
   createdAt: Scalars['DateTime']['output'];
   expiresAt?: Maybe<Scalars['DateTime']['output']>;
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
   token: Scalars['String']['output'];
-  type: CredentialType;
-  user: User;
+  type: ChurrosCredentialType;
+  user: ChurrosUser;
   userAgent: Scalars['String']['output'];
 };
 
-export type CredentialType =
+export type ChurrosCredentialType =
   | 'Google'
   | 'Password'
   | 'Token';
 
-export type DatabaseHealthCheck = {
+export type ChurrosDatabaseHealthCheck = {
   prisma: Scalars['Boolean']['output'];
 };
 
-export type Document = Commentable & Node & Reactable & {
-  comments: CommentsConnection;
+export type ChurrosDocument = ChurrosCommentable & ChurrosNode & ChurrosReactable & {
+  comments: ChurrosCommentsConnection;
   createdAt: Scalars['DateTime']['output'];
   description: Scalars['String']['output'];
   descriptionHtml: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   /** L'identifiant local de la ressource (sans préfixe) */
-  localID: Scalars['LocalID']['output'];
+  localID: Scalars['ChurrosLocalID']['output'];
   /** Liste de chemins vers les fichiers représentant le sujet (ou la fiche de révision) */
   paperPaths: Array<Scalars['String']['output']>;
   reacted: Scalars['Boolean']['output'];
@@ -587,19 +587,19 @@ export type Document = Commentable & Node & Reactable & {
   slug: Scalars['String']['output'];
   /** Liste de chemins vers les fichiers représentant la correction. */
   solutionPaths: Array<Scalars['String']['output']>;
-  subject?: Maybe<Subject>;
+  subject?: Maybe<ChurrosSubject>;
   subjectId?: Maybe<Scalars['ID']['output']>;
   title: Scalars['String']['output'];
-  type: DocumentType;
+  type: ChurrosDocumentType;
   /** @deprecated Use `slug` instead. This field was never universally unique. */
   uid: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
-  uploader?: Maybe<User>;
+  uploader?: Maybe<ChurrosUser>;
   uploaderId?: Maybe<Scalars['ID']['output']>;
 };
 
 
-export type DocumentcommentsArgs = {
+export type ChurrosDocumentcommentsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -607,23 +607,23 @@ export type DocumentcommentsArgs = {
 };
 
 
-export type DocumentreactedArgs = {
+export type ChurrosDocumentreactedArgs = {
   emoji: Scalars['String']['input'];
 };
 
 
-export type DocumentreactionsArgs = {
+export type ChurrosDocumentreactionsArgs = {
   emoji: Scalars['String']['input'];
 };
 
-export type DocumentSearchResult = {
-  document: Document;
+export type ChurrosDocumentSearchResult = {
+  document: ChurrosDocument;
   id: Scalars['ID']['output'];
   rank?: Maybe<Scalars['Int']['output']>;
   similarity: Scalars['Float']['output'];
 };
 
-export type DocumentType =
+export type ChurrosDocumentType =
   | 'CourseNotes'
   | 'CourseSlides'
   | 'Exam'
@@ -635,28 +635,28 @@ export type DocumentType =
   | 'Summary';
 
 /** A email validation request */
-export type EmailChange = {
+export type ChurrosEmailChange = {
   createdAt: Scalars['DateTime']['output'];
   email: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   pending: Scalars['Boolean']['output'];
   updatedAt: Scalars['DateTime']['output'];
-  user: User;
+  user: ChurrosUser;
   userId: Scalars['ID']['output'];
 };
 
 /** The most basic error object, based on the base JavaScript Error object. */
-export type Error = ErrorInterface & {
+export type ChurrosError = ChurrosErrorInterface & {
   message: Scalars['String']['output'];
 };
 
 /** Basic interface for all error types to implement. */
-export type ErrorInterface = {
+export type ChurrosErrorInterface = {
   message: Scalars['String']['output'];
 };
 
-export type EvenSearchResult = {
-  event: Event;
+export type ChurrosEvenSearchResult = {
+  event: ChurrosEvent;
   highlightedTitle: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   rank?: Maybe<Scalars['Float']['output']>;
@@ -664,16 +664,16 @@ export type EvenSearchResult = {
 };
 
 /** An event is a date, time and place, as well as an optional ticket */
-export type Event = Node & Pictured & Reactable & {
-  articles: Array<Article>;
-  author?: Maybe<User>;
+export type ChurrosEvent = ChurrosNode & ChurrosPictured & ChurrosReactable & {
+  articles: Array<ChurrosArticle>;
+  author?: Maybe<ChurrosUser>;
   authorId?: Maybe<Scalars['ID']['output']>;
-  bannedUsers: Array<User>;
-  beneficiary?: Maybe<LydiaAccount>;
-  bookings: EventBookingsConnection;
-  bookingsCounts: RegistrationsCounts;
+  bannedUsers: Array<ChurrosUser>;
+  beneficiary?: Maybe<ChurrosLydiaAccount>;
+  bookings: ChurrosEventBookingsConnection;
+  bookingsCounts: ChurrosRegistrationsCounts;
   /** Renvoie un texte au format CSV contenant un export des réservations de l'évènement. */
-  bookingsCsv: EventBookingsCsvResult;
+  bookingsCsv: ChurrosEventBookingsCsvResult;
   /** L'utilisateur·ice connecté·e peut modifier cet évènement */
   canEdit: Scalars['Boolean']['output'];
   /** L'utilisateur·ice connecté·e peut ajouter, enlever ou modifier les droits des managers de cet évènement */
@@ -685,31 +685,31 @@ export type Event = Node & Pictured & Reactable & {
   /** L'utilsateur·ice connecté·e peut voir les logs de cet évènement */
   canSeeLogs: Scalars['Boolean']['output'];
   capacity: Scalars['Int']['output'];
-  coOrganizers: Array<Group>;
+  coOrganizers: Array<ChurrosGroup>;
   contactMail: Scalars['String']['output'];
   description: Scalars['String']['output'];
   descriptionHtml: Scalars['String']['output'];
   descriptionPreview: Scalars['String']['output'];
   endsAt: Scalars['DateTime']['output'];
   /** Formulaires associés à l'événement */
-  forms: Array<Form>;
-  frequency: EventFrequency;
-  group: Group;
+  forms: Array<ChurrosForm>;
+  frequency: ChurrosEventFrequency;
+  group: ChurrosGroup;
   groupId: Scalars['ID']['output'];
   id: Scalars['ID']['output'];
   /** Vrai si l'évènement doit apparaître dans le mode kiosque */
   includeInKiosk: Scalars['Boolean']['output'];
-  links: Array<Link>;
+  links: Array<ChurrosLink>;
   /** L'identifiant local de la ressource (sans préfixe) */
-  localID: Scalars['LocalID']['output'];
+  localID: Scalars['ChurrosLocalID']['output'];
   location: Scalars['String']['output'];
   /** Logs concernant cet évènement. Ne contient pas les logs concernant les réservations. */
-  logs: EventLogsConnection;
+  logs: ChurrosEventLogsConnection;
   lydiaAccountId?: Maybe<Scalars['ID']['output']>;
-  managers: Array<EventManager>;
+  managers: Array<ChurrosEventManager>;
   /** Réservations faites par et/ou pour l'utilisateur.ice connecté.e */
-  myBookings: EventMyBookingsResult;
-  myReactions: Scalars['BooleanMap']['output'];
+  myBookings: ChurrosEventMyBookingsResult;
+  myReactions: Scalars['ChurrosBooleanMap']['output'];
   mySoonestShotgunOpensAt?: Maybe<Scalars['DateTime']['output']>;
   pictureFile: Scalars['String']['output'];
   /** Le nom du fichier de l'image, en thème sombre */
@@ -717,29 +717,29 @@ export type Event = Node & Pictured & Reactable & {
   /** L'URL publique de l'image */
   pictureURL: Scalars['String']['output'];
   placesLeft?: Maybe<Scalars['Int']['output']>;
-  profitsBreakdown: ProfitsBreakdown;
+  profitsBreakdown: ChurrosProfitsBreakdown;
   reacted: Scalars['Boolean']['output'];
-  reactionCounts: Scalars['Counts']['output'];
+  reactionCounts: Scalars['ChurrosCounts']['output'];
   reactions: Scalars['Int']['output'];
   recurringUntil?: Maybe<Scalars['DateTime']['output']>;
-  searchBookings: Array<RegistrationSearchResult>;
+  searchBookings: Array<ChurrosRegistrationSearchResult>;
   /** Vrai si le nombre de places restantes doit être affiché */
   showPlacesLeft: Scalars['Boolean']['output'];
   /** Un nom lisible sans espaces, adaptés pour des URLs. */
   slug: Scalars['String']['output'];
   startsAt: Scalars['DateTime']['output'];
-  ticket?: Maybe<Ticket>;
-  ticketGroups: Array<TicketGroup>;
-  tickets: Array<Ticket>;
+  ticket?: Maybe<ChurrosTicket>;
+  ticketGroups: Array<ChurrosTicketGroup>;
+  tickets: Array<ChurrosTicket>;
   title: Scalars['String']['output'];
   /** @deprecated Use `slug` instead. This field was never universally unique. */
   uid: Scalars['String']['output'];
-  visibility: Visibility;
+  visibility: ChurrosVisibility;
 };
 
 
 /** An event is a date, time and place, as well as an optional ticket */
-export type EventbookingsArgs = {
+export type ChurrosEventbookingsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -748,7 +748,7 @@ export type EventbookingsArgs = {
 
 
 /** An event is a date, time and place, as well as an optional ticket */
-export type EventlogsArgs = {
+export type ChurrosEventlogsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -757,111 +757,111 @@ export type EventlogsArgs = {
 
 
 /** An event is a date, time and place, as well as an optional ticket */
-export type EventpictureURLArgs = {
+export type ChurrosEventpictureURLArgs = {
   dark?: Scalars['Boolean']['input'];
 };
 
 
 /** An event is a date, time and place, as well as an optional ticket */
-export type EventreactedArgs = {
+export type ChurrosEventreactedArgs = {
   emoji: Scalars['String']['input'];
 };
 
 
 /** An event is a date, time and place, as well as an optional ticket */
-export type EventreactionsArgs = {
+export type ChurrosEventreactionsArgs = {
   emoji: Scalars['String']['input'];
 };
 
 
 /** An event is a date, time and place, as well as an optional ticket */
-export type EventsearchBookingsArgs = {
+export type ChurrosEventsearchBookingsArgs = {
   q: Scalars['String']['input'];
 };
 
 
 /** An event is a date, time and place, as well as an optional ticket */
-export type EventticketArgs = {
+export type ChurrosEventticketArgs = {
   slug: Scalars['String']['input'];
 };
 
-export type EventBookingsConnection = {
-  edges: Array<EventBookingsConnectionEdge>;
-  nodes: Array<Registration>;
-  pageInfo: PageInfo;
+export type ChurrosEventBookingsConnection = {
+  edges: Array<ChurrosEventBookingsConnectionEdge>;
+  nodes: Array<ChurrosRegistration>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type EventBookingsConnectionEdge = {
+export type ChurrosEventBookingsConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: Registration;
+  node: ChurrosRegistration;
 };
 
-export type EventBookingsCsvResult = Error | EventBookingsCsvSuccess;
+export type ChurrosEventBookingsCsvResult = ChurrosError | ChurrosEventBookingsCsvSuccess;
 
-export type EventBookingsCsvSuccess = {
+export type ChurrosEventBookingsCsvSuccess = {
   data: Scalars['String']['output'];
 };
 
-export type EventFrequency =
+export type ChurrosEventFrequency =
   | 'Biweekly'
   | 'Monthly'
   | 'Once'
   | 'Weekly';
 
-export type EventLogsConnection = {
-  edges: Array<EventLogsConnectionEdge>;
-  nodes: Array<LogEntry>;
-  pageInfo: PageInfo;
+export type ChurrosEventLogsConnection = {
+  edges: Array<ChurrosEventLogsConnectionEdge>;
+  nodes: Array<ChurrosLogEntry>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type EventLogsConnectionEdge = {
+export type ChurrosEventLogsConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: LogEntry;
+  node: ChurrosLogEntry;
 };
 
 /** An event manager is a user that can scan tickets, and may be able to manage the event */
-export type EventManager = {
+export type ChurrosEventManager = {
   canEdit: Scalars['Boolean']['output'];
   canEditPermissions: Scalars['Boolean']['output'];
   canVerifyRegistrations: Scalars['Boolean']['output'];
-  event: Event;
-  power: EventManagerPowerLevel;
-  user: User;
+  event: ChurrosEvent;
+  power: ChurrosEventManagerPowerLevel;
+  user: ChurrosUser;
 };
 
-export type EventManagerPowerLevel =
+export type ChurrosEventManagerPowerLevel =
   | 'Edit'
   | 'EditPermissions'
   | 'ReadOnly'
   | 'ScanTickets';
 
-export type EventMyBookingsResult = Error | EventMyBookingsSuccess;
+export type ChurrosEventMyBookingsResult = ChurrosError | ChurrosEventMyBookingsSuccess;
 
-export type EventMyBookingsSuccess = {
-  data: Array<Registration>;
+export type ChurrosEventMyBookingsSuccess = {
+  data: Array<ChurrosRegistration>;
 };
 
-export type EventsByDay = {
+export type ChurrosEventsByDay = {
   date: Scalars['DateTime']['output'];
   /** Évènements qui ont lieu (commencent) à ce jour */
-  happening: Array<Event>;
+  happening: Array<ChurrosEvent>;
   /** Évènements qui ont leur premier shotgun à ce jour */
-  shotgunning: Array<Event>;
+  shotgunning: Array<ChurrosEvent>;
 };
 
-export type FamilyTree = {
+export type ChurrosFamilyTree = {
   nesting: Scalars['String']['output'];
-  users: Array<User>;
+  users: Array<ChurrosUser>;
 };
 
 /** Un formulaire */
-export type Form = Node & {
+export type ChurrosForm = ChurrosNode & {
   /** Nombre de réponses au formulaire */
   answerCount: Scalars['Int']['output'];
   /** Réponses au formulaire */
-  answers: FormAnswersConnection;
+  answers: ChurrosFormAnswersConnection;
   /** Réponses au formulaire, groupées par utilisateur·ice. Ne contient pas de réponses dont l'utilisateur·ice est inconnu·e. */
-  answersByUser: FormAnswersByUserConnection;
+  answersByUser: ChurrosFormAnswersByUserConnection;
   /** Export des réponses au formulaires dans un format */
   answersExport: Scalars['String']['output'];
   /** Indique si l'utilisateur peut répondre au formulaire. */
@@ -882,15 +882,15 @@ export type Form = Node & {
   /** Date de création du formulaire */
   createdAt: Scalars['DateTime']['output'];
   /** Utilisateur ayant créé le formulaire */
-  createdBy?: Maybe<User>;
+  createdBy?: Maybe<ChurrosUser>;
   /** Description en Markdown du formulaire. */
   description?: Maybe<Scalars['String']['output']>;
   /** Description en HTML du formulaire. */
   descriptionHtml: Scalars['String']['output'];
   /** Événement associé au formulaire */
-  event?: Maybe<Event>;
+  event?: Maybe<ChurrosEvent>;
   /** Groupe auquel le formulaire est associé */
-  group?: Maybe<Group>;
+  group?: Maybe<ChurrosGroup>;
   /** Vrai si le formulaire comporte des sections */
   hasSections: Scalars['Boolean']['output'];
   /** Préfixe de l'identifiant: `form:` */
@@ -898,30 +898,30 @@ export type Form = Node & {
   /** L'URL du Google Sheet des réponses lié à ce formulaire. Voir `createLinkedGoogleSheet` pour créer un Google Sheet lié au formulaire. */
   linkedGoogleSheetUrl?: Maybe<Scalars['String']['output']>;
   /** L'identifiant local de la ressource (sans préfixe) */
-  localID: Scalars['LocalID']['output'];
+  localID: Scalars['ChurrosLocalID']['output'];
   /** Identifiant local du formulaire */
   localId: Scalars['String']['output'];
   /** Réponses de l'utilisateur·ice connecté·e à ce formulaire */
-  myAnswers: Array<Answer>;
+  myAnswers: Array<ChurrosAnswer>;
   /** Date d'ouverture du formulaire. */
   opensAt?: Maybe<Scalars['DateTime']['output']>;
   /** Questions du formulaire. Liste de toutes les questions, peut importe la section dans laquelle elles se trouvent. */
-  questions: FormQuestionsConnection;
-  searchAnswers: Array<AnswerSearchResult>;
+  questions: ChurrosFormQuestionsConnection;
+  searchAnswers: Array<ChurrosAnswerSearchResult>;
   /** Une section du formulaire. */
-  section: FormSection;
+  section: ChurrosFormSection;
   /** Sections du formulaire. Un formulaire contient toujours au moins une section (sauf s'il n'y a aucune question). Uniquement accessible par celleux qui peuvent modifier le formulaire. Utiliser `nextSection` pour afficher une section dans le but d'y répondre. */
-  sections: Array<FormSection>;
+  sections: Array<ChurrosFormSection>;
   title: Scalars['String']['output'];
   /** Date de dernière mise à jour du formulaire */
   updatedAt: Scalars['DateTime']['output'];
   /** Visibilité du formulaire */
-  visibility: Visibility;
+  visibility: ChurrosVisibility;
 };
 
 
 /** Un formulaire */
-export type FormanswersArgs = {
+export type ChurrosFormanswersArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -930,7 +930,7 @@ export type FormanswersArgs = {
 
 
 /** Un formulaire */
-export type FormanswersByUserArgs = {
+export type ChurrosFormanswersByUserArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -940,13 +940,13 @@ export type FormanswersByUserArgs = {
 
 
 /** Un formulaire */
-export type FormanswersExportArgs = {
-  format?: AnswersExportFormats;
+export type ChurrosFormanswersExportArgs = {
+  format?: ChurrosAnswersExportFormats;
 };
 
 
 /** Un formulaire */
-export type FormquestionsArgs = {
+export type ChurrosFormquestionsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -955,52 +955,52 @@ export type FormquestionsArgs = {
 
 
 /** Un formulaire */
-export type FormsearchAnswersArgs = {
+export type ChurrosFormsearchAnswersArgs = {
   q: Scalars['String']['input'];
   similarityCutoff?: InputMaybe<Scalars['Float']['input']>;
 };
 
 
 /** Un formulaire */
-export type FormsectionArgs = {
+export type ChurrosFormsectionArgs = {
   id?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type FormAnswersByUserConnection = {
-  edges: Array<FormAnswersByUserConnectionEdge>;
-  nodes: Array<AnswersOfUser>;
-  pageInfo: PageInfo;
+export type ChurrosFormAnswersByUserConnection = {
+  edges: Array<ChurrosFormAnswersByUserConnectionEdge>;
+  nodes: Array<ChurrosAnswersOfUser>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type FormAnswersByUserConnectionEdge = {
+export type ChurrosFormAnswersByUserConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: AnswersOfUser;
+  node: ChurrosAnswersOfUser;
 };
 
-export type FormAnswersConnection = {
-  edges: Array<FormAnswersConnectionEdge>;
-  nodes: Array<Answer>;
-  pageInfo: PageInfo;
+export type ChurrosFormAnswersConnection = {
+  edges: Array<ChurrosFormAnswersConnectionEdge>;
+  nodes: Array<ChurrosAnswer>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type FormAnswersConnectionEdge = {
+export type ChurrosFormAnswersConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: Answer;
+  node: ChurrosAnswer;
 };
 
-export type FormQuestionsConnection = {
-  edges: Array<FormQuestionsConnectionEdge>;
-  nodes: Array<Question>;
-  pageInfo: PageInfo;
+export type ChurrosFormQuestionsConnection = {
+  edges: Array<ChurrosFormQuestionsConnectionEdge>;
+  nodes: Array<ChurrosQuestion>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type FormQuestionsConnectionEdge = {
+export type ChurrosFormQuestionsConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: Question;
+  node: ChurrosQuestion;
 };
 
-export type FormSearchResult = {
-  form: Form;
+export type ChurrosFormSearchResult = {
+  form: ChurrosForm;
   highlightedDescription: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   rank?: Maybe<Scalars['Float']['output']>;
@@ -1008,132 +1008,132 @@ export type FormSearchResult = {
 };
 
 /** Une section d'un formulaire. Les sections sont utiles pour séparer les questions en plusieurs parties, dont certaines peuvent être affichées selon des réponses à des questions précédentes */
-export type FormSection = {
+export type ChurrosFormSection = {
   /** Réponses à cette section */
-  answers: FormSectionAnswersConnection;
+  answers: ChurrosFormSectionAnswersConnection;
   /** Description en Markdown de la section */
   description: Scalars['String']['output'];
   /** Description en HTML de la section */
   descriptionHtml: Scalars['String']['output'];
   /** Formulaire auquel appartient la section */
-  form: Form;
+  form: ChurrosForm;
   id: Scalars['ID']['output'];
   /** Identifiant local de la section du formulaire */
   localId: Scalars['String']['output'];
   /** Section suivante dans le formulaire, si il y en a une. (Sinon, c'est que c'est la dernière section). Dépend du fait que des sections soit cachées à l'utilisateur (voir `restrictedToGroups`), ou que une répond à une question provoque le passaage à une autre section (voir `goToSection`)  */
-  nextSection?: Maybe<FormSection>;
+  nextSection?: Maybe<ChurrosFormSection>;
   /** Ordre de la section dans le formulaire */
   order: Scalars['Int']['output'];
   /** Questions dans section */
-  questions: Array<Question>;
+  questions: Array<ChurrosQuestion>;
   /** Si non vide, seul·e·s les membres des groupes spécifiés peuvent accéder à cette section.  */
-  restrictedToGroups: Array<Group>;
+  restrictedToGroups: Array<ChurrosGroup>;
   /** Titre de la section */
   title: Scalars['String']['output'];
 };
 
 
 /** Une section d'un formulaire. Les sections sont utiles pour séparer les questions en plusieurs parties, dont certaines peuvent être affichées selon des réponses à des questions précédentes */
-export type FormSectionanswersArgs = {
+export type ChurrosFormSectionanswersArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
 };
 
-export type FormSectionAnswersConnection = {
-  edges: Array<FormSectionAnswersConnectionEdge>;
-  nodes: Array<Answer>;
-  pageInfo: PageInfo;
+export type ChurrosFormSectionAnswersConnection = {
+  edges: Array<ChurrosFormSectionAnswersConnectionEdge>;
+  nodes: Array<ChurrosAnswer>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type FormSectionAnswersConnectionEdge = {
+export type ChurrosFormSectionAnswersConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: Answer;
+  node: ChurrosAnswer;
 };
 
 /** Requests to become someone's godchild. Gets deleted once the request has been accepted (or denied). godchild is the requester, godparent is the requested. */
-export type GodparentRequest = {
+export type ChurrosGodparentRequest = {
   createdAt: Scalars['DateTime']['output'];
-  godchild: User;
-  godparent: User;
+  godchild: ChurrosUser;
+  godparent: ChurrosUser;
   id: Scalars['ID']['output'];
   updatedAt: Scalars['DateTime']['output'];
 };
 
 /** A group is a collection of users */
-export type Group = Node & Pictured & {
+export type ChurrosGroup = ChurrosNode & ChurrosPictured & {
   address: Scalars['String']['output'];
   /** All the ancestors of this group, from the current group to the root. */
-  ancestors: Array<Group>;
-  articles: Array<Article>;
-  boardMembers: Array<GroupMember>;
+  ancestors: Array<ChurrosGroup>;
+  articles: Array<ChurrosArticle>;
+  boardMembers: Array<ChurrosGroupMember>;
   /** Vrai si l'utilisateur·ice connecté·e peut modifier les informations du groupe */
   canEditDetails: Scalars['Boolean']['output'];
   /** L'utilisateur·ice connecté·e peut éditer (créer ou modifier) les pages du groupe */
   canEditPages: Scalars['Boolean']['output'];
   /** L'utilisateur·ice connecté·e peut lister les pages du groupe */
   canListPages: Scalars['Boolean']['output'];
-  children: Array<Group>;
-  coOrganizedEvents: Array<Event>;
+  children: Array<ChurrosGroup>;
+  coOrganizedEvents: Array<ChurrosEvent>;
   color: Scalars['String']['output'];
   description: Scalars['String']['output'];
   email: Scalars['String']['output'];
-  events: GroupEventsConnection;
-  familyChildren: Array<Group>;
+  events: ChurrosGroupEventsConnection;
+  familyChildren: Array<ChurrosGroup>;
   /** Helper field to get a whole tree without processing all groups\nTo be set to the group's id itself for root groups. */
   familyId?: Maybe<Scalars['ID']['output']>;
   /** Formulaires associés au groupe */
-  forms: Array<Form>;
+  forms: Array<ChurrosForm>;
   groupId: Scalars['ID']['output'];
   id: Scalars['ID']['output'];
   ldapUid: Scalars['String']['output'];
-  links: Array<Link>;
+  links: Array<ChurrosLink>;
   /** L'identifiant local de la ressource (sans préfixe) */
-  localID: Scalars['LocalID']['output'];
+  localID: Scalars['ChurrosLocalID']['output'];
   longDescription: Scalars['String']['output'];
   longDescriptionHtml: Scalars['String']['output'];
   /** Comptes Lydia du groupe */
-  lydiaAccounts: Array<LydiaAccount>;
+  lydiaAccounts: Array<ChurrosLydiaAccount>;
   mailingList: Scalars['String']['output'];
-  members: Array<GroupMember>;
+  members: Array<ChurrosGroupMember>;
   name: Scalars['String']['output'];
-  ownEvents: Array<Event>;
+  ownEvents: Array<ChurrosEvent>;
   /** La page associée au groupe */
-  page?: Maybe<Page>;
+  page?: Maybe<ChurrosPage>;
   /** Les pages associées au groupe */
-  pages: PagesConnection;
+  pages: ChurrosPagesConnection;
   /** Parent group, from which this group inherits its permissions */
-  parent?: Maybe<Group>;
+  parent?: Maybe<ChurrosGroup>;
   parentId?: Maybe<Scalars['ID']['output']>;
   pictureFile: Scalars['String']['output'];
   pictureFileDark: Scalars['String']['output'];
   /** L'URL publique de l'image */
   pictureURL: Scalars['String']['output'];
-  president?: Maybe<GroupMember>;
+  president?: Maybe<ChurrosGroupMember>;
   /** Related clubs */
-  related: Array<Group>;
+  related: Array<ChurrosGroup>;
   roomIsOpen: Scalars['Boolean']['output'];
   /** Family root, only created for performance reasons */
-  root?: Maybe<Group>;
-  secretaries: Array<GroupMember>;
+  root?: Maybe<ChurrosGroup>;
+  secretaries: Array<ChurrosGroupMember>;
   selfJoinable: Scalars['Boolean']['output'];
-  services: Array<Service>;
+  services: Array<ChurrosService>;
   /** Article de la boutique du groupe */
-  shopItem?: Maybe<ShopItem>;
-  shopItems: GroupShopItemsConnection;
-  shopOrders: Array<ShopPayment>;
-  studentAssociation?: Maybe<StudentAssociation>;
-  treasurers: Array<GroupMember>;
-  type: GroupType;
+  shopItem?: Maybe<ChurrosShopItem>;
+  shopItems: ChurrosGroupShopItemsConnection;
+  shopOrders: Array<ChurrosShopPayment>;
+  studentAssociation?: Maybe<ChurrosStudentAssociation>;
+  treasurers: Array<ChurrosGroupMember>;
+  type: ChurrosGroupType;
   uid: Scalars['String']['output'];
-  vicePresidents: Array<GroupMember>;
+  vicePresidents: Array<ChurrosGroupMember>;
   website: Scalars['String']['output'];
 };
 
 
 /** A group is a collection of users */
-export type GroupeventsArgs = {
+export type ChurrosGroupeventsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -1142,13 +1142,13 @@ export type GroupeventsArgs = {
 
 
 /** A group is a collection of users */
-export type GrouppageArgs = {
+export type ChurrosGrouppageArgs = {
   path: Scalars['String']['input'];
 };
 
 
 /** A group is a collection of users */
-export type GrouppagesArgs = {
+export type ChurrosGrouppagesArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -1157,46 +1157,46 @@ export type GrouppagesArgs = {
 
 
 /** A group is a collection of users */
-export type GrouppictureURLArgs = {
+export type ChurrosGrouppictureURLArgs = {
   dark?: Scalars['Boolean']['input'];
 };
 
 
 /** A group is a collection of users */
-export type GroupshopItemArgs = {
-  id: Scalars['LocalID']['input'];
+export type ChurrosGroupshopItemArgs = {
+  id: Scalars['ChurrosLocalID']['input'];
 };
 
 
 /** A group is a collection of users */
-export type GroupshopItemsArgs = {
+export type ChurrosGroupshopItemsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
 };
 
-export type GroupEventsConnection = {
-  edges: Array<GroupEventsConnectionEdge>;
-  nodes: Array<Event>;
-  pageInfo: PageInfo;
+export type ChurrosGroupEventsConnection = {
+  edges: Array<ChurrosGroupEventsConnectionEdge>;
+  nodes: Array<ChurrosEvent>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type GroupEventsConnectionEdge = {
+export type ChurrosGroupEventsConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: Event;
+  node: ChurrosEvent;
 };
 
 /** The intermediate model between users and groups */
-export type GroupMember = {
+export type ChurrosGroupMember = {
   canEditArticles: Scalars['Boolean']['output'];
   canEditMembers: Scalars['Boolean']['output'];
   canScanEvents: Scalars['Boolean']['output'];
   createdAt: Scalars['DateTime']['output'];
-  group: Group;
+  group: ChurrosGroup;
   groupId: Scalars['ID']['output'];
   isDeveloper: Scalars['Boolean']['output'];
-  member: User;
+  member: ChurrosUser;
   memberId: Scalars['ID']['output'];
   president: Scalars['Boolean']['output'];
   secretary: Scalars['Boolean']['output'];
@@ -1205,26 +1205,26 @@ export type GroupMember = {
   vicePresident: Scalars['Boolean']['output'];
 };
 
-export type GroupSearchResult = {
-  group: Group;
+export type ChurrosGroupSearchResult = {
+  group: ChurrosGroup;
   highlightedDescription: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   rank?: Maybe<Scalars['Float']['output']>;
   similarity: Scalars['Float']['output'];
 };
 
-export type GroupShopItemsConnection = {
-  edges: Array<GroupShopItemsConnectionEdge>;
-  nodes: Array<ShopItem>;
-  pageInfo: PageInfo;
+export type ChurrosGroupShopItemsConnection = {
+  edges: Array<ChurrosGroupShopItemsConnectionEdge>;
+  nodes: Array<ChurrosShopItem>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type GroupShopItemsConnectionEdge = {
+export type ChurrosGroupShopItemsConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: ShopItem;
+  node: ChurrosShopItem;
 };
 
-export type GroupType =
+export type ChurrosGroupType =
   | 'Association'
   | 'Club'
   | 'Group'
@@ -1233,18 +1233,18 @@ export type GroupType =
   | 'StudentAssociationSection';
 
 /** Results of a health self-check */
-export type HealthCheck = {
-  database: DatabaseHealthCheck;
-  ldap: LdapHealthCheck;
-  mail: MailHealthCheck;
-  redis: RedisHealthCheck;
+export type ChurrosHealthCheck = {
+  database: ChurrosDatabaseHealthCheck;
+  ldap: ChurrosLdapHealthCheck;
+  mail: ChurrosMailHealthCheck;
+  redis: ChurrosRedisHealthCheck;
 };
 
 /** A Gitlab issue */
-export type Issue = {
+export type ChurrosIssue = {
   body: Scalars['String']['output'];
   bodyHtml: Scalars['String']['output'];
-  comments: Array<IssueComment>;
+  comments: Array<ChurrosIssueComment>;
   deployedIn: Scalars['String']['output'];
   /** Expressed from 0 to 1 */
   difficulty?: Maybe<Scalars['Float']['output']>;
@@ -1252,7 +1252,7 @@ export type Issue = {
   /** Expressed from 0 to 1 */
   importance?: Maybe<Scalars['Float']['output']>;
   number: Scalars['Int']['output'];
-  state: IssueState;
+  state: ChurrosIssueState;
   /** The date at which the issue was submitted */
   submittedAt: Scalars['DateTime']['output'];
   title: Scalars['String']['output'];
@@ -1260,7 +1260,7 @@ export type Issue = {
 };
 
 /** A Gitlab issue comment */
-export type IssueComment = {
+export type ChurrosIssueComment = {
   /** The date at which the comment was added */
   addedAt: Scalars['DateTime']['output'];
   authorAvatarUrl: Scalars['String']['output'];
@@ -1270,12 +1270,12 @@ export type IssueComment = {
   bodyHtml: Scalars['String']['output'];
 };
 
-export type IssueState =
+export type ChurrosIssueState =
   | 'Closed'
   | 'Deployed'
   | 'Open';
 
-export type LdapHealthCheck = {
+export type ChurrosLdapHealthCheck = {
   /** Whether the LDAP internal client is ready */
   internal: Scalars['Boolean']['output'];
   /** Whether the LDAP school client is ready */
@@ -1283,1373 +1283,273 @@ export type LdapHealthCheck = {
 };
 
 /** A single external link */
-export type Link = Node & {
+export type ChurrosLink = ChurrosNode & {
   computedValue: Scalars['String']['output'];
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
   /** L'identifiant local de la ressource (sans préfixe) */
-  localID: Scalars['LocalID']['output'];
+  localID: Scalars['ChurrosLocalID']['output'];
   name: Scalars['String']['output'];
   value: Scalars['String']['output'];
 };
 
-export type LinkInput = {
+export type ChurrosLinkInput = {
   name: Scalars['String']['input'];
   value: Scalars['String']['input'];
 };
 
 /** A log entry is a log of an action that happened on the website */
-export type LogEntry = Node & {
+export type ChurrosLogEntry = ChurrosNode & {
   action: Scalars['String']['output'];
   area: Scalars['String']['output'];
   happenedAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
   /** L'identifiant local de la ressource (sans préfixe) */
-  localID: Scalars['LocalID']['output'];
+  localID: Scalars['ChurrosLocalID']['output'];
   message: Scalars['String']['output'];
   target?: Maybe<Scalars['String']['output']>;
-  user?: Maybe<User>;
+  user?: Maybe<ChurrosUser>;
 };
 
-export type LogoSourceType =
+export type ChurrosLogoSourceType =
   | 'ExternalLink'
   | 'GroupLogo'
   | 'Icon'
   | 'InternalLink';
 
 /** A Lydia account */
-export type LydiaAccount = {
-  events: Array<Event>;
-  group?: Maybe<Group>;
+export type ChurrosLydiaAccount = {
+  events: Array<ChurrosEvent>;
+  group?: Maybe<ChurrosGroup>;
   groupId?: Maybe<Scalars['ID']['output']>;
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
-  studentAssociation?: Maybe<StudentAssociation>;
+  studentAssociation?: Maybe<ChurrosStudentAssociation>;
   studentAssociationId?: Maybe<Scalars['ID']['output']>;
 };
 
-export type MailHealthCheck = {
+export type ChurrosMailHealthCheck = {
   /** Whether the SMTP client is ready */
   smtp: Scalars['Boolean']['output'];
 };
 
 /** A school syllabus */
-export type Major = {
+export type ChurrosMajor = {
   id: Scalars['ID']['output'];
-  ldapSchool?: Maybe<School>;
-  minors: Array<Minor>;
+  ldapSchool?: Maybe<ChurrosSchool>;
+  minors: Array<ChurrosMinor>;
   name: Scalars['String']['output'];
-  schools: Array<School>;
+  schools: Array<ChurrosSchool>;
   shortName: Scalars['String']['output'];
-  subjects: Array<Subject>;
+  subjects: Array<ChurrosSubject>;
   uid: Scalars['String']['output'];
 };
 
 
 /** A school syllabus */
-export type MajorsubjectsArgs = {
+export type ChurrosMajorsubjectsArgs = {
   forApprentices?: InputMaybe<Scalars['Boolean']['input']>;
   yearTier?: InputMaybe<Scalars['Int']['input']>;
 };
 
-export type ManagerOfEventInput = {
+export type ChurrosManagerOfEventInput = {
   canEdit: Scalars['Boolean']['input'];
   canEditPermissions: Scalars['Boolean']['input'];
   canVerifyRegistrations: Scalars['Boolean']['input'];
   userUid: Scalars['String']['input'];
 };
 
-export type Minor = Node & {
+export type ChurrosMinor = ChurrosNode & {
   id: Scalars['ID']['output'];
   /** L'identifiant local de la ressource (sans préfixe) */
-  localID: Scalars['LocalID']['output'];
-  majors: Array<Major>;
+  localID: Scalars['ChurrosLocalID']['output'];
+  majors: Array<ChurrosMajor>;
   name: Scalars['String']['output'];
   shortName: Scalars['String']['output'];
   /** Un nom lisible sans espaces, adaptés pour des URLs. */
   slug: Scalars['String']['output'];
-  subjects: Array<Subject>;
+  subjects: Array<ChurrosSubject>;
   /** @deprecated Use `slug` instead. This field was never universally unique. */
   uid: Scalars['String']['output'];
-  users: Array<User>;
+  users: Array<ChurrosUser>;
   yearTier: Scalars['Int']['output'];
 };
 
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type Mutation = {
-  acceptRegistration: MutationAcceptRegistrationResult;
-  /** Marks the user as having seen the given version's changelog. */
-  acknowledgeChangelog: Scalars['Boolean']['output'];
-  /** Activate a third-party app. Only admins can do this. */
-  activateApp: Scalars['Boolean']['output'];
-  /** Ajouter un fichier à une page. Permet notamment d'ajouter des images pour s'en servir dans le contenu de la page. */
-  addFileToPage: MutationAddFileToPageResult;
-  addGroupMember: MutationAddGroupMemberResult;
-  /** Répondre à une question de type `FileUpload` en uploadant un fichier */
-  answerFileQuestion: AnswerFileUpload;
-  answerFormSection: MutationAnswerFormSectionResult;
-  /**
-   *
-   * Authorize a third-party client to access the user's data.
-   * Returns an access code.
-   *
-   * Use the frontend's /authorize endpoint instead of this, as it requires already being logged-in.
-   *
-   * Do a `GET` request to `https://churros.inpt.fr/authorize?client_id=<clientId>&redirect_uri=<redirectUri>&response_type=code&state=<state>` with:
-   *
-   * - `<clientId>`: The client ID of the app. See registerApp to get this.
-   * - `<redirectUri>`: The URL that you want to redirect the user to. The frontend uses this on /authorize to redirect users to `<redirectUri>?code=<return value of this mutation>`
-   * - `<state>`: A random string generated from personal information used to prevent CSRF attacks.
-   *
-   * Use that code to get an access token with /token:
-   *
-   * Do a `POST` request to `https://churros.inpt.fr/token` with a `application/x-www-form-urlencoded` body with the following fields:
-   *
-   * - `grant_type`: `authorization_code`
-   * - `code`: The code returned by this endpoint
-   * - `client_id`: The client ID of the app
-   * - `client_secret`: The client secret of the app
-   * - `redirect_uri`: The redirect URI used in this request
-   *
-   */
-  authorize: MutationAuthorizeResult;
-  cancelPendingContribution: Scalars['Boolean']['output'];
-  cancelRegistration: MutationCancelRegistrationResult;
-  checkIfRegistrationIsPaid: Scalars['Boolean']['output'];
-  claimPromotionCode: Scalars['Boolean']['output'];
-  completeRegistration: MutationCompleteRegistrationResult;
-  contribute: MutationContributeResult;
-  createBot: User;
-  createGitlabIssue: Scalars['Int']['output'];
-  /** Créer un pass Google Wallet pour une réservation donnée. Renvoie l'URL a utiliser pour ajouter le pass à Google Wallet. */
-  createGoogleWalletPass: Scalars['String']['output'];
-  /** Crée une feuille Google Sheets (si elle n'existe pas déjà) qui contiendra les réponses au formulaire (et sera mise à jour automatiquement). Renvoie l'URL de la feuille Google Sheets. */
-  createLinkedGoogleSheet: Scalars['String']['output'];
-  /** Démarre une procédure de réinitialisation de mot de passe pour l'utilisateur associé à l'adresse e-mail ou l'uid fournie. Renvoie `true` même si l'utilisateur n'existe pas. */
-  createPasswordReset: MutationCreatePasswordResetResult;
-  /** Créer un lien d'inscription rapide */
-  createQuickSignup: QuickSignup;
-  /** Deactivate a third-party app. Only admins can do this. */
-  deactivateApp: Scalars['Boolean']['output'];
-  deleteAnnouncement: Scalars['Boolean']['output'];
-  deleteArticle: Scalars['Boolean']['output'];
-  deleteArticlePicture: Scalars['Boolean']['output'];
-  deleteBarWeek: Scalars['Boolean']['output'];
-  deleteComment: Comment;
-  deleteDocument: Scalars['Boolean']['output'];
-  deleteDocumentFile: Scalars['Boolean']['output'];
-  deleteEvent: Scalars['Boolean']['output'];
-  deleteEventManager: Scalars['Boolean']['output'];
-  deleteEventPicture: Scalars['Boolean']['output'];
-  deleteGodchild: Scalars['Boolean']['output'];
-  /** Deletes a pending godparent request. If accept is true, the request will be accepted (and the godparent of the requester will be changed), otherwise it will be rejected (the godparent of the requester won't be changed) */
-  deleteGodparentRequest: GodparentRequest;
-  deleteGroup: Scalars['Boolean']['output'];
-  deleteGroupMember: Scalars['Boolean']['output'];
-  deleteGroupPicture: Scalars['Boolean']['output'];
-  deleteItemPicture: Scalars['Boolean']['output'];
-  deleteNotificationSubscription: Scalars['Boolean']['output'];
-  /** Supprime une page existante. On peut renseigner l'identifiant de la page ou son chemin ainsi que son groupe ou AE d'appartenance. */
-  deletePage: MutationDeletePageResult;
-  deleteQuickSignup: QuickSignup;
-  deleteReaction: Scalars['Boolean']['output'];
-  deleteRegistration: Scalars['Boolean']['output'];
-  deleteSchoolPicture: Scalars['String']['output'];
-  deleteShopItem: MutationDeleteShopItemResult;
-  deleteShopOption: Scalars['Boolean']['output'];
-  deleteTicket: Scalars['Boolean']['output'];
-  deleteTicketGroup: Scalars['Boolean']['output'];
-  deleteToken: Scalars['Boolean']['output'];
-  deleteUserPicture: Scalars['Boolean']['output'];
-  /** Update a third-party app's details */
-  editApp: ThirdPartyApp;
-  finishPaypalRegistrationPayment: MutationFinishPaypalRegistrationPaymentResult;
-  kioskReload: Scalars['Boolean']['output'];
-  /** Logs a user in and returns a session token. */
-  login: MutationLoginResult;
-  /** Logs a user out and invalidates the session token. */
-  logout: Scalars['Boolean']['output'];
-  /** Envoie une copie des réponses de l'utilisateur·ice connecté·e à ce formulaire par email. Renvoie l'adresse mail à laquelle les réponses ont été envoyées. */
-  mailFormAnswers: MutationMailFormAnswersResult;
-  mergeDocuments: Document;
-  opposeRegistration: MutationOpposeRegistrationResult;
-  /** When paying with Paypal, returns the order id for a capture to finish the payment */
-  paidRegistration: MutationPaidRegistrationResult;
-  paidShopPayment: MutationPaidShopPaymentResult;
-  refuseRegistration: Scalars['Boolean']['output'];
-  /** Register a third-party OAuth2 client. Returns the client secret. The client secret cannot be retrieved at any other time. Use refreshAppSecret to rotate your client secret. */
-  registerApp: ThirdPartyAppRegistrationResponse;
-  /** Enregistrer un token OAuth2 Google pour l'utilisateur connecté. */
-  registerGoogleCredential: MutationRegisterGoogleCredentialResult;
-  /** Supprimer un fichier d'une page. */
-  removeFileFromPage: MutationRemoveFileFromPageResult;
-  renameSession: Scalars['Boolean']['output'];
-  requestEmailChange: MutationRequestEmailChangeResult;
-  resetPassword: MutationResetPasswordResult;
-  /** Révoque l'accès d'une application au compte utilisateur connecté. Renvoie `true` si l'opération a réussi. */
-  revokeAuthorization: Scalars['Boolean']['output'];
-  /** Rotate a third-party app's secret */
-  rotateAppSecret: Scalars['String']['output'];
-  selfJoinGroup: GroupMember;
-  /**
-   * Envoie une notification à l'utilisateur connecté. Limité à une notification par heure. Si l'utilisateur a désactivé les notifications de type “Autres” pour le groupe responsable du [client OAuth](/oauth) faisant la requête, la notification ne lui sera pas envoyée.
-   *
-   * - **Rate limit:** 1/heure
-   */
-  sendNotification: Scalars['Boolean']['output'];
-  setDocumentFileIsSolution: Scalars['Boolean']['output'];
-  /** Coche ou décoche la case à cocher à côté des réponses à un formulaire pour un·e utilisateur·ice. */
-  setFormAnswersCheckbox: Form;
-  startRegistration: MutationStartRegistrationResult;
-  syncUserLdap: Scalars['Boolean']['output'];
-  testNotification: Scalars['Boolean']['output'];
-  toggleReaction: Reactable;
-  updateArticlePicture: Scalars['String']['output'];
-  updateEventPicture: Scalars['String']['output'];
-  updateGroupPicture: Scalars['String']['output'];
-  updateItemPicture: Picture;
-  updateNotificationSettings: Array<NotificationChannel>;
-  /** Changer si la salle d'un groupe est fermée ou ouvert */
-  updateRoomOpenState: Scalars['Boolean']['output'];
-  updateSchool: School;
-  updateSchoolPicture: Scalars['String']['output'];
-  updateStudentAssociationPicture: Scalars['String']['output'];
-  updateSubjectsExamDates: Scalars['Boolean']['output'];
-  updateUser: MutationUpdateUserResult;
-  updateUserCandidate: MutationUpdateUserCandidateResult;
-  updateUserPermissions: User;
-  updateUserPicture: Scalars['String']['output'];
-  uploadDocumentFile: Scalars['String']['output'];
-  upsertAnnouncement: MutationUpsertAnnouncementResult;
-  /** Crée ou met à jour un post */
-  upsertArticle: MutationUpsertArticleResult;
-  upsertBarWeek: MutationUpsertBarWeekResult;
-  upsertComment: Comment;
-  upsertDocument: MutationUpsertDocumentResult;
-  upsertEvent: MutationUpsertEventResult;
-  /** Crée ou met à jour un formulaire. À la création, une section de formulaire vide sans titre est automatiquement créée. C'est pratique pour les formulaires sans section. */
-  upsertForm: Form;
-  /** Crée ou met à jour une section de formulaire. */
-  upsertFormSection: FormSection;
-  upsertGodparentRequest: MutationUpsertGodparentRequestResult;
-  upsertGroup: MutationUpsertGroupResult;
-  upsertGroupMember: GroupMember;
-  upsertLydiaAccount: LydiaAccount;
-  upsertManagersOfEvent: Array<EventManager>;
-  upsertNotificationSubscription: NotificationSubscription;
-  /** Crée ou met à jour une page. */
-  upsertPage: MutationUpsertPageResult;
-  /** Crée ou met à jour une question. */
-  upsertQuestion: Question;
-  upsertReaction: Scalars['Int']['output'];
-  upsertRegistration: MutationUpsertRegistrationResult;
-  upsertService: MutationUpsertServiceResult;
-  upsertShopItem: MutationUpsertShopItemResult;
-  upsertShopOptions: Scalars['Boolean']['output'];
-  upsertShopPayment: MutationUpsertShopPaymentResult;
-  upsertTicketGroup: TicketGroup;
-  usePasswordReset: MutationUsePasswordResetResult;
-  validateEmail: MutationValidateEmailResult;
-  verifyBooking: MutationVerifyBookingResult;
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationacceptRegistrationArgs = {
-  email: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationacknowledgeChangelogArgs = {
-  version?: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationactivateAppArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationaddFileToPageArgs = {
-  file: Scalars['File']['input'];
-  page: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationaddGroupMemberArgs = {
-  groupUid: Scalars['String']['input'];
-  title: Scalars['String']['input'];
-  uid: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationanswerFileQuestionArgs = {
-  answer: Scalars['File']['input'];
-  question: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationanswerFormSectionArgs = {
-  answers: Array<AnswerInput>;
-  section: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationauthorizeArgs = {
-  clientId: Scalars['String']['input'];
-  redirectUri: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationcancelPendingContributionArgs = {
-  optionId: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationcancelRegistrationArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationcheckIfRegistrationIsPaidArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationclaimPromotionCodeArgs = {
-  code: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationcompleteRegistrationArgs = {
-  address: Scalars['String']['input'];
-  apprentice: Scalars['Boolean']['input'];
-  birthday?: InputMaybe<Scalars['DateTime']['input']>;
-  cededImageRightsToTVn7: Scalars['Boolean']['input'];
-  firstName: Scalars['String']['input'];
-  graduationYear: Scalars['Int']['input'];
-  lastName: Scalars['String']['input'];
-  majorId?: InputMaybe<Scalars['ID']['input']>;
-  password: Scalars['String']['input'];
-  passwordConfirmation: Scalars['String']['input'];
-  phone: Scalars['String']['input'];
-  token: Scalars['String']['input'];
-  uid: Scalars['UID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationcontributeArgs = {
-  optionId: Scalars['ID']['input'];
-  phone: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationcreateBotArgs = {
-  major?: InputMaybe<Scalars['String']['input']>;
-  name: Scalars['String']['input'];
-  password: Scalars['String']['input'];
-  uid: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationcreateGitlabIssueArgs = {
-  description: Scalars['String']['input'];
-  isBug: Scalars['Boolean']['input'];
-  title: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationcreateGoogleWalletPassArgs = {
-  code: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationcreateLinkedGoogleSheetArgs = {
-  form: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationcreatePasswordResetArgs = {
-  email: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationcreateQuickSignupArgs = {
-  school: Scalars['String']['input'];
-  validUntil: Scalars['DateTime']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationdeactivateAppArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationdeleteAnnouncementArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationdeleteArticleArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationdeleteArticlePictureArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationdeleteBarWeekArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationdeleteCommentArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationdeleteDocumentArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationdeleteDocumentFileArgs = {
-  documentId: Scalars['ID']['input'];
-  filename: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationdeleteEventArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationdeleteEventManagerArgs = {
-  eventId: Scalars['ID']['input'];
-  user: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationdeleteEventPictureArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationdeleteGodchildArgs = {
-  godchildUid: Scalars['String']['input'];
-  parentUid: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationdeleteGodparentRequestArgs = {
-  accept: Scalars['Boolean']['input'];
-  id: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationdeleteGroupArgs = {
-  uid: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationdeleteGroupMemberArgs = {
-  groupId: Scalars['ID']['input'];
-  memberId: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationdeleteGroupPictureArgs = {
-  dark: Scalars['Boolean']['input'];
-  uid: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationdeleteItemPictureArgs = {
-  groupUid: Scalars['String']['input'];
-  itemId: Scalars['String']['input'];
-  pictureId: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationdeleteNotificationSubscriptionArgs = {
-  endpoint: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationdeletePageArgs = {
-  group?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['ID']['input']>;
-  path?: InputMaybe<Scalars['String']['input']>;
-  studentAssociation?: InputMaybe<Scalars['String']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationdeleteQuickSignupArgs = {
-  code: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationdeleteReactionArgs = {
-  articleId?: InputMaybe<Scalars['ID']['input']>;
-  commentId?: InputMaybe<Scalars['ID']['input']>;
-  documentId?: InputMaybe<Scalars['ID']['input']>;
-  emoji: Scalars['String']['input'];
-  eventId?: InputMaybe<Scalars['ID']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationdeleteRegistrationArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationdeleteSchoolPictureArgs = {
-  id: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationdeleteShopItemArgs = {
-  groupUid: Scalars['String']['input'];
-  itemId: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationdeleteShopOptionArgs = {
-  optionIds: Array<Scalars['String']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationdeleteTicketArgs = {
-  force?: Scalars['Boolean']['input'];
-  id: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationdeleteTicketGroupArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationdeleteTokenArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationdeleteUserPictureArgs = {
-  uid: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationeditAppArgs = {
-  allowedRedirectUris?: InputMaybe<Array<Scalars['String']['input']>>;
-  description?: InputMaybe<Scalars['String']['input']>;
-  id: Scalars['ID']['input'];
-  name?: InputMaybe<Scalars['String']['input']>;
-  ownerGroupUid?: InputMaybe<Scalars['String']['input']>;
-  website?: InputMaybe<Scalars['String']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationfinishPaypalRegistrationPaymentArgs = {
-  orderId: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationkioskReloadArgs = {
-  studentAssociation: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationloginArgs = {
-  clientId?: InputMaybe<Scalars['String']['input']>;
-  email: Scalars['String']['input'];
-  password: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationmailFormAnswersArgs = {
-  formId: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationmergeDocumentsArgs = {
-  from: Array<Scalars['ID']['input']>;
-  into: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationopposeRegistrationArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationpaidRegistrationArgs = {
-  beneficiary?: InputMaybe<Scalars['String']['input']>;
-  paymentMethod?: InputMaybe<PaymentMethod>;
-  phone?: InputMaybe<Scalars['String']['input']>;
-  regId: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationpaidShopPaymentArgs = {
-  paymentMethod?: InputMaybe<PaymentMethod>;
-  phone?: InputMaybe<Scalars['String']['input']>;
-  shopPaymentId: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationrefuseRegistrationArgs = {
-  email: Scalars['String']['input'];
-  reason: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationregisterAppArgs = {
-  allowedRedirectUris: Array<Scalars['String']['input']>;
-  description: Scalars['String']['input'];
-  name: Scalars['String']['input'];
-  ownerGroupUid: Scalars['String']['input'];
-  website: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationregisterGoogleCredentialArgs = {
-  code: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationremoveFileFromPageArgs = {
-  filename: Scalars['String']['input'];
-  page: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationrenameSessionArgs = {
-  id: Scalars['ID']['input'];
-  name: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationrequestEmailChangeArgs = {
-  email: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationresetPasswordArgs = {
-  disconnectAll: Scalars['Boolean']['input'];
-  newPassword: Scalars['String']['input'];
-  oldPassword: Scalars['String']['input'];
-  uid: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationrevokeAuthorizationArgs = {
-  clientId: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationrotateAppSecretArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationselfJoinGroupArgs = {
-  uid: Scalars['UID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationsendNotificationArgs = {
-  body: Scalars['String']['input'];
-  title: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationsetDocumentFileIsSolutionArgs = {
-  documentId: Scalars['ID']['input'];
-  filename: Scalars['String']['input'];
-  isSolution: Scalars['Boolean']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationsetFormAnswersCheckboxArgs = {
-  checked: Scalars['Boolean']['input'];
-  form: Scalars['String']['input'];
-  userId: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationstartRegistrationArgs = {
-  email: Scalars['String']['input'];
-  quickSignupCode?: InputMaybe<Scalars['String']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationsyncUserLdapArgs = {
-  uid: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationtestNotificationArgs = {
-  subscriptionEndpoint: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationtoggleReactionArgs = {
-  articleId?: InputMaybe<Scalars['ID']['input']>;
-  commentId?: InputMaybe<Scalars['ID']['input']>;
-  documentId?: InputMaybe<Scalars['ID']['input']>;
-  emoji: Scalars['String']['input'];
-  eventId?: InputMaybe<Scalars['ID']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupdateArticlePictureArgs = {
-  file: Scalars['File']['input'];
-  id: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupdateEventPictureArgs = {
-  file: Scalars['File']['input'];
-  id: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupdateGroupPictureArgs = {
-  dark: Scalars['Boolean']['input'];
-  file: Scalars['File']['input'];
-  uid: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupdateItemPictureArgs = {
-  file: Scalars['File']['input'];
-  groupUid: Scalars['String']['input'];
-  itemId: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupdateNotificationSettingsArgs = {
-  enabledChannels: Array<NotificationChannel>;
-  uid: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupdateRoomOpenStateArgs = {
-  groupUid: Scalars['String']['input'];
-  openRoom: Scalars['Boolean']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupdateSchoolArgs = {
-  address?: InputMaybe<Scalars['String']['input']>;
-  aliasMailDomains: Array<Scalars['String']['input']>;
-  description?: InputMaybe<Scalars['String']['input']>;
-  name: Scalars['String']['input'];
-  studentMailDomain: Scalars['String']['input'];
-  uid: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupdateSchoolPictureArgs = {
-  file: Scalars['File']['input'];
-  id: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupdateStudentAssociationPictureArgs = {
-  file: Scalars['File']['input'];
-  uid: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupdateUserArgs = {
-  address: Scalars['String']['input'];
-  apprentice: Scalars['Boolean']['input'];
-  birthday?: InputMaybe<Scalars['DateTime']['input']>;
-  cededImageRightsToTVn7: Scalars['Boolean']['input'];
-  contributesWith?: InputMaybe<Array<Scalars['ID']['input']>>;
-  description: Scalars['String']['input'];
-  email: Scalars['String']['input'];
-  firstName: Scalars['String']['input'];
-  godparentUid?: InputMaybe<Scalars['String']['input']>;
-  graduationYear?: InputMaybe<Scalars['Int']['input']>;
-  lastName: Scalars['String']['input'];
-  links: Array<LinkInput>;
-  majorId?: InputMaybe<Scalars['ID']['input']>;
-  minorId?: InputMaybe<Scalars['ID']['input']>;
-  nickname: Scalars['String']['input'];
-  otherEmails: Array<Scalars['String']['input']>;
-  phone: Scalars['String']['input'];
-  uid: Scalars['UID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupdateUserCandidateArgs = {
-  address: Scalars['String']['input'];
-  birthday?: InputMaybe<Scalars['DateTime']['input']>;
-  cededImageRightsToTVn7: Scalars['Boolean']['input'];
-  email: Scalars['String']['input'];
-  firstName: Scalars['String']['input'];
-  graduationYear: Scalars['Int']['input'];
-  lastName: Scalars['String']['input'];
-  majorId: Scalars['ID']['input'];
-  phone: Scalars['String']['input'];
-  register: Scalars['Boolean']['input'];
-  uid: Scalars['UID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupdateUserPermissionsArgs = {
-  canAccessDocuments: Scalars['Boolean']['input'];
-  uid: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupdateUserPictureArgs = {
-  file: Scalars['File']['input'];
-  uid: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationuploadDocumentFileArgs = {
-  documentId: Scalars['ID']['input'];
-  file: Scalars['File']['input'];
-  solution: Scalars['Boolean']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupsertAnnouncementArgs = {
-  body: Scalars['String']['input'];
-  endsAt: Scalars['DateTime']['input'];
-  id?: InputMaybe<Scalars['ID']['input']>;
-  startsAt: Scalars['DateTime']['input'];
-  title: Scalars['String']['input'];
-  warning: Scalars['Boolean']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupsertArticleArgs = {
-  body: Scalars['String']['input'];
-  event?: InputMaybe<Scalars['ID']['input']>;
-  group: Scalars['UID']['input'];
-  id?: InputMaybe<Scalars['ID']['input']>;
-  links?: Array<LinkInput>;
-  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  title: Scalars['String']['input'];
-  visibility: Visibility;
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupsertBarWeekArgs = {
-  description: Scalars['String']['input'];
-  endsAt: Scalars['DateTime']['input'];
-  groupsUids: Array<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['ID']['input']>;
-  startsAt: Scalars['DateTime']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupsertCommentArgs = {
-  body: Scalars['String']['input'];
-  id?: InputMaybe<Scalars['ID']['input']>;
-  inReplyToId?: InputMaybe<Scalars['ID']['input']>;
-  resourceId?: InputMaybe<Scalars['ID']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupsertDocumentArgs = {
-  description: Scalars['String']['input'];
-  id?: InputMaybe<Scalars['ID']['input']>;
-  schoolYear: Scalars['Int']['input'];
-  subject: Scalars['ID']['input'];
-  title: Scalars['String']['input'];
-  type: DocumentType;
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupsertEventArgs = {
-  bannedUsers: Array<Scalars['String']['input']>;
-  coOrganizers: Array<Scalars['String']['input']>;
-  contactMail: Scalars['String']['input'];
-  description: Scalars['String']['input'];
-  endsAt: Scalars['DateTime']['input'];
-  frequency: EventFrequency;
-  groupUid: Scalars['String']['input'];
-  id?: InputMaybe<Scalars['String']['input']>;
-  includeInKiosk?: InputMaybe<Scalars['Boolean']['input']>;
-  links: Array<LinkInput>;
-  location: Scalars['String']['input'];
-  lydiaAccountId?: InputMaybe<Scalars['String']['input']>;
-  managers: Array<ManagerOfEventInput>;
-  recurringUntil?: InputMaybe<Scalars['DateTime']['input']>;
-  showPlacesLeft?: InputMaybe<Scalars['Boolean']['input']>;
-  startsAt: Scalars['DateTime']['input'];
-  ticketGroups: Array<TicketGroupInput>;
-  tickets: Array<TicketInput>;
-  title: Scalars['String']['input'];
-  visibility: Visibility;
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupsertFormArgs = {
-  input: MutationUpsertFormInput;
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupsertFormSectionArgs = {
-  input: MutationUpsertFormSectionInput;
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupsertGodparentRequestArgs = {
-  godchildUid: Scalars['String']['input'];
-  godparentUid: Scalars['String']['input'];
-  id?: InputMaybe<Scalars['ID']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupsertGroupArgs = {
-  input: UpsertGroupInput;
-  uid?: InputMaybe<Scalars['UID']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupsertGroupMemberArgs = {
-  canEditArticles: Scalars['Boolean']['input'];
-  canEditMembers: Scalars['Boolean']['input'];
-  canScanEvents: Scalars['Boolean']['input'];
-  groupId: Scalars['ID']['input'];
-  isDeveloper: Scalars['Boolean']['input'];
-  memberId: Scalars['ID']['input'];
-  president: Scalars['Boolean']['input'];
-  secretary: Scalars['Boolean']['input'];
-  title: Scalars['String']['input'];
-  treasurer: Scalars['Boolean']['input'];
-  vicePresident: Scalars['Boolean']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupsertLydiaAccountArgs = {
-  groupUid: Scalars['String']['input'];
-  id?: InputMaybe<Scalars['ID']['input']>;
-  name: Scalars['String']['input'];
-  privateToken: Scalars['String']['input'];
-  vendorToken: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupsertManagersOfEventArgs = {
-  eventId: Scalars['ID']['input'];
-  managers: Array<ManagerOfEventInput>;
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupsertNotificationSubscriptionArgs = {
-  endpoint: Scalars['String']['input'];
-  expiresAt?: InputMaybe<Scalars['DateTime']['input']>;
-  keys: NotificationSubscriptionKeysInput;
-  name: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupsertPageArgs = {
-  body: Scalars['String']['input'];
-  group?: InputMaybe<Scalars['String']['input']>;
-  path: Scalars['String']['input'];
-  studentAssociation?: InputMaybe<Scalars['String']['input']>;
-  title: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupsertQuestionArgs = {
-  input: MutationUpsertQuestionInput;
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupsertReactionArgs = {
-  articleId?: InputMaybe<Scalars['ID']['input']>;
-  commentId?: InputMaybe<Scalars['ID']['input']>;
-  documentId?: InputMaybe<Scalars['ID']['input']>;
-  emoji: Scalars['String']['input'];
-  eventId?: InputMaybe<Scalars['ID']['input']>;
-  id?: InputMaybe<Scalars['ID']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupsertRegistrationArgs = {
-  authorEmail?: InputMaybe<Scalars['String']['input']>;
-  beneficiary?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['ID']['input']>;
-  paid: Scalars['Boolean']['input'];
-  paymentMethod?: InputMaybe<PaymentMethod>;
-  ticketId: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupsertServiceArgs = {
-  description: Scalars['String']['input'];
-  groupUid?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['ID']['input']>;
-  importance?: InputMaybe<Scalars['Int']['input']>;
-  logo: Scalars['String']['input'];
-  logoSourceType: LogoSourceType;
-  name: Scalars['String']['input'];
-  schoolUid?: InputMaybe<Scalars['String']['input']>;
-  studentAssociationUid?: InputMaybe<Scalars['String']['input']>;
-  url: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupsertShopItemArgs = {
-  description: Scalars['String']['input'];
-  endsAt?: InputMaybe<Scalars['DateTime']['input']>;
-  groupUid: Scalars['String']['input'];
-  id?: InputMaybe<Scalars['ID']['input']>;
-  lydiaAccounId?: InputMaybe<Scalars['String']['input']>;
-  max: Scalars['Int']['input'];
-  name: Scalars['String']['input'];
-  paymentMethods: Array<PaymentMethod>;
-  price: Scalars['Float']['input'];
-  startsAt?: InputMaybe<Scalars['DateTime']['input']>;
-  stock: Scalars['Int']['input'];
-  visibility: Visibility;
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupsertShopOptionsArgs = {
-  itemOptions: Array<ShopItemOptionInput>;
-  shopItemId: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupsertShopPaymentArgs = {
-  answers: Array<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['ID']['input']>;
-  paymentMethod?: InputMaybe<Scalars['String']['input']>;
-  phone?: InputMaybe<Scalars['String']['input']>;
-  quantity: Scalars['Int']['input'];
-  shopItemId: Scalars['String']['input'];
-  userUid: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationupsertTicketGroupArgs = {
-  capacity: Scalars['Int']['input'];
-  eventId: Scalars['ID']['input'];
-  id?: InputMaybe<Scalars['ID']['input']>;
-  name: Scalars['String']['input'];
-  tickets: Array<Scalars['ID']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationusePasswordResetArgs = {
-  newPassword: Scalars['String']['input'];
-  token: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationvalidateEmailArgs = {
-  token: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200 / 10 minutes (par utilisateur·ice et par query) */
-export type MutationverifyBookingArgs = {
-  event: Scalars['ID']['input'];
-  id: Scalars['ID']['input'];
-};
-
-export type MutationAcceptRegistrationResult = Error | MutationAcceptRegistrationSuccess;
+export type ChurrosMutationAcceptRegistrationResult = ChurrosError | ChurrosMutationAcceptRegistrationSuccess;
 
-export type MutationAcceptRegistrationSuccess = {
-  data: User;
+export type ChurrosMutationAcceptRegistrationSuccess = {
+  data: ChurrosUser;
 };
 
-export type MutationAddFileToPageResult = Error | MutationAddFileToPageSuccess | ZodError;
+export type ChurrosMutationAddFileToPageResult = ChurrosError | ChurrosMutationAddFileToPageSuccess | ChurrosZodError;
 
-export type MutationAddFileToPageSuccess = {
-  data: Page;
+export type ChurrosMutationAddFileToPageSuccess = {
+  data: ChurrosPage;
 };
 
-export type MutationAddGroupMemberResult = Error | MutationAddGroupMemberSuccess;
+export type ChurrosMutationAddGroupMemberResult = ChurrosError | ChurrosMutationAddGroupMemberSuccess;
 
-export type MutationAddGroupMemberSuccess = {
-  data: GroupMember;
+export type ChurrosMutationAddGroupMemberSuccess = {
+  data: ChurrosGroupMember;
 };
 
-export type MutationAnswerFormSectionResult = Error | MutationAnswerFormSectionSuccess;
+export type ChurrosMutationAnswerFormSectionResult = ChurrosError | ChurrosMutationAnswerFormSectionSuccess;
 
-export type MutationAnswerFormSectionSuccess = {
-  data: Array<Answer>;
+export type ChurrosMutationAnswerFormSectionSuccess = {
+  data: Array<ChurrosAnswer>;
 };
 
-export type MutationAuthorizeResult = Error | MutationAuthorizeSuccess | OAuth2Error;
+export type ChurrosMutationAuthorizeResult = ChurrosError | ChurrosMutationAuthorizeSuccess | ChurrosOAuth2Error;
 
-export type MutationAuthorizeSuccess = {
+export type ChurrosMutationAuthorizeSuccess = {
   data: Scalars['String']['output'];
 };
 
-export type MutationCancelRegistrationResult = Error | MutationCancelRegistrationSuccess;
+export type ChurrosMutationCancelRegistrationResult = ChurrosError | ChurrosMutationCancelRegistrationSuccess;
 
-export type MutationCancelRegistrationSuccess = {
+export type ChurrosMutationCancelRegistrationSuccess = {
   data: Scalars['Boolean']['output'];
 };
 
-export type MutationCompleteRegistrationResult = Error | MutationCompleteRegistrationSuccess | ZodError;
+export type ChurrosMutationCompleteRegistrationResult = ChurrosError | ChurrosMutationCompleteRegistrationSuccess | ChurrosZodError;
 
-export type MutationCompleteRegistrationSuccess = {
-  data: CompleteSignupResult;
+export type ChurrosMutationCompleteRegistrationSuccess = {
+  data: ChurrosCompleteSignupResult;
 };
 
-export type MutationContributeResult = Error | MutationContributeSuccess;
+export type ChurrosMutationContributeResult = ChurrosError | ChurrosMutationContributeSuccess;
 
-export type MutationContributeSuccess = {
+export type ChurrosMutationContributeSuccess = {
   data: Scalars['Boolean']['output'];
 };
 
-export type MutationCreatePasswordResetResult = Error | MutationCreatePasswordResetSuccess;
+export type ChurrosMutationCreatePasswordResetResult = ChurrosError | ChurrosMutationCreatePasswordResetSuccess;
 
-export type MutationCreatePasswordResetSuccess = {
+export type ChurrosMutationCreatePasswordResetSuccess = {
   data: Scalars['Boolean']['output'];
 };
 
-export type MutationDeletePageResult = Error | MutationDeletePageSuccess | ZodError;
+export type ChurrosMutationDeletePageResult = ChurrosError | ChurrosMutationDeletePageSuccess | ChurrosZodError;
 
-export type MutationDeletePageSuccess = {
-  data: Page;
+export type ChurrosMutationDeletePageSuccess = {
+  data: ChurrosPage;
 };
 
-export type MutationDeleteShopItemResult = Error | MutationDeleteShopItemSuccess;
+export type ChurrosMutationDeleteShopItemResult = ChurrosError | ChurrosMutationDeleteShopItemSuccess;
 
-export type MutationDeleteShopItemSuccess = {
+export type ChurrosMutationDeleteShopItemSuccess = {
   data: Scalars['Boolean']['output'];
 };
 
-export type MutationFinishPaypalRegistrationPaymentResult = Error | MutationFinishPaypalRegistrationPaymentSuccess;
+export type ChurrosMutationFinishPaypalRegistrationPaymentResult = ChurrosError | ChurrosMutationFinishPaypalRegistrationPaymentSuccess;
 
-export type MutationFinishPaypalRegistrationPaymentSuccess = {
+export type ChurrosMutationFinishPaypalRegistrationPaymentSuccess = {
   data: Scalars['Boolean']['output'];
 };
 
-export type MutationLoginResult = AwaitingValidationError | Error | MutationLoginSuccess;
+export type ChurrosMutationLoginResult = ChurrosAwaitingValidationError | ChurrosError | ChurrosMutationLoginSuccess;
 
-export type MutationLoginSuccess = {
-  data: Credential;
+export type ChurrosMutationLoginSuccess = {
+  data: ChurrosCredential;
 };
 
-export type MutationMailFormAnswersResult = Error | MutationMailFormAnswersSuccess;
+export type ChurrosMutationMailFormAnswersResult = ChurrosError | ChurrosMutationMailFormAnswersSuccess;
 
-export type MutationMailFormAnswersSuccess = {
+export type ChurrosMutationMailFormAnswersSuccess = {
   data: Scalars['String']['output'];
 };
 
-export type MutationOpposeRegistrationResult = Error | MutationOpposeRegistrationSuccess;
+export type ChurrosMutationOpposeRegistrationResult = ChurrosError | ChurrosMutationOpposeRegistrationSuccess;
 
-export type MutationOpposeRegistrationSuccess = {
+export type ChurrosMutationOpposeRegistrationSuccess = {
   data: Scalars['Boolean']['output'];
 };
 
-export type MutationPaidRegistrationResult = Error | MutationPaidRegistrationSuccess;
+export type ChurrosMutationPaidRegistrationResult = ChurrosError | ChurrosMutationPaidRegistrationSuccess;
 
-export type MutationPaidRegistrationSuccess = {
+export type ChurrosMutationPaidRegistrationSuccess = {
   data: Scalars['String']['output'];
 };
 
-export type MutationPaidShopPaymentResult = Error | MutationPaidShopPaymentSuccess;
+export type ChurrosMutationPaidShopPaymentResult = ChurrosError | ChurrosMutationPaidShopPaymentSuccess;
 
-export type MutationPaidShopPaymentSuccess = {
-  data: ShopPayment;
+export type ChurrosMutationPaidShopPaymentSuccess = {
+  data: ChurrosShopPayment;
 };
 
-export type MutationRegisterGoogleCredentialResult = Error | MutationRegisterGoogleCredentialSuccess;
+export type ChurrosMutationRegisterGoogleCredentialResult = ChurrosError | ChurrosMutationRegisterGoogleCredentialSuccess;
 
-export type MutationRegisterGoogleCredentialSuccess = {
+export type ChurrosMutationRegisterGoogleCredentialSuccess = {
   data: Scalars['Boolean']['output'];
 };
 
-export type MutationRemoveFileFromPageResult = Error | MutationRemoveFileFromPageSuccess | ZodError;
+export type ChurrosMutationRemoveFileFromPageResult = ChurrosError | ChurrosMutationRemoveFileFromPageSuccess | ChurrosZodError;
 
-export type MutationRemoveFileFromPageSuccess = {
-  data: Page;
+export type ChurrosMutationRemoveFileFromPageSuccess = {
+  data: ChurrosPage;
 };
 
-export type MutationRequestEmailChangeResult = Error | MutationRequestEmailChangeSuccess;
+export type ChurrosMutationRequestEmailChangeResult = ChurrosError | ChurrosMutationRequestEmailChangeSuccess;
 
-export type MutationRequestEmailChangeSuccess = {
+export type ChurrosMutationRequestEmailChangeSuccess = {
   data: Scalars['Boolean']['output'];
 };
 
-export type MutationResetPasswordResult = Error | MutationResetPasswordSuccess;
+export type ChurrosMutationResetPasswordResult = ChurrosError | ChurrosMutationResetPasswordSuccess;
 
-export type MutationResetPasswordSuccess = {
+export type ChurrosMutationResetPasswordSuccess = {
   data: Scalars['Boolean']['output'];
 };
 
-export type MutationStartRegistrationResult = Error | MutationStartRegistrationSuccess | ZodError;
+export type ChurrosMutationStartRegistrationResult = ChurrosError | ChurrosMutationStartRegistrationSuccess | ChurrosZodError;
 
-export type MutationStartRegistrationSuccess = {
+export type ChurrosMutationStartRegistrationSuccess = {
   data: Scalars['Boolean']['output'];
 };
 
-export type MutationUpdateUserCandidateResult = Error | MutationUpdateUserCandidateSuccess | ZodError;
+export type ChurrosMutationUpdateUserCandidateResult = ChurrosError | ChurrosMutationUpdateUserCandidateSuccess | ChurrosZodError;
 
-export type MutationUpdateUserCandidateSuccess = {
+export type ChurrosMutationUpdateUserCandidateSuccess = {
   data: Scalars['Boolean']['output'];
 };
 
-export type MutationUpdateUserResult = Error | MutationUpdateUserSuccess;
+export type ChurrosMutationUpdateUserResult = ChurrosError | ChurrosMutationUpdateUserSuccess;
 
-export type MutationUpdateUserSuccess = {
-  data: User;
+export type ChurrosMutationUpdateUserSuccess = {
+  data: ChurrosUser;
 };
 
-export type MutationUpsertAnnouncementResult = Error | MutationUpsertAnnouncementSuccess | ZodError;
+export type ChurrosMutationUpsertAnnouncementResult = ChurrosError | ChurrosMutationUpsertAnnouncementSuccess | ChurrosZodError;
 
-export type MutationUpsertAnnouncementSuccess = {
-  data: Announcement;
+export type ChurrosMutationUpsertAnnouncementSuccess = {
+  data: ChurrosAnnouncement;
 };
 
-export type MutationUpsertArticleResult = Error | MutationUpsertArticleSuccess | ZodError;
+export type ChurrosMutationUpsertArticleResult = ChurrosError | ChurrosMutationUpsertArticleSuccess | ChurrosZodError;
 
-export type MutationUpsertArticleSuccess = {
-  data: Article;
+export type ChurrosMutationUpsertArticleSuccess = {
+  data: ChurrosArticle;
 };
 
-export type MutationUpsertBarWeekResult = Error | MutationUpsertBarWeekSuccess;
+export type ChurrosMutationUpsertBarWeekResult = ChurrosError | ChurrosMutationUpsertBarWeekSuccess;
 
-export type MutationUpsertBarWeekSuccess = {
-  data: BarWeek;
+export type ChurrosMutationUpsertBarWeekSuccess = {
+  data: ChurrosBarWeek;
 };
 
-export type MutationUpsertDocumentResult = Error | MutationUpsertDocumentSuccess;
+export type ChurrosMutationUpsertDocumentResult = ChurrosError | ChurrosMutationUpsertDocumentSuccess;
 
-export type MutationUpsertDocumentSuccess = {
-  data: Document;
+export type ChurrosMutationUpsertDocumentSuccess = {
+  data: ChurrosDocument;
 };
 
-export type MutationUpsertEventResult = Error | MutationUpsertEventSuccess;
+export type ChurrosMutationUpsertEventResult = ChurrosError | ChurrosMutationUpsertEventSuccess;
 
-export type MutationUpsertEventSuccess = {
-  data: Event;
+export type ChurrosMutationUpsertEventSuccess = {
+  data: ChurrosEvent;
 };
 
-export type MutationUpsertFormInput = {
+export type ChurrosMutationUpsertFormInput = {
   closesAt?: InputMaybe<Scalars['DateTime']['input']>;
   description?: Scalars['String']['input'];
   /** Identifiant de l'événement à associer au formulaire */
@@ -2660,10 +1560,10 @@ export type MutationUpsertFormInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
   opensAt?: InputMaybe<Scalars['DateTime']['input']>;
   title: Scalars['String']['input'];
-  visibility?: Visibility;
+  visibility?: ChurrosVisibility;
 };
 
-export type MutationUpsertFormSectionInput = {
+export type ChurrosMutationUpsertFormSectionInput = {
   description?: Scalars['String']['input'];
   /** Identifiant du formulaire auquel associer la section. Il n'es pas possible de changer le formulaire auquel une section est associée, si id est fourni, ce paramètre est ignoré. L'ID peut être local */
   formId: Scalars['String']['input'];
@@ -2674,25 +1574,25 @@ export type MutationUpsertFormSectionInput = {
   title: Scalars['String']['input'];
 };
 
-export type MutationUpsertGodparentRequestResult = Error | MutationUpsertGodparentRequestSuccess;
+export type ChurrosMutationUpsertGodparentRequestResult = ChurrosError | ChurrosMutationUpsertGodparentRequestSuccess;
 
-export type MutationUpsertGodparentRequestSuccess = {
-  data: GodparentRequest;
+export type ChurrosMutationUpsertGodparentRequestSuccess = {
+  data: ChurrosGodparentRequest;
 };
 
-export type MutationUpsertGroupResult = Error | MutationUpsertGroupSuccess | ZodError;
+export type ChurrosMutationUpsertGroupResult = ChurrosError | ChurrosMutationUpsertGroupSuccess | ChurrosZodError;
 
-export type MutationUpsertGroupSuccess = {
-  data: Group;
+export type ChurrosMutationUpsertGroupSuccess = {
+  data: ChurrosGroup;
 };
 
-export type MutationUpsertPageResult = Error | MutationUpsertPageSuccess | ZodError;
+export type ChurrosMutationUpsertPageResult = ChurrosError | ChurrosMutationUpsertPageSuccess | ChurrosZodError;
 
-export type MutationUpsertPageSuccess = {
-  data: Page;
+export type ChurrosMutationUpsertPageSuccess = {
+  data: ChurrosPage;
 };
 
-export type MutationUpsertQuestionInput = {
+export type ChurrosMutationUpsertQuestionInput = {
   /** Indique si la question doit avoir une option "Autre" */
   allowOptionOther?: Scalars['Boolean']['input'];
   /** Types de fichiers autorisés pour les questions de type `FileUpload` */
@@ -2708,83 +1608,83 @@ export type MutationUpsertQuestionInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
   /** Indique si la question est obligatoire */
   mandatory: Scalars['Boolean']['input'];
-  options?: InputMaybe<Array<QuestionOptionInput>>;
+  options?: InputMaybe<Array<ChurrosQuestionOptionInput>>;
   /** Position de la question dans la section. Si non spécifié, rajoute la question à la fin de la section. */
   order?: InputMaybe<Scalars['Int']['input']>;
-  scale?: InputMaybe<QuestionScaleInput>;
+  scale?: InputMaybe<ChurrosQuestionScaleInput>;
   /** Identifiant de la section de formulaire à laquelle associer la question. Si non fourni, la question est rajoutée à une section à titre vide, qui est créée au besoin. Pratique pour les formulaires plus simples sans section. */
   sectionId?: InputMaybe<Scalars['ID']['input']>;
   title: Scalars['String']['input'];
-  type: QuestionKind;
+  type: ChurrosQuestionKind;
 };
 
-export type MutationUpsertRegistrationResult = Error | MutationUpsertRegistrationSuccess;
+export type ChurrosMutationUpsertRegistrationResult = ChurrosError | ChurrosMutationUpsertRegistrationSuccess;
 
-export type MutationUpsertRegistrationSuccess = {
-  data: Registration;
+export type ChurrosMutationUpsertRegistrationSuccess = {
+  data: ChurrosRegistration;
 };
 
-export type MutationUpsertServiceResult = Error | MutationUpsertServiceSuccess;
+export type ChurrosMutationUpsertServiceResult = ChurrosError | ChurrosMutationUpsertServiceSuccess;
 
-export type MutationUpsertServiceSuccess = {
-  data: Service;
+export type ChurrosMutationUpsertServiceSuccess = {
+  data: ChurrosService;
 };
 
-export type MutationUpsertShopItemResult = Error | MutationUpsertShopItemSuccess;
+export type ChurrosMutationUpsertShopItemResult = ChurrosError | ChurrosMutationUpsertShopItemSuccess;
 
-export type MutationUpsertShopItemSuccess = {
-  data: ShopItem;
+export type ChurrosMutationUpsertShopItemSuccess = {
+  data: ChurrosShopItem;
 };
 
-export type MutationUpsertShopPaymentResult = Error | MutationUpsertShopPaymentSuccess;
+export type ChurrosMutationUpsertShopPaymentResult = ChurrosError | ChurrosMutationUpsertShopPaymentSuccess;
 
-export type MutationUpsertShopPaymentSuccess = {
-  data: ShopPayment;
+export type ChurrosMutationUpsertShopPaymentSuccess = {
+  data: ChurrosShopPayment;
 };
 
-export type MutationUsePasswordResetResult = Error | MutationUsePasswordResetSuccess;
+export type ChurrosMutationUsePasswordResetResult = ChurrosError | ChurrosMutationUsePasswordResetSuccess;
 
-export type MutationUsePasswordResetSuccess = {
+export type ChurrosMutationUsePasswordResetSuccess = {
   data: Scalars['Boolean']['output'];
 };
 
-export type MutationValidateEmailResult = Error | MutationValidateEmailSuccess;
+export type ChurrosMutationValidateEmailResult = ChurrosError | ChurrosMutationValidateEmailSuccess;
 
-export type MutationValidateEmailSuccess = {
+export type ChurrosMutationValidateEmailSuccess = {
   data: Scalars['Boolean']['output'];
 };
 
-export type MutationVerifyBookingResult = Error | MutationVerifyBookingSuccess;
+export type ChurrosMutationVerifyBookingResult = ChurrosError | ChurrosMutationVerifyBookingSuccess;
 
-export type MutationVerifyBookingSuccess = {
-  data: RegistrationVerificationResult;
+export type ChurrosMutationVerifyBookingSuccess = {
+  data: ChurrosRegistrationVerificationResult;
 };
 
-export type Node = {
+export type ChurrosNode = {
   id: Scalars['ID']['output'];
   /** L'identifiant local de la ressource (sans préfixe) */
-  localID: Scalars['LocalID']['output'];
+  localID: Scalars['ChurrosLocalID']['output'];
 };
 
 /** An error raised when a resource does not exist. */
-export type NotFoundError = ErrorInterface & {
+export type ChurrosNotFoundError = ChurrosErrorInterface & {
   message: Scalars['String']['output'];
 };
 
 /** A notification is a push notification that was sent to a user */
-export type Notification = Node & {
-  actions: Array<Link>;
+export type ChurrosNotification = ChurrosNode & {
+  actions: Array<ChurrosLink>;
   body: Scalars['String']['output'];
-  channel: NotificationChannel;
+  channel: ChurrosNotificationChannel;
   createdAt: Scalars['DateTime']['output'];
   goto: Scalars['String']['output'];
-  group?: Maybe<Group>;
+  group?: Maybe<ChurrosGroup>;
   groupId?: Maybe<Scalars['ID']['output']>;
   id: Scalars['ID']['output'];
   imageFile: Scalars['String']['output'];
   /** L'identifiant local de la ressource (sans préfixe) */
-  localID: Scalars['LocalID']['output'];
-  subscription: NotificationSubscription;
+  localID: Scalars['ChurrosLocalID']['output'];
+  subscription: ChurrosNotificationSubscription;
   subscriptionId: Scalars['ID']['output'];
   timestamp?: Maybe<Scalars['DateTime']['output']>;
   title: Scalars['String']['output'];
@@ -2792,7 +1692,7 @@ export type Notification = Node & {
   vibrate: Array<Scalars['Int']['output']>;
 };
 
-export type NotificationChannel =
+export type ChurrosNotificationChannel =
   | 'Articles'
   | 'Comments'
   | 'GodparentRequests'
@@ -2802,29 +1702,29 @@ export type NotificationChannel =
   | 'Shotguns';
 
 /** A NotificationSubscription stores a user's subscription to push notifications on a user agent */
-export type NotificationSubscription = {
+export type ChurrosNotificationSubscription = {
   createdAt: Scalars['DateTime']['output'];
   endpoint: Scalars['String']['output'];
   expiresAt?: Maybe<Scalars['DateTime']['output']>;
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
-  owner: User;
+  owner: ChurrosUser;
   ownerId: Scalars['ID']['output'];
   updatedAt: Scalars['DateTime']['output'];
 };
 
-export type NotificationSubscriptionKeysInput = {
+export type ChurrosNotificationSubscriptionKeysInput = {
   auth: Scalars['String']['input'];
   p256dh: Scalars['String']['input'];
 };
 
-export type OAuth2Error = {
-  code: OAuth2ErrorCode;
+export type ChurrosOAuth2Error = {
+  code: ChurrosOAuth2ErrorCode;
   message: Scalars['String']['output'];
 };
 
 /** OAuth2 error codes, see RFC 6749 § 4.1.2.1 */
-export type OAuth2ErrorCode =
+export type ChurrosOAuth2ErrorCode =
   | 'access_denied'
   | 'invalid_request'
   | 'invalid_scope'
@@ -2834,7 +1734,7 @@ export type OAuth2ErrorCode =
   | 'unsupported_response_type';
 
 /** Une page écrite par un·e utilisateur·rice, servant par exemple à présenter les partenariats d'une AE sur une page dédiée. */
-export type Page = {
+export type ChurrosPage = {
   /** Contenu de la page. Supporte la syntaxe Markdown. */
   body: Scalars['String']['output'];
   /** Contenu de la page, converti en HTML. Protégé contre les attaques XSS. */
@@ -2847,38 +1747,38 @@ export type Page = {
   /** URLs vers les fichiers inclus sur la page. */
   filesURLs: Array<Scalars['String']['output']>;
   /** Groupe auquel appartient la page. Peut être null si la page n'appartient à aucun groupe. */
-  group?: Maybe<Group>;
+  group?: Maybe<ChurrosGroup>;
   id: Scalars['ID']['output'];
   /** Dernier·ère utilisateur·rice ayant modifié la page. Peut être null si la page n'a jamais été modifiée, ou que l'utilisateur·ice en question a été supprimé·e. */
-  lastAuthor?: Maybe<User>;
+  lastAuthor?: Maybe<ChurrosUser>;
   /** Chemin vers la page. Doit être unique _par AE ou groupe_. L'URL finale sera donc préfixée d'une certaine manière pour éviter les collisions. */
   path: Scalars['String']['output'];
   /** Association étudiante à laquelle appartient la page. Peut être null si la page n'appartient à aucune association. */
-  studentAssociation?: Maybe<StudentAssociation>;
+  studentAssociation?: Maybe<ChurrosStudentAssociation>;
   /** Titre de la page. */
   title: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
 };
 
-export type PageInfo = {
+export type ChurrosPageInfo = {
   endCursor?: Maybe<Scalars['String']['output']>;
   hasNextPage: Scalars['Boolean']['output'];
   hasPreviousPage: Scalars['Boolean']['output'];
   startCursor?: Maybe<Scalars['String']['output']>;
 };
 
-export type PagesConnection = {
-  edges: Array<PagesEdge>;
-  nodes: Array<Page>;
-  pageInfo: PageInfo;
+export type ChurrosPagesConnection = {
+  edges: Array<ChurrosPagesEdge>;
+  nodes: Array<ChurrosPage>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type PagesEdge = {
+export type ChurrosPagesEdge = {
   cursor: Scalars['String']['output'];
-  node: Page;
+  node: ChurrosPage;
 };
 
-export type PaymentMethod =
+export type ChurrosPaymentMethod =
   | 'Card'
   | 'Cash'
   | 'Check'
@@ -2887,14 +1787,14 @@ export type PaymentMethod =
   | 'PayPal'
   | 'Transfer';
 
-export type Picture = {
+export type ChurrosPicture = {
   id: Scalars['ID']['output'];
   path: Scalars['String']['output'];
   position: Scalars['Int']['output'];
 };
 
 /** Une ressource qui possède une image associée */
-export type Pictured = {
+export type ChurrosPictured = {
   /** Le nom du fichier de l'image */
   pictureFile: Scalars['String']['output'];
   /** Le nom du fichier de l'image, en thème sombre */
@@ -2905,17 +1805,17 @@ export type Pictured = {
 
 
 /** Une ressource qui possède une image associée */
-export type PicturedpictureURLArgs = {
+export type ChurrosPicturedpictureURLArgs = {
   dark?: Scalars['Boolean']['input'];
 };
 
-export type ProfitsBreakdown = {
-  byPaymentMethod: ProfitsBreakdownByPaymentMethod;
-  byTicket: Array<ProfitsBreakdownByTicket>;
+export type ChurrosProfitsBreakdown = {
+  byPaymentMethod: ChurrosProfitsBreakdownByPaymentMethod;
+  byTicket: Array<ChurrosProfitsBreakdownByTicket>;
   total: Scalars['Float']['output'];
 };
 
-export type ProfitsBreakdownByPaymentMethod = {
+export type ChurrosProfitsBreakdownByPaymentMethod = {
   Card: Scalars['Float']['output'];
   Cash: Scalars['Float']['output'];
   Check: Scalars['Float']['output'];
@@ -2925,305 +1825,25 @@ export type ProfitsBreakdownByPaymentMethod = {
   Transfer: Scalars['Float']['output'];
 };
 
-export type ProfitsBreakdownByTicket = {
+export type ChurrosProfitsBreakdownByTicket = {
   amount: Scalars['Float']['output'];
   id: Scalars['ID']['output'];
 };
 
-export type PromotionType =
+export type ChurrosPromotionType =
   | 'SIMPPS';
 
-export type QRCode = {
+export type ChurrosQRCode = {
   path: Scalars['String']['output'];
   viewbox: Scalars['String']['output'];
 };
 
 /** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
 export type Query = {
-  /** Get all OAuth2 clients. Only admins can do this. */
-  allApps: Array<ThirdPartyApp>;
-  /** Récupère tous les formulaires. Réservé aux admins. */
-  allForms: QueryAllFormsConnection;
-  allUsers: QueryAllUsersConnection;
-  announcement: Announcement;
-  announcements: QueryAnnouncementsConnection;
-  announcementsNow: Array<Announcement>;
-  article: Article;
-  /**
-   * Récupérer l'ID d'un article à partir de son groupe et de son slug. Pensé pour les redirections d'URLs anciennes.
-   * @deprecated Utilisez `article` à la place
-   */
-  articleID?: Maybe<Scalars['LocalID']['output']>;
-  barWeek: BarWeek;
-  barWeekNow?: Maybe<BarWeek>;
-  barWeeks: Array<BarWeek>;
-  birthdays: Array<User>;
-  /** Retourne des informations sur le build actuel de l'API */
-  buildInfo: BuildInfo;
-  changelog: ChangelogRelease;
-  codeContributors: QueryCodeContributorsResult;
-  /**
-   * A changelog for multiple versions.
-   * Be careful, this range is (from, to]. I.e. **the first version is excluded, and the last is included**.
-   * This is way more useful for querying a range of versions for a changelog, but not the usual way ranges are defined.
-   */
-  combinedChangelog: QueryCombinedChangelogResult;
-  contributionOptions: Array<ContributionOption>;
-  document: Document;
-  documents: QueryDocumentsConnection;
-  event: Event;
-  eventManager: EventManager;
-  events: QueryEventsConnection;
-  /** Tout les évènements, regroupés par date (de début). Les curseurs (before, after) peuvent être des dates au format YYYY-MM-DD */
-  eventsByDay: QueryEventsByDayConnection;
-  eventsInWeek: Array<Event>;
-  existsInSchoolLdap: Scalars['Boolean']['output'];
-  /** Récupère un formulaire. On peut utiliser une subscription pour avoir la mise à jour en temps réel des réponses au formulaire. */
-  form?: Maybe<Form>;
-  /** Récupère les formulaires visibles par l'utilisateur·ice connecté·e. */
-  forms: QueryFormsConnection;
-  godparentRequest: GodparentRequest;
-  godparentRequests: Array<GodparentRequest>;
-  group: Group;
-  groupMembersCsv: QueryGroupMembersCsvResult;
-  groups: Array<Group>;
-  /** - **Rate limit:** 5/seconde */
-  healthcheck: HealthCheck;
-  /** Gets the homepage articles, customized if the user is logged in. */
-  homepage: QueryHomepageConnection;
-  issue: Issue;
-  issuesByUser: Array<Issue>;
-  kioskReload: Scalars['Boolean']['output'];
-  logs: QueryLogsConnection;
-  lydiaAccount: LydiaAccount;
-  lydiaAccounts: Array<LydiaAccount>;
-  /** @deprecated Use group.lydiaAccounts instead */
-  lydiaAccountsOfGroup: Array<LydiaAccount>;
-  major: Major;
-  majors: Array<Major>;
+  group: ChurrosGroup;
   /** - **Rate limit:** 6000/minute */
-  me: User;
-  minor: Minor;
-  minors: QueryMinorsConnection;
-  myApps: Array<ThirdPartyApp>;
-  notification: Notification;
-  notificationSubscription: NotificationSubscription;
-  notificationSubscriptions: Array<NotificationSubscription>;
-  notifications: QueryNotificationsConnection;
-  /** Returns how many people will be notified if an article of the given visibility and group is created. */
-  notificationsSendCountForArticle: Scalars['Int']['output'];
-  /** Récupérer une page par son identifiant. Voir aussi `Group.page` et `StudentAssociation.page` pour des queries plus ergonomiques */
-  page: Page;
-  /** Récupère toutes les pages existantes. Réservé aux administrateur·ice.s. */
-  pages: QueryPagesConnection;
-  quickSignups: QueryQuickSignupsConnection;
-  reaction: Reaction;
-  reactions: QueryReactionsConnection;
-  registration: QueryRegistrationResult;
-  /** Returns an SVG path of the QR Code for the given registration */
-  registrationQRCode: QRCode;
-  /** @deprecated Utilisez plutôt `user(uid: userUid) { bookings }` (champ `bookings` sur le type `User`). */
-  registrationsOfUser: QueryRegistrationsOfUserConnection;
-  /** Rendu de markdown en HTML. Demande a être authentifié·e pour éviter tout abus. */
-  renderMarkdown: Scalars['String']['output'];
-  school: School;
-  schoolGroups: Array<SchoolGroup>;
-  schools: Array<School>;
-  searchArticles: Array<ArticleSearchResultType>;
-  searchDocuments: Array<DocumentSearchResult>;
-  searchEvents: Array<EvenSearchResult>;
-  /** Recherche des formulaires */
-  searchForms: Array<FormSearchResult>;
-  searchGroups: Array<GroupSearchResult>;
-  searchUsers: Array<UserSearchResult>;
-  service: Service;
-  services: Array<Service>;
-  shopItem: ShopItem;
-  shopPayments: Array<ShopPayment>;
-  studentAssociation: StudentAssociation;
-  studentAssociations: Array<StudentAssociation>;
-  subject: Subject;
-  subjects: Array<Subject>;
-  thirdPartyApp: ThirdPartyApp;
-  ticketGroup: TicketGroup;
-  /** Vérifie si un identifiant (un “@” dans l'interface) est disponible */
-  uidIsAvailable: Scalars['Boolean']['output'];
-  upcomingChangelog: QueryUpcomingChangelogResult;
-  user: User;
-  userByEmail: User;
-  userCandidate: UserCandidate;
-  userCandidateByEmail: UserCandidate;
-  userCandidates: QueryUserCandidatesConnection;
-  userServices: Array<Service>;
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryallFormsArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryallUsersArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryannouncementArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryannouncementsArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryarticleArgs = {
-  id: Scalars['LocalID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryarticleIDArgs = {
-  group: Scalars['UID']['input'];
-  slug: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QuerybarWeekArgs = {
-  slug: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QuerybarWeekNowArgs = {
-  now: Scalars['DateTime']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QuerybirthdaysArgs = {
-  activeOnly?: InputMaybe<Scalars['Boolean']['input']>;
-  now?: InputMaybe<Scalars['DateTime']['input']>;
-  width?: InputMaybe<Scalars['Int']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QuerychangelogArgs = {
-  version?: InputMaybe<Scalars['String']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QuerycombinedChangelogArgs = {
-  from?: InputMaybe<Scalars['String']['input']>;
-  sort?: SortDirection;
-  to?: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QuerydocumentArgs = {
-  slug: Scalars['String']['input'];
-  subject: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QuerydocumentsArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryeventArgs = {
-  group?: InputMaybe<Scalars['UID']['input']>;
-  id?: InputMaybe<Scalars['LocalID']['input']>;
-  slug?: InputMaybe<Scalars['String']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryeventManagerArgs = {
-  eventId: Scalars['ID']['input'];
-  user: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryeventsArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  future?: InputMaybe<Scalars['Boolean']['input']>;
-  kiosk?: InputMaybe<Scalars['Boolean']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  noLinkedArticles?: InputMaybe<Scalars['Boolean']['input']>;
-  past?: InputMaybe<Scalars['Boolean']['input']>;
-  pastRecurring?: InputMaybe<Scalars['Boolean']['input']>;
-  upcomingShotguns?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryeventsByDayArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  kiosk?: InputMaybe<Scalars['Boolean']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryeventsInWeekArgs = {
-  today: Scalars['DateTime']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryexistsInSchoolLdapArgs = {
-  email: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryformArgs = {
-  localId: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryformsArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QuerygodparentRequestArgs = {
-  id: Scalars['ID']['input'];
+  me: ChurrosUser;
+  user: ChurrosUser;
 };
 
 
@@ -3234,533 +1854,224 @@ export type QuerygroupArgs = {
 
 
 /** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QuerygroupMembersCsvArgs = {
-  groupUid: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QuerygroupsArgs = {
-  types?: InputMaybe<Array<GroupType>>;
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryhomepageArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryissueArgs = {
-  number: Scalars['Int']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QuerylogsArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QuerylydiaAccountArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QuerylydiaAccountsOfGroupArgs = {
-  uid: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QuerymajorArgs = {
-  uid: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryminorArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryminorsArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QuerynotificationArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QuerynotificationSubscriptionArgs = {
-  endpoint: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QuerynotificationsArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  channels?: InputMaybe<Array<NotificationChannel>>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  groupUids?: InputMaybe<Array<Scalars['String']['input']>>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  subscriptionEndpoint?: InputMaybe<Scalars['ID']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QuerynotificationsSendCountForArticleArgs = {
-  group: Scalars['UID']['input'];
-  visibility: Visibility;
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QuerypageArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QuerypagesArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryquickSignupsArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryreactionArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryreactionsArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryregistrationArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryregistrationQRCodeArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryregistrationsOfUserArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  forUserOnly?: InputMaybe<Scalars['Boolean']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  userUid: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryrenderMarkdownArgs = {
-  markdown: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryschoolArgs = {
-  uid: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QuerysearchArticlesArgs = {
-  groupUid?: InputMaybe<Scalars['String']['input']>;
-  q: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QuerysearchDocumentsArgs = {
-  forApprentices: Scalars['Boolean']['input'];
-  majorUid: Scalars['String']['input'];
-  q: Scalars['String']['input'];
-  yearTier: Scalars['Int']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QuerysearchEventsArgs = {
-  groupUid?: InputMaybe<Scalars['String']['input']>;
-  q: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QuerysearchFormsArgs = {
-  q: Scalars['String']['input'];
-  similarityCutoff?: InputMaybe<Scalars['Float']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QuerysearchGroupsArgs = {
-  q: Scalars['String']['input'];
-  similarityCutoff?: InputMaybe<Scalars['Float']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QuerysearchUsersArgs = {
-  q: Scalars['String']['input'];
-  similarityCutoff?: InputMaybe<Scalars['Float']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryserviceArgs = {
-  id: Scalars['LocalID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryservicesArgs = {
-  groupUid?: InputMaybe<Scalars['String']['input']>;
-  schoolUid?: InputMaybe<Scalars['String']['input']>;
-  studentAssociationUid?: InputMaybe<Scalars['String']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryshopItemArgs = {
-  slug: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryshopPaymentsArgs = {
-  item: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QuerystudentAssociationArgs = {
-  uid: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QuerystudentAssociationsArgs = {
-  canContributeOnly?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QuerysubjectArgs = {
-  forApprentices: Scalars['Boolean']['input'];
-  slug: Scalars['String']['input'];
-  yearTier: Scalars['Int']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QuerythirdPartyAppArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryticketGroupArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryuidIsAvailableArgs = {
-  uid: Scalars['UID']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
 export type QueryuserArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
   uid?: InputMaybe<Scalars['String']['input']>;
 };
 
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryuserByEmailArgs = {
-  email: Scalars['String']['input'];
+export type ChurrosQueryAllFormsConnection = {
+  edges: Array<ChurrosQueryAllFormsConnectionEdge>;
+  nodes: Array<ChurrosForm>;
+  pageInfo: ChurrosPageInfo;
 };
 
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryuserCandidateArgs = {
-  token: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryuserCandidateByEmailArgs = {
-  email: Scalars['String']['input'];
-};
-
-
-/** - **Rate limit par défault:** 1200/minute (par utilisateur·ice et par query) */
-export type QueryuserCandidatesArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-};
-
-export type QueryAllFormsConnection = {
-  edges: Array<QueryAllFormsConnectionEdge>;
-  nodes: Array<Form>;
-  pageInfo: PageInfo;
-};
-
-export type QueryAllFormsConnectionEdge = {
+export type ChurrosQueryAllFormsConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: Form;
+  node: ChurrosForm;
 };
 
-export type QueryAllUsersConnection = {
-  edges: Array<QueryAllUsersConnectionEdge>;
-  nodes: Array<User>;
-  pageInfo: PageInfo;
+export type ChurrosQueryAllUsersConnection = {
+  edges: Array<ChurrosQueryAllUsersConnectionEdge>;
+  nodes: Array<ChurrosUser>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type QueryAllUsersConnectionEdge = {
+export type ChurrosQueryAllUsersConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: User;
+  node: ChurrosUser;
 };
 
-export type QueryAnnouncementsConnection = {
-  edges: Array<QueryAnnouncementsConnectionEdge>;
-  nodes: Array<Announcement>;
-  pageInfo: PageInfo;
+export type ChurrosQueryAnnouncementsConnection = {
+  edges: Array<ChurrosQueryAnnouncementsConnectionEdge>;
+  nodes: Array<ChurrosAnnouncement>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type QueryAnnouncementsConnectionEdge = {
+export type ChurrosQueryAnnouncementsConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: Announcement;
+  node: ChurrosAnnouncement;
 };
 
-export type QueryCodeContributorsResult = Error | QueryCodeContributorsSuccess;
+export type ChurrosQueryCodeContributorsResult = ChurrosError | ChurrosQueryCodeContributorsSuccess;
 
-export type QueryCodeContributorsSuccess = {
-  data: Array<User>;
+export type ChurrosQueryCodeContributorsSuccess = {
+  data: Array<ChurrosUser>;
 };
 
-export type QueryCombinedChangelogResult = Error | QueryCombinedChangelogSuccess;
+export type ChurrosQueryCombinedChangelogResult = ChurrosError | ChurrosQueryCombinedChangelogSuccess;
 
-export type QueryCombinedChangelogSuccess = {
-  data: Array<ChangelogRelease>;
+export type ChurrosQueryCombinedChangelogSuccess = {
+  data: Array<ChurrosChangelogRelease>;
 };
 
-export type QueryDocumentsConnection = {
-  edges: Array<QueryDocumentsConnectionEdge>;
-  nodes: Array<Document>;
-  pageInfo: PageInfo;
+export type ChurrosQueryDocumentsConnection = {
+  edges: Array<ChurrosQueryDocumentsConnectionEdge>;
+  nodes: Array<ChurrosDocument>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type QueryDocumentsConnectionEdge = {
+export type ChurrosQueryDocumentsConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: Document;
+  node: ChurrosDocument;
 };
 
-export type QueryEventsByDayConnection = {
-  edges: Array<QueryEventsByDayConnectionEdge>;
-  nodes: Array<EventsByDay>;
-  pageInfo: PageInfo;
+export type ChurrosQueryEventsByDayConnection = {
+  edges: Array<ChurrosQueryEventsByDayConnectionEdge>;
+  nodes: Array<ChurrosEventsByDay>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type QueryEventsByDayConnectionEdge = {
+export type ChurrosQueryEventsByDayConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: EventsByDay;
+  node: ChurrosEventsByDay;
 };
 
-export type QueryEventsConnection = {
-  edges: Array<QueryEventsConnectionEdge>;
-  nodes: Array<Event>;
-  pageInfo: PageInfo;
+export type ChurrosQueryEventsConnection = {
+  edges: Array<ChurrosQueryEventsConnectionEdge>;
+  nodes: Array<ChurrosEvent>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type QueryEventsConnectionEdge = {
+export type ChurrosQueryEventsConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: Event;
+  node: ChurrosEvent;
 };
 
-export type QueryFormsConnection = {
-  edges: Array<QueryFormsConnectionEdge>;
-  nodes: Array<Form>;
-  pageInfo: PageInfo;
+export type ChurrosQueryFormsConnection = {
+  edges: Array<ChurrosQueryFormsConnectionEdge>;
+  nodes: Array<ChurrosForm>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type QueryFormsConnectionEdge = {
+export type ChurrosQueryFormsConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: Form;
+  node: ChurrosForm;
 };
 
-export type QueryGroupMembersCsvResult = Error | QueryGroupMembersCsvSuccess;
+export type ChurrosQueryGroupMembersCsvResult = ChurrosError | ChurrosQueryGroupMembersCsvSuccess;
 
-export type QueryGroupMembersCsvSuccess = {
+export type ChurrosQueryGroupMembersCsvSuccess = {
   data: Scalars['String']['output'];
 };
 
-export type QueryHomepageConnection = {
-  edges: Array<QueryHomepageConnectionEdge>;
-  nodes: Array<Article>;
-  pageInfo: PageInfo;
+export type ChurrosQueryHomepageConnection = {
+  edges: Array<ChurrosQueryHomepageConnectionEdge>;
+  nodes: Array<ChurrosArticle>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type QueryHomepageConnectionEdge = {
+export type ChurrosQueryHomepageConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: Article;
+  node: ChurrosArticle;
 };
 
-export type QueryLogsConnection = {
-  edges: Array<QueryLogsConnectionEdge>;
-  nodes: Array<LogEntry>;
-  pageInfo: PageInfo;
+export type ChurrosQueryLogsConnection = {
+  edges: Array<ChurrosQueryLogsConnectionEdge>;
+  nodes: Array<ChurrosLogEntry>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type QueryLogsConnectionEdge = {
+export type ChurrosQueryLogsConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: LogEntry;
+  node: ChurrosLogEntry;
 };
 
-export type QueryMinorsConnection = {
-  edges: Array<QueryMinorsConnectionEdge>;
-  nodes: Array<Minor>;
-  pageInfo: PageInfo;
+export type ChurrosQueryMinorsConnection = {
+  edges: Array<ChurrosQueryMinorsConnectionEdge>;
+  nodes: Array<ChurrosMinor>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type QueryMinorsConnectionEdge = {
+export type ChurrosQueryMinorsConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: Minor;
+  node: ChurrosMinor;
 };
 
-export type QueryNotificationsConnection = {
-  edges: Array<QueryNotificationsConnectionEdge>;
-  nodes: Array<Notification>;
-  pageInfo: PageInfo;
+export type ChurrosQueryNotificationsConnection = {
+  edges: Array<ChurrosQueryNotificationsConnectionEdge>;
+  nodes: Array<ChurrosNotification>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type QueryNotificationsConnectionEdge = {
+export type ChurrosQueryNotificationsConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: Notification;
+  node: ChurrosNotification;
 };
 
-export type QueryPagesConnection = {
-  edges: Array<QueryPagesConnectionEdge>;
-  nodes: Array<Page>;
-  pageInfo: PageInfo;
+export type ChurrosQueryPagesConnection = {
+  edges: Array<ChurrosQueryPagesConnectionEdge>;
+  nodes: Array<ChurrosPage>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type QueryPagesConnectionEdge = {
+export type ChurrosQueryPagesConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: Page;
+  node: ChurrosPage;
 };
 
-export type QueryQuickSignupsConnection = {
-  edges: Array<QueryQuickSignupsConnectionEdge>;
-  nodes: Array<QuickSignup>;
-  pageInfo: PageInfo;
+export type ChurrosQueryQuickSignupsConnection = {
+  edges: Array<ChurrosQueryQuickSignupsConnectionEdge>;
+  nodes: Array<ChurrosQuickSignup>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type QueryQuickSignupsConnectionEdge = {
+export type ChurrosQueryQuickSignupsConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: QuickSignup;
+  node: ChurrosQuickSignup;
 };
 
-export type QueryReactionsConnection = {
-  edges: Array<QueryReactionsConnectionEdge>;
-  nodes: Array<Reaction>;
-  pageInfo: PageInfo;
+export type ChurrosQueryReactionsConnection = {
+  edges: Array<ChurrosQueryReactionsConnectionEdge>;
+  nodes: Array<ChurrosReaction>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type QueryReactionsConnectionEdge = {
+export type ChurrosQueryReactionsConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: Reaction;
+  node: ChurrosReaction;
 };
 
-export type QueryRegistrationResult = Error | QueryRegistrationSuccess;
+export type ChurrosQueryRegistrationResult = ChurrosError | ChurrosQueryRegistrationSuccess;
 
-export type QueryRegistrationSuccess = {
-  data: Registration;
+export type ChurrosQueryRegistrationSuccess = {
+  data: ChurrosRegistration;
 };
 
-export type QueryRegistrationsOfUserConnection = {
-  edges: Array<QueryRegistrationsOfUserConnectionEdge>;
-  nodes: Array<Registration>;
-  pageInfo: PageInfo;
+export type ChurrosQueryRegistrationsOfUserConnection = {
+  edges: Array<ChurrosQueryRegistrationsOfUserConnectionEdge>;
+  nodes: Array<ChurrosRegistration>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type QueryRegistrationsOfUserConnectionEdge = {
+export type ChurrosQueryRegistrationsOfUserConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: Registration;
+  node: ChurrosRegistration;
 };
 
-export type QueryUpcomingChangelogResult = Error | QueryUpcomingChangelogSuccess;
+export type ChurrosQueryUpcomingChangelogResult = ChurrosError | ChurrosQueryUpcomingChangelogSuccess;
 
-export type QueryUpcomingChangelogSuccess = {
-  data: ChangelogRelease;
+export type ChurrosQueryUpcomingChangelogSuccess = {
+  data: ChurrosChangelogRelease;
 };
 
-export type QueryUserCandidatesConnection = {
-  edges: Array<QueryUserCandidatesConnectionEdge>;
-  nodes: Array<UserCandidate>;
-  pageInfo: PageInfo;
+export type ChurrosQueryUserCandidatesConnection = {
+  edges: Array<ChurrosQueryUserCandidatesConnectionEdge>;
+  nodes: Array<ChurrosUserCandidate>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type QueryUserCandidatesConnectionEdge = {
+export type ChurrosQueryUserCandidatesConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: UserCandidate;
+  node: ChurrosUserCandidate;
 };
 
 /** Une question dans un formulaire */
-export type Question = {
+export type ChurrosQuestion = {
   /** Indique si la réponse à la question est anonyme. Si oui, les personnes pouvant voir les réponses ne pouront jamais savoir la réponse d'une personne à la question */
   anonymous: Scalars['Boolean']['output'];
-  answers: QuestionAnswersConnection;
+  answers: ChurrosQuestionAnswersConnection;
   /** La réponse par défaut à cette question. Même si le résultat est bien de type Answer, le champ `id` est vide */
-  defaultAnswer?: Maybe<Answer>;
+  defaultAnswer?: Maybe<ChurrosAnswer>;
   /** Description en Markdown de la question */
   description: Scalars['String']['output'];
   /** Description en HTML de la question */
@@ -3770,22 +2081,22 @@ export type Question = {
   /** Indique si la question est obligatoire */
   mandatory: Scalars['Boolean']['output'];
   /** La réponse de l'utilisateur·ice connecté·e à cette question */
-  myAnswer?: Maybe<Answer>;
+  myAnswer?: Maybe<ChurrosAnswer>;
   /** Ordre de la question dans la section */
   order: Scalars['Int']['output'];
   /** Section du formulaire dans laquelle est la question */
-  section: FormSection;
+  section: ChurrosFormSection;
   /** Titre de la question */
   title: Scalars['String']['output'];
   /** Nombre total de réponses à cette question */
   totalAnswers: Scalars['Int']['output'];
   /** Type de la question */
-  type: QuestionKind;
+  type: ChurrosQuestionKind;
 };
 
 
 /** Une question dans un formulaire */
-export type QuestionanswersArgs = {
+export type ChurrosQuestionanswersArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   by?: InputMaybe<Scalars['String']['input']>;
@@ -3793,26 +2104,26 @@ export type QuestionanswersArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
 };
 
-export type QuestionAnswersConnection = {
-  edges: Array<QuestionAnswersConnectionEdge>;
-  nodes: Array<Answer>;
-  pageInfo: PageInfo;
+export type ChurrosQuestionAnswersConnection = {
+  edges: Array<ChurrosQuestionAnswersConnectionEdge>;
+  nodes: Array<ChurrosAnswer>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type QuestionAnswersConnectionEdge = {
+export type ChurrosQuestionAnswersConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: Answer;
+  node: ChurrosAnswer;
 };
 
 /** Question de type `FileUpload` */
-export type QuestionFileUpload = Question & {
+export type ChurrosQuestionFileUpload = ChurrosQuestion & {
   /** Types de fichiers autorisés pour les questions de type `File`. Null si la question n'est pas de type `File`. */
   allowedFileTypes?: Maybe<Array<Scalars['String']['output']>>;
   /** Indique si la réponse à la question est anonyme. Si oui, les personnes pouvant voir les réponses ne pouront jamais savoir la réponse d'une personne à la question */
   anonymous: Scalars['Boolean']['output'];
-  answers: QuestionAnswersConnection;
+  answers: ChurrosQuestionAnswersConnection;
   /** La réponse par défaut à cette question. Même si le résultat est bien de type Answer, le champ `id` est vide */
-  defaultAnswer?: Maybe<Answer>;
+  defaultAnswer?: Maybe<ChurrosAnswer>;
   /** Description en Markdown de la question */
   description: Scalars['String']['output'];
   /** Description en HTML de la question */
@@ -3822,22 +2133,22 @@ export type QuestionFileUpload = Question & {
   /** Indique si la question est obligatoire */
   mandatory: Scalars['Boolean']['output'];
   /** La réponse de l'utilisateur·ice connecté·e à cette question */
-  myAnswer?: Maybe<Answer>;
+  myAnswer?: Maybe<ChurrosAnswer>;
   /** Ordre de la question dans la section */
   order: Scalars['Int']['output'];
   /** Section du formulaire dans laquelle est la question */
-  section: FormSection;
+  section: ChurrosFormSection;
   /** Titre de la question */
   title: Scalars['String']['output'];
   /** Nombre total de réponses à cette question */
   totalAnswers: Scalars['Int']['output'];
   /** Type de la question */
-  type: QuestionKind;
+  type: ChurrosQuestionKind;
 };
 
 
 /** Question de type `FileUpload` */
-export type QuestionFileUploadanswersArgs = {
+export type ChurrosQuestionFileUploadanswersArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   by?: InputMaybe<Scalars['String']['input']>;
@@ -3846,7 +2157,7 @@ export type QuestionFileUploadanswersArgs = {
 };
 
 /** Le type de question */
-export type QuestionKind =
+export type ChurrosQuestionKind =
   /** La réponse est une date, sans heure associée. */
   | 'Date'
   /** La réponse est un fichier mis en ligne par l'utilisateur·ice. */
@@ -3867,7 +2178,7 @@ export type QuestionKind =
   | 'Time';
 
 /** Choix pour les questions de type `SelectOne` ou `SelectMultiple` */
-export type QuestionOptionInput = {
+export type ChurrosQuestionOptionInput = {
   /** ID de la question vers laquelle sauter si ce choix est sélectionné */
   jump?: InputMaybe<Scalars['ID']['input']>;
   /** Choix */
@@ -3875,12 +2186,12 @@ export type QuestionOptionInput = {
 };
 
 /** Question de type `Text`, `Number`, `Date`, `Time` ou `LongText` */
-export type QuestionScalar = Question & {
+export type ChurrosQuestionScalar = ChurrosQuestion & {
   /** Indique si la réponse à la question est anonyme. Si oui, les personnes pouvant voir les réponses ne pouront jamais savoir la réponse d'une personne à la question */
   anonymous: Scalars['Boolean']['output'];
-  answers: QuestionAnswersConnection;
+  answers: ChurrosQuestionAnswersConnection;
   /** La réponse par défaut à cette question. Même si le résultat est bien de type Answer, le champ `id` est vide */
-  defaultAnswer?: Maybe<Answer>;
+  defaultAnswer?: Maybe<ChurrosAnswer>;
   /** Description en Markdown de la question */
   description: Scalars['String']['output'];
   /** Description en HTML de la question */
@@ -3890,22 +2201,22 @@ export type QuestionScalar = Question & {
   /** Indique si la question est obligatoire */
   mandatory: Scalars['Boolean']['output'];
   /** La réponse de l'utilisateur·ice connecté·e à cette question */
-  myAnswer?: Maybe<Answer>;
+  myAnswer?: Maybe<ChurrosAnswer>;
   /** Ordre de la question dans la section */
   order: Scalars['Int']['output'];
   /** Section du formulaire dans laquelle est la question */
-  section: FormSection;
+  section: ChurrosFormSection;
   /** Titre de la question */
   title: Scalars['String']['output'];
   /** Nombre total de réponses à cette question */
   totalAnswers: Scalars['Int']['output'];
   /** Type de la question */
-  type: QuestionKind;
+  type: ChurrosQuestionKind;
 };
 
 
 /** Question de type `Text`, `Number`, `Date`, `Time` ou `LongText` */
-export type QuestionScalaranswersArgs = {
+export type ChurrosQuestionScalaranswersArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   by?: InputMaybe<Scalars['String']['input']>;
@@ -3914,14 +2225,14 @@ export type QuestionScalaranswersArgs = {
 };
 
 /** Question de type `Scale` */
-export type QuestionScale = Question & {
+export type ChurrosQuestionScale = ChurrosQuestion & {
   /** Indique si la réponse à la question est anonyme. Si oui, les personnes pouvant voir les réponses ne pouront jamais savoir la réponse d'une personne à la question */
   anonymous: Scalars['Boolean']['output'];
   /** Compte le nombre total de réponses pour chaque option. Retourne un `StringToIntMapping` où les clés sont les options et les valeurs sont le nombre de réponses pour l'option. */
-  answerCounts: Array<StringToIntMapping>;
-  answers: QuestionAnswersConnection;
+  answerCounts: Array<ChurrosStringToIntMapping>;
+  answers: ChurrosQuestionAnswersConnection;
   /** La réponse par défaut à cette question. Même si le résultat est bien de type Answer, le champ `id` est vide */
-  defaultAnswer?: Maybe<Answer>;
+  defaultAnswer?: Maybe<ChurrosAnswer>;
   /** Description en Markdown de la question */
   description: Scalars['String']['output'];
   /** Description en HTML de la question */
@@ -3941,24 +2252,24 @@ export type QuestionScale = Question & {
   /** Label de la valeur minimale */
   minimumLabel: Scalars['String']['output'];
   /** La réponse de l'utilisateur·ice connecté·e à cette question */
-  myAnswer?: Maybe<Answer>;
+  myAnswer?: Maybe<ChurrosAnswer>;
   /** Liste des valeurs possibles */
   options: Array<Scalars['Int']['output']>;
   /** Ordre de la question dans la section */
   order: Scalars['Int']['output'];
   /** Section du formulaire dans laquelle est la question */
-  section: FormSection;
+  section: ChurrosFormSection;
   /** Titre de la question */
   title: Scalars['String']['output'];
   /** Nombre total de réponses à cette question */
   totalAnswers: Scalars['Int']['output'];
   /** Type de la question */
-  type: QuestionKind;
+  type: ChurrosQuestionKind;
 };
 
 
 /** Question de type `Scale` */
-export type QuestionScaleanswersArgs = {
+export type ChurrosQuestionScaleanswersArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   by?: InputMaybe<Scalars['String']['input']>;
@@ -3967,7 +2278,7 @@ export type QuestionScaleanswersArgs = {
 };
 
 /** Options supplémentaires pour les questions de type `Scale` */
-export type QuestionScaleInput = {
+export type ChurrosQuestionScaleInput = {
   /** Valeur maximale */
   maximum: Scalars['Int']['input'];
   /** Label de la valeur maximale */
@@ -3979,16 +2290,16 @@ export type QuestionScaleInput = {
 };
 
 /** Question de type `SelectMultiple` */
-export type QuestionSelectMultiple = Question & {
+export type ChurrosQuestionSelectMultiple = ChurrosQuestion & {
   /** Indique si la question de type `SelectOne` ou `SelectMultiple` permet une option "Autre", que l'utilisateur·ice peut remplir sans contrainte. */
   allowOptionsOther: Scalars['Boolean']['output'];
   /** Indique si la réponse à la question est anonyme. Si oui, les personnes pouvant voir les réponses ne pouront jamais savoir la réponse d'une personne à la question */
   anonymous: Scalars['Boolean']['output'];
   /** Compte le nombre total de réponses pour chaque option. Retourne un `StringToIntMapping` où les clés sont les options et les valeurs sont le nombre de réponses pour l'option. */
-  answerCounts: Array<StringToIntMapping>;
-  answers: QuestionAnswersConnection;
+  answerCounts: Array<ChurrosStringToIntMapping>;
+  answers: ChurrosQuestionAnswersConnection;
   /** La réponse par défaut à cette question. Même si le résultat est bien de type Answer, le champ `id` est vide */
-  defaultAnswer?: Maybe<Answer>;
+  defaultAnswer?: Maybe<ChurrosAnswer>;
   /** Description en Markdown de la question */
   description: Scalars['String']['output'];
   /** Description en HTML de la question */
@@ -3998,24 +2309,24 @@ export type QuestionSelectMultiple = Question & {
   /** Indique si la question est obligatoire */
   mandatory: Scalars['Boolean']['output'];
   /** La réponse de l'utilisateur·ice connecté·e à cette question */
-  myAnswer?: Maybe<Answer>;
+  myAnswer?: Maybe<ChurrosAnswer>;
   /** Uniquement pertinent pour les questions de type `SelectOne` ou `SelectMultiple` */
   options: Array<Scalars['String']['output']>;
   /** Ordre de la question dans la section */
   order: Scalars['Int']['output'];
   /** Section du formulaire dans laquelle est la question */
-  section: FormSection;
+  section: ChurrosFormSection;
   /** Titre de la question */
   title: Scalars['String']['output'];
   /** Nombre total de réponses à cette question */
   totalAnswers: Scalars['Int']['output'];
   /** Type de la question */
-  type: QuestionKind;
+  type: ChurrosQuestionKind;
 };
 
 
 /** Question de type `SelectMultiple` */
-export type QuestionSelectMultipleanswersArgs = {
+export type ChurrosQuestionSelectMultipleanswersArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   by?: InputMaybe<Scalars['String']['input']>;
@@ -4024,47 +2335,47 @@ export type QuestionSelectMultipleanswersArgs = {
 };
 
 /** Question de type `SelectOne` */
-export type QuestionSelectOne = Question & {
+export type ChurrosQuestionSelectOne = ChurrosQuestion & {
   /** Indique si la question de type `SelectOne` ou `SelectMultiple` permet une option "Autre", que l'utilisateur·ice peut remplir sans contrainte. */
   allowOptionsOther: Scalars['Boolean']['output'];
   /** Indique si la réponse à la question est anonyme. Si oui, les personnes pouvant voir les réponses ne pouront jamais savoir la réponse d'une personne à la question */
   anonymous: Scalars['Boolean']['output'];
   /** Compte le nombre total de réponses pour chaque option. Retourne un `StringToIntMapping` où les clés sont les options et les valeurs sont le nombre de réponses pour l'option. */
-  answerCounts: Array<StringToIntMapping>;
-  answers: QuestionAnswersConnection;
+  answerCounts: Array<ChurrosStringToIntMapping>;
+  answers: ChurrosQuestionAnswersConnection;
   /** La réponse par défaut à cette question. Même si le résultat est bien de type Answer, le champ `id` est vide */
-  defaultAnswer?: Maybe<Answer>;
+  defaultAnswer?: Maybe<ChurrosAnswer>;
   /** Description en Markdown de la question */
   description: Scalars['String']['output'];
   /** Description en HTML de la question */
   descriptionHtml: Scalars['String']['output'];
   /** Dans le même ordre que `options`, contient le groupe si l'option porte exactement le nom du groupe, ou null si aucun groupe ne correspond. Pratique pour les questions où l'on demande à choisir entre plusieurs groupes (comme les votes de listes par ex.) */
-  groups: Array<Maybe<Group>>;
+  groups: Array<Maybe<ChurrosGroup>>;
   /** Préfixe d'identifiant: question: */
   id: Scalars['ID']['output'];
   /** Correspondances entre les réponses à cette question et les sections du formulaire à sauter vers. Dans le même ordre que `options`. Quand un élément est null, la section suivante n'est pas modifiée */
-  jumps: Array<Maybe<FormSection>>;
+  jumps: Array<Maybe<ChurrosFormSection>>;
   /** Indique si la question est obligatoire */
   mandatory: Scalars['Boolean']['output'];
   /** La réponse de l'utilisateur·ice connecté·e à cette question */
-  myAnswer?: Maybe<Answer>;
+  myAnswer?: Maybe<ChurrosAnswer>;
   /** Uniquement pertinent pour les questions de type `SelectOne` ou `SelectMultiple` */
   options: Array<Scalars['String']['output']>;
   /** Ordre de la question dans la section */
   order: Scalars['Int']['output'];
   /** Section du formulaire dans laquelle est la question */
-  section: FormSection;
+  section: ChurrosFormSection;
   /** Titre de la question */
   title: Scalars['String']['output'];
   /** Nombre total de réponses à cette question */
   totalAnswers: Scalars['Int']['output'];
   /** Type de la question */
-  type: QuestionKind;
+  type: ChurrosQuestionKind;
 };
 
 
 /** Question de type `SelectOne` */
-export type QuestionSelectOneanswersArgs = {
+export type ChurrosQuestionSelectOneanswersArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   by?: InputMaybe<Scalars['String']['input']>;
@@ -4073,22 +2384,22 @@ export type QuestionSelectOneanswersArgs = {
 };
 
 /** Lien d'inscription rapide, qui permet de créer un compte étudiant sans adresse mail étudiante et sans validation manuelle */
-export type QuickSignup = Node & {
+export type ChurrosQuickSignup = ChurrosNode & {
   code: Scalars['String']['output'];
   createdAt: Scalars['DateTime']['output'];
   /** Vrai si le lien est expiré */
   expired: Scalars['Boolean']['output'];
   id: Scalars['ID']['output'];
   /** L'identifiant local de la ressource (sans préfixe) */
-  localID: Scalars['LocalID']['output'];
-  school: School;
+  localID: Scalars['ChurrosLocalID']['output'];
+  school: ChurrosSchool;
   schoolId: Scalars['ID']['output'];
   updatedAt: Scalars['DateTime']['output'];
   validUntil: Scalars['DateTime']['output'];
 };
 
 /** Une resource pouvant recevoir des réactions (likes, etc) par les utilisateur·ice·s */
-export type Reactable = {
+export type ChurrosReactable = {
   /** L’identifiant de la resource */
   id: Scalars['ID']['output'];
   /** Vrai si l’utilisateur·ice connecté·e a réagi avec cet emoji */
@@ -4099,32 +2410,32 @@ export type Reactable = {
 
 
 /** Une resource pouvant recevoir des réactions (likes, etc) par les utilisateur·ice·s */
-export type ReactablereactedArgs = {
+export type ChurrosReactablereactedArgs = {
   emoji: Scalars['String']['input'];
 };
 
 
 /** Une resource pouvant recevoir des réactions (likes, etc) par les utilisateur·ice·s */
-export type ReactablereactionsArgs = {
+export type ChurrosReactablereactionsArgs = {
   emoji: Scalars['String']['input'];
 };
 
-export type Reaction = Node & {
-  author?: Maybe<User>;
+export type ChurrosReaction = ChurrosNode & {
+  author?: Maybe<ChurrosUser>;
   authorId?: Maybe<Scalars['ID']['output']>;
-  comment?: Maybe<Comment>;
+  comment?: Maybe<ChurrosComment>;
   commentId?: Maybe<Scalars['ID']['output']>;
   createdAt: Scalars['DateTime']['output'];
-  document?: Maybe<Document>;
+  document?: Maybe<ChurrosDocument>;
   documentId?: Maybe<Scalars['ID']['output']>;
   emoji: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   /** L'identifiant local de la ressource (sans préfixe) */
-  localID: Scalars['LocalID']['output'];
+  localID: Scalars['ChurrosLocalID']['output'];
   updatedAt: Scalars['DateTime']['output'];
 };
 
-export type RedisHealthCheck = {
+export type ChurrosRedisHealthCheck = {
   /** Whether the Redis publisher client is ready */
   publish: Scalars['Boolean']['output'];
   /** Whether the Redis subscriber client is ready */
@@ -4132,48 +2443,48 @@ export type RedisHealthCheck = {
 };
 
 /** A reservation is a user's registration for a ticket */
-export type Registration = Node & {
-  author?: Maybe<User>;
+export type ChurrosRegistration = ChurrosNode & {
+  author?: Maybe<ChurrosUser>;
   authorEmail: Scalars['String']['output'];
   authorId?: Maybe<Scalars['ID']['output']>;
   authorIsBeneficiary: Scalars['Boolean']['output'];
   beneficiary: Scalars['String']['output'];
-  beneficiaryUser?: Maybe<User>;
+  beneficiaryUser?: Maybe<ChurrosUser>;
   cancelled: Scalars['Boolean']['output'];
   cancelledAt?: Maybe<Scalars['DateTime']['output']>;
-  cancelledBy?: Maybe<User>;
+  cancelledBy?: Maybe<ChurrosUser>;
   code: Scalars['String']['output'];
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
   /** L'identifiant local de la ressource (sans préfixe) */
-  localID: Scalars['LocalID']['output'];
+  localID: Scalars['ChurrosLocalID']['output'];
   opposed: Scalars['Boolean']['output'];
   opposedAt?: Maybe<Scalars['DateTime']['output']>;
-  opposedBy?: Maybe<User>;
+  opposedBy?: Maybe<ChurrosUser>;
   paid: Scalars['Boolean']['output'];
-  paymentMethod?: Maybe<PaymentMethod>;
-  ticket: Ticket;
+  paymentMethod?: Maybe<ChurrosPaymentMethod>;
+  ticket: ChurrosTicket;
   ticketId: Scalars['ID']['output'];
   updatedAt: Scalars['DateTime']['output'];
   verified: Scalars['Boolean']['output'];
   verifiedAt?: Maybe<Scalars['DateTime']['output']>;
-  verifiedBy?: Maybe<User>;
+  verifiedBy?: Maybe<ChurrosUser>;
 };
 
-export type RegistrationSearchResult = {
+export type ChurrosRegistrationSearchResult = {
   highlightedBeneficiary: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   rank?: Maybe<Scalars['Float']['output']>;
-  registration: Registration;
+  registration: ChurrosRegistration;
   similarity: Scalars['Float']['output'];
 };
 
-export type RegistrationVerificationResult = {
-  registration?: Maybe<Registration>;
-  state: RegistrationVerificationState;
+export type ChurrosRegistrationVerificationResult = {
+  registration?: Maybe<ChurrosRegistration>;
+  state: ChurrosRegistrationVerificationState;
 };
 
-export type RegistrationVerificationState =
+export type ChurrosRegistrationVerificationState =
   | 'AlreadyVerified'
   | 'NotFound'
   | 'NotPaid'
@@ -4181,7 +2492,7 @@ export type RegistrationVerificationState =
   | 'Opposed'
   | 'OtherEvent';
 
-export type RegistrationsCounts = {
+export type ChurrosRegistrationsCounts = {
   cancelled: Scalars['Float']['output'];
   paid: Scalars['Float']['output'];
   total: Scalars['Float']['output'];
@@ -4190,7 +2501,7 @@ export type RegistrationsCounts = {
 };
 
 /** A change in the changelog */
-export type ReleaseChange = {
+export type ChurrosReleaseChange = {
   /** The authors of the change */
   authors: Array<Scalars['String']['output']>;
   html: Scalars['String']['output'];
@@ -4205,90 +2516,90 @@ export type ReleaseChange = {
 };
 
 /** Changes in the changelog, grouped by category */
-export type ReleaseChangesMaps = {
+export type ChurrosReleaseChangesMaps = {
   /** New features */
-  added: Array<ReleaseChange>;
+  added: Array<ChurrosReleaseChange>;
   /** What was fixed */
-  fixed: Array<ReleaseChange>;
+  fixed: Array<ChurrosReleaseChange>;
   /** What was improved */
-  improved: Array<ReleaseChange>;
+  improved: Array<ChurrosReleaseChange>;
   /** Miscalleanous changes */
-  other: Array<ReleaseChange>;
+  other: Array<ChurrosReleaseChange>;
   /** Security changes */
-  security: Array<ReleaseChange>;
+  security: Array<ChurrosReleaseChange>;
   /** Technical changes */
-  technical: Array<ReleaseChange>;
+  technical: Array<ChurrosReleaseChange>;
 };
 
-export type School = Pictured & {
+export type ChurrosSchool = ChurrosPictured & {
   address: Scalars['String']['output'];
   aliasMailDomains: Array<Scalars['String']['output']>;
   color: Scalars['String']['output'];
   description: Scalars['String']['output'];
   id: Scalars['ID']['output'];
-  majors: Array<Major>;
+  majors: Array<ChurrosMajor>;
   name: Scalars['String']['output'];
   pictureFile: Scalars['String']['output'];
   /** Le nom du fichier de l'image, en thème sombre */
   pictureFileDark: Scalars['String']['output'];
   /** L'URL publique de l'image */
   pictureURL: Scalars['String']['output'];
-  services: Array<Service>;
+  services: Array<ChurrosService>;
   slug: Scalars['String']['output'];
-  studentAssociations: Array<StudentAssociation>;
+  studentAssociations: Array<ChurrosStudentAssociation>;
   studentMailDomain: Scalars['String']['output'];
   uid: Scalars['String']['output'];
 };
 
 
-export type SchoolpictureURLArgs = {
+export type ChurrosSchoolpictureURLArgs = {
   dark?: Scalars['Boolean']['input'];
 };
 
-export type SchoolGroup = {
-  majors: Array<Major>;
+export type ChurrosSchoolGroup = {
+  majors: Array<ChurrosMajor>;
   names: Array<Scalars['String']['output']>;
 };
 
-export type SchoolInput = {
+export type ChurrosSchoolInput = {
   color: Scalars['String']['input'];
   id?: InputMaybe<Scalars['ID']['input']>;
   name: Scalars['String']['input'];
 };
 
 /** A service */
-export type Service = Node & {
+export type ChurrosService = ChurrosNode & {
   description: Scalars['String']['output'];
-  group?: Maybe<Group>;
+  group?: Maybe<ChurrosGroup>;
   id: Scalars['ID']['output'];
   importance: Scalars['Int']['output'];
   /** L'identifiant local de la ressource (sans préfixe) */
-  localID: Scalars['LocalID']['output'];
+  localID: Scalars['ChurrosLocalID']['output'];
   logo: Scalars['String']['output'];
-  logoSourceType: LogoSourceType;
+  logoSourceType: ChurrosLogoSourceType;
   name: Scalars['String']['output'];
-  school?: Maybe<School>;
-  studentAssociation?: Maybe<StudentAssociation>;
+  school?: Maybe<ChurrosSchool>;
+  studentAssociation?: Maybe<ChurrosStudentAssociation>;
   url: Scalars['String']['output'];
 };
 
-export type ShopItem = Node & {
+export type ChurrosShopItem = ChurrosNode & {
   createdAt: Scalars['DateTime']['output'];
   description: Scalars['String']['output'];
   descriptionHtml: Scalars['String']['output'];
   endsAt?: Maybe<Scalars['DateTime']['output']>;
-  group: Group;
+  group: ChurrosGroup;
   id: Scalars['ID']['output'];
-  itemOptions: Array<ShopItemOption>;
+  itemOptions: Array<ChurrosShopItemOption>;
   /** L'identifiant local de la ressource (sans préfixe) */
-  localID: Scalars['LocalID']['output'];
-  lydiaAccount?: Maybe<LydiaAccount>;
+  localID: Scalars['ChurrosLocalID']['output'];
+  lydiaAccount?: Maybe<ChurrosLydiaAccount>;
   max: Scalars['Int']['output'];
   name: Scalars['String']['output'];
-  paymentMethods: Array<PaymentMethod>;
-  pictures: Array<Picture>;
+  paymentMethods: Array<ChurrosPaymentMethod>;
+  pictures: Array<ChurrosPicture>;
   price: Scalars['Float']['output'];
-  shopPayments: Array<ShopPayment>;
+  shopPayments: Array<ChurrosShopPayment>;
   /** Un nom lisible sans espaces, adaptés pour des URLs. */
   slug: Scalars['String']['output'];
   startsAt?: Maybe<Scalars['DateTime']['output']>;
@@ -4297,26 +2608,26 @@ export type ShopItem = Node & {
   /** @deprecated Use `slug` instead. This field was never universally unique. */
   uid: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
-  visibility: Visibility;
+  visibility: ChurrosVisibility;
 };
 
-export type ShopItemAnswer = {
+export type ChurrosShopItemAnswer = {
   id: Scalars['ID']['output'];
   options: Array<Scalars['String']['output']>;
-  shopPayment: ShopPayment;
+  shopPayment: ChurrosShopPayment;
   shopPaymentId: Scalars['String']['output'];
 };
 
-export type ShopItemOption = {
+export type ChurrosShopItemOption = {
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
   options: Array<Scalars['String']['output']>;
   otherToggle: Scalars['Boolean']['output'];
   required: Scalars['Boolean']['output'];
-  shopItem: ShopItem;
+  shopItem: ChurrosShopItem;
 };
 
-export type ShopItemOptionInput = {
+export type ChurrosShopItemOptionInput = {
   id: Scalars['String']['input'];
   name: Scalars['String']['input'];
   options: Array<Scalars['String']['input']>;
@@ -4324,25 +2635,25 @@ export type ShopItemOptionInput = {
   required: Scalars['Boolean']['input'];
 };
 
-export type ShopPayment = {
+export type ChurrosShopPayment = {
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
   paid: Scalars['Boolean']['output'];
-  paymentMethod: PaymentMethod;
+  paymentMethod: ChurrosPaymentMethod;
   quantity: Scalars['Int']['output'];
-  shopItem: ShopItem;
-  shopItemAnswer?: Maybe<ShopItemAnswer>;
+  shopItem: ChurrosShopItem;
+  shopItemAnswer?: Maybe<ChurrosShopItemAnswer>;
   totalPrice: Scalars['Float']['output'];
   updatedAt: Scalars['DateTime']['output'];
-  user: User;
+  user: ChurrosUser;
 };
 
-export type SortDirection =
+export type ChurrosSortDirection =
   | 'Ascending'
   | 'Descending';
 
 /** Associe une clé à une valeur de type nombre entier */
-export type StringToIntMapping = {
+export type ChurrosStringToIntMapping = {
   /** Clé de la paire */
   key: Scalars['String']['output'];
   /** Valeur de la paire */
@@ -4350,32 +2661,32 @@ export type StringToIntMapping = {
 };
 
 /** There is one student association per school */
-export type StudentAssociation = Pictured & {
+export type ChurrosStudentAssociation = ChurrosPictured & {
   /** Si l'utilsateur·ice courant·e peut créer des groupes rattachés à cette AE */
   canCreateGroups: Scalars['Boolean']['output'];
   /** L'utilisateur·ice connecté·e peut éditer (créer ou modifier) les pages de l'AE */
   canEditPages: Scalars['Boolean']['output'];
   /** L'utilisateur·ice connecté·e peut lister les pages de l'AE */
   canListPages: Scalars['Boolean']['output'];
-  contributionOptions: Array<ContributionOption>;
+  contributionOptions: Array<ChurrosContributionOption>;
   createdAt: Scalars['DateTime']['output'];
   description: Scalars['String']['output'];
-  groups: StudentAssociationGroupsConnection;
+  groups: ChurrosStudentAssociationGroupsConnection;
   /** Nombre de groupes reliés à cette AE */
   groupsCount: Scalars['Int']['output'];
   id: Scalars['ID']['output'];
-  links: Array<Link>;
+  links: Array<ChurrosLink>;
   name: Scalars['String']['output'];
   /** La page associée à l'AE */
-  page?: Maybe<Page>;
+  page?: Maybe<ChurrosPage>;
   /** Les pages associées à l'AE */
-  pages: PagesConnection;
+  pages: ChurrosPagesConnection;
   pictureFile: Scalars['String']['output'];
   /** Le nom du fichier de l'image, en thème sombre */
   pictureFileDark: Scalars['String']['output'];
   /** L'URL publique de l'image */
   pictureURL: Scalars['String']['output'];
-  school: School;
+  school: ChurrosSchool;
   schoolId: Scalars['ID']['output'];
   uid?: Maybe<Scalars['String']['output']>;
   updatedAt: Scalars['DateTime']['output'];
@@ -4383,29 +2694,29 @@ export type StudentAssociation = Pictured & {
 
 
 /** There is one student association per school */
-export type StudentAssociationcanCreateGroupsArgs = {
-  type?: InputMaybe<GroupType>;
+export type ChurrosStudentAssociationcanCreateGroupsArgs = {
+  type?: InputMaybe<ChurrosGroupType>;
 };
 
 
 /** There is one student association per school */
-export type StudentAssociationgroupsArgs = {
+export type ChurrosStudentAssociationgroupsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
-  types?: InputMaybe<Array<GroupType>>;
+  types?: InputMaybe<Array<ChurrosGroupType>>;
 };
 
 
 /** There is one student association per school */
-export type StudentAssociationpageArgs = {
+export type ChurrosStudentAssociationpageArgs = {
   path: Scalars['String']['input'];
 };
 
 
 /** There is one student association per school */
-export type StudentAssociationpagesArgs = {
+export type ChurrosStudentAssociationpagesArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -4414,31 +2725,31 @@ export type StudentAssociationpagesArgs = {
 
 
 /** There is one student association per school */
-export type StudentAssociationpictureURLArgs = {
+export type ChurrosStudentAssociationpictureURLArgs = {
   dark?: Scalars['Boolean']['input'];
 };
 
-export type StudentAssociationGroupsConnection = {
-  edges: Array<StudentAssociationGroupsConnectionEdge>;
-  nodes: Array<Group>;
-  pageInfo: PageInfo;
+export type ChurrosStudentAssociationGroupsConnection = {
+  edges: Array<ChurrosStudentAssociationGroupsConnectionEdge>;
+  nodes: Array<ChurrosGroup>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type StudentAssociationGroupsConnectionEdge = {
+export type ChurrosStudentAssociationGroupsConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: Group;
+  node: ChurrosGroup;
 };
 
-export type Subject = {
+export type ChurrosSubject = {
   apogeeCode?: Maybe<Scalars['String']['output']>;
-  documents: SubjectDocumentsConnection;
+  documents: ChurrosSubjectDocumentsConnection;
   documentsCount: Scalars['Int']['output'];
   emoji: Scalars['String']['output'];
   forApprentices: Scalars['Boolean']['output'];
   id: Scalars['ID']['output'];
-  links: Array<Link>;
-  majors: Array<Major>;
-  minors: Array<Minor>;
+  links: Array<ChurrosLink>;
+  majors: Array<ChurrosMajor>;
+  minors: Array<ChurrosMinor>;
   name: Scalars['String']['output'];
   nextExamAt?: Maybe<Scalars['DateTime']['output']>;
   semester?: Maybe<Scalars['Int']['output']>;
@@ -4447,28 +2758,28 @@ export type Subject = {
   slug: Scalars['String']['output'];
   /** @deprecated Use `slug` instead. This field was never universally unique. */
   uid: Scalars['String']['output'];
-  unit?: Maybe<TeachingUnit>;
+  unit?: Maybe<ChurrosTeachingUnit>;
   unitId?: Maybe<Scalars['ID']['output']>;
   yearTier?: Maybe<Scalars['Int']['output']>;
 };
 
 
-export type SubjectdocumentsArgs = {
+export type ChurrosSubjectdocumentsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
 };
 
-export type SubjectDocumentsConnection = {
-  edges: Array<SubjectDocumentsConnectionEdge>;
-  nodes: Array<Document>;
-  pageInfo: PageInfo;
+export type ChurrosSubjectDocumentsConnection = {
+  edges: Array<ChurrosSubjectDocumentsConnectionEdge>;
+  nodes: Array<ChurrosDocument>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type SubjectDocumentsConnectionEdge = {
+export type ChurrosSubjectDocumentsConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: Document;
+  node: ChurrosDocument;
 };
 
 /**
@@ -4480,16 +2791,16 @@ export type SubjectDocumentsConnectionEdge = {
  * - **Rate limit par défault:** 600 / 10 minutes (par utilisateur·ice et par query)
  */
 export type Subscription = {
-  announcementsNow: Array<Announcement>;
-  article: Article;
-  event: Event;
+  announcementsNow: Array<ChurrosAnnouncement>;
+  article: ChurrosArticle;
+  event: ChurrosEvent;
   /** Récupère un formulaire. On peut utiliser une subscription pour avoir la mise à jour en temps réel des réponses au formulaire. */
-  form?: Maybe<Form>;
+  form?: Maybe<ChurrosForm>;
   /** Gets the homepage articles, customized if the user is logged in. */
-  homepage: QueryHomepageConnection;
+  homepage: ChurrosQueryHomepageConnection;
   kioskReload: Scalars['Boolean']['output'];
-  registration: SubscriptionRegistrationResult;
-  thirdPartyApp: ThirdPartyApp;
+  registration: ChurrosSubscriptionRegistrationResult;
+  thirdPartyApp: ChurrosThirdPartyApp;
 };
 
 
@@ -4502,7 +2813,7 @@ export type Subscription = {
  * - **Rate limit par défault:** 600 / 10 minutes (par utilisateur·ice et par query)
  */
 export type SubscriptionarticleArgs = {
-  id: Scalars['LocalID']['input'];
+  id: Scalars['ChurrosLocalID']['input'];
 };
 
 
@@ -4515,8 +2826,8 @@ export type SubscriptionarticleArgs = {
  * - **Rate limit par défault:** 600 / 10 minutes (par utilisateur·ice et par query)
  */
 export type SubscriptioneventArgs = {
-  group?: InputMaybe<Scalars['UID']['input']>;
-  id?: InputMaybe<Scalars['LocalID']['input']>;
+  group?: InputMaybe<Scalars['ChurrosUID']['input']>;
+  id?: InputMaybe<Scalars['ChurrosLocalID']['input']>;
   slug?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -4575,45 +2886,45 @@ export type SubscriptionthirdPartyAppArgs = {
   id: Scalars['ID']['input'];
 };
 
-export type SubscriptionRegistrationResult = Error | SubscriptionRegistrationSuccess;
+export type ChurrosSubscriptionRegistrationResult = ChurrosError | ChurrosSubscriptionRegistrationSuccess;
 
-export type SubscriptionRegistrationSuccess = {
-  data: Registration;
+export type ChurrosSubscriptionRegistrationSuccess = {
+  data: ChurrosRegistration;
 };
 
-export type TeachingUnit = {
+export type ChurrosTeachingUnit = {
   apogeeCode?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
   shortName: Scalars['String']['output'];
-  subjects: Array<Subject>;
+  subjects: Array<ChurrosSubject>;
 };
 
 /** A third-party OAuth2 client */
-export type ThirdPartyApp = {
+export type ChurrosThirdPartyApp = {
   active: Scalars['Boolean']['output'];
   allowedRedirectUris: Array<Scalars['String']['output']>;
-  apiUsage: ThirdPartyAppApiUsageConnection;
+  apiUsage: ChurrosThirdPartyAppApiUsageConnection;
   clientId: Scalars['String']['output'];
   createdAt: Scalars['DateTime']['output'];
   description: Scalars['String']['output'];
   faviconUrl: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   /** Logs de connexion de l'application tierce, utile pour débugger des problèmes. Mise à jour en temps réel disponible via une subscription sur la query `thirdPartyApp`. */
-  logs: ThirdPartyAppLogsConnection;
+  logs: ChurrosThirdPartyAppLogsConnection;
   name: Scalars['String']['output'];
-  owner: Group;
-  rateLimitHits: ThirdPartyAppRateLimitHitsConnection;
+  owner: ChurrosGroup;
+  rateLimitHits: ChurrosThirdPartyAppRateLimitHitsConnection;
   secretLength: Scalars['Int']['output'];
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
-  users: ThirdPartyAppUsersConnection;
+  users: ChurrosThirdPartyAppUsersConnection;
   usersCount: Scalars['Int']['output'];
   website: Scalars['String']['output'];
 };
 
 
 /** A third-party OAuth2 client */
-export type ThirdPartyAppapiUsageArgs = {
+export type ChurrosThirdPartyAppapiUsageArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -4622,7 +2933,7 @@ export type ThirdPartyAppapiUsageArgs = {
 
 
 /** A third-party OAuth2 client */
-export type ThirdPartyApplogsArgs = {
+export type ChurrosThirdPartyApplogsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -4631,7 +2942,7 @@ export type ThirdPartyApplogsArgs = {
 
 
 /** A third-party OAuth2 client */
-export type ThirdPartyApprateLimitHitsArgs = {
+export type ChurrosThirdPartyApprateLimitHitsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -4640,97 +2951,97 @@ export type ThirdPartyApprateLimitHitsArgs = {
 
 
 /** A third-party OAuth2 client */
-export type ThirdPartyAppusersArgs = {
+export type ChurrosThirdPartyAppusersArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
 };
 
-export type ThirdPartyAppApiUsageConnection = {
-  edges: Array<ThirdPartyAppApiUsageConnectionEdge>;
-  nodes: Array<ApiUsage>;
-  pageInfo: PageInfo;
+export type ChurrosThirdPartyAppApiUsageConnection = {
+  edges: Array<ChurrosThirdPartyAppApiUsageConnectionEdge>;
+  nodes: Array<ChurrosApiUsage>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type ThirdPartyAppApiUsageConnectionEdge = {
+export type ChurrosThirdPartyAppApiUsageConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: ApiUsage;
+  node: ChurrosApiUsage;
 };
 
-export type ThirdPartyAppLogsConnection = {
-  edges: Array<ThirdPartyAppLogsConnectionEdge>;
-  nodes: Array<LogEntry>;
-  pageInfo: PageInfo;
+export type ChurrosThirdPartyAppLogsConnection = {
+  edges: Array<ChurrosThirdPartyAppLogsConnectionEdge>;
+  nodes: Array<ChurrosLogEntry>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type ThirdPartyAppLogsConnectionEdge = {
+export type ChurrosThirdPartyAppLogsConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: LogEntry;
+  node: ChurrosLogEntry;
 };
 
-export type ThirdPartyAppRateLimitHitsConnection = {
-  edges: Array<ThirdPartyAppRateLimitHitsConnectionEdge>;
-  nodes: Array<ApiRateLimitHits>;
-  pageInfo: PageInfo;
+export type ChurrosThirdPartyAppRateLimitHitsConnection = {
+  edges: Array<ChurrosThirdPartyAppRateLimitHitsConnectionEdge>;
+  nodes: Array<ChurrosApiRateLimitHits>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type ThirdPartyAppRateLimitHitsConnectionEdge = {
+export type ChurrosThirdPartyAppRateLimitHitsConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: ApiRateLimitHits;
+  node: ChurrosApiRateLimitHits;
 };
 
-export type ThirdPartyAppRegistrationResponse = {
+export type ChurrosThirdPartyAppRegistrationResponse = {
   client_id: Scalars['String']['output'];
   client_secret: Scalars['String']['output'];
 };
 
-export type ThirdPartyAppUsersConnection = {
-  edges: Array<ThirdPartyAppUsersConnectionEdge>;
-  nodes: Array<User>;
-  pageInfo: PageInfo;
+export type ChurrosThirdPartyAppUsersConnection = {
+  edges: Array<ChurrosThirdPartyAppUsersConnectionEdge>;
+  nodes: Array<ChurrosUser>;
+  pageInfo: ChurrosPageInfo;
   totalCount: Scalars['Int']['output'];
 };
 
-export type ThirdPartyAppUsersConnectionEdge = {
+export type ChurrosThirdPartyAppUsersConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: User;
+  node: ChurrosUser;
 };
 
 /** A ticket is a way to register for an event. May include a price and conditions. */
-export type Ticket = Node & {
-  allowedPaymentMethods: Array<PaymentMethod>;
-  autojoinGroups: Array<Group>;
+export type ChurrosTicket = ChurrosNode & {
+  allowedPaymentMethods: Array<ChurrosPaymentMethod>;
+  autojoinGroups: Array<ChurrosGroup>;
   basePrice: Scalars['Float']['output'];
   capacity: Scalars['Int']['output'];
   closesAt?: Maybe<Scalars['DateTime']['output']>;
   description: Scalars['String']['output'];
   descriptionHtml: Scalars['String']['output'];
-  event: Event;
+  event: ChurrosEvent;
   eventId: Scalars['ID']['output'];
   /** Full name, including the ticket group's name if any */
   fullName: Scalars['String']['output'];
   godsonLimit: Scalars['Int']['output'];
-  group?: Maybe<TicketGroup>;
+  group?: Maybe<ChurrosTicketGroup>;
   id: Scalars['ID']['output'];
-  links: Array<Link>;
+  links: Array<ChurrosLink>;
   /** L'identifiant local de la ressource (sans préfixe) */
-  localID: Scalars['LocalID']['output'];
+  localID: Scalars['ChurrosLocalID']['output'];
   name: Scalars['String']['output'];
   onlyManagersCanProvide: Scalars['Boolean']['output'];
   openToAlumni?: Maybe<Scalars['Boolean']['output']>;
   openToApprentices?: Maybe<Scalars['Boolean']['output']>;
   openToContributors?: Maybe<Scalars['Boolean']['output']>;
   openToExternal?: Maybe<Scalars['Boolean']['output']>;
-  openToGroups: Array<Group>;
-  openToMajors: Array<Major>;
+  openToGroups: Array<ChurrosGroup>;
+  openToMajors: Array<ChurrosMajor>;
   openToPromotions: Array<Scalars['Int']['output']>;
-  openToSchools: Array<School>;
+  openToSchools: Array<ChurrosSchool>;
   opensAt?: Maybe<Scalars['DateTime']['output']>;
   /** Nombre de places restantes. Null si l'information n'est pas disponible. N'est jamais null quand il n'y a plus de places disponibles (0) */
   placesLeft?: Maybe<Scalars['Int']['output']>;
   price: Scalars['Float']['output'];
-  registrations: Array<Registration>;
+  registrations: Array<ChurrosRegistration>;
   remainingGodsons: Scalars['Int']['output'];
   /** Un nom lisible sans espaces, adaptés pour des URLs. */
   slug: Scalars['String']['output'];
@@ -4740,25 +3051,25 @@ export type Ticket = Node & {
 };
 
 /** A ticket group allows for conditions on multiple tickets, such as an upper limit on the sum of registrations in the sub-tickets */
-export type TicketGroup = Node & {
+export type ChurrosTicketGroup = ChurrosNode & {
   capacity: Scalars['Int']['output'];
-  event: Event;
+  event: ChurrosEvent;
   eventId: Scalars['ID']['output'];
   id: Scalars['ID']['output'];
   /** L'identifiant local de la ressource (sans préfixe) */
-  localID: Scalars['LocalID']['output'];
+  localID: Scalars['ChurrosLocalID']['output'];
   name: Scalars['String']['output'];
-  tickets: Array<Ticket>;
+  tickets: Array<ChurrosTicket>;
 };
 
-export type TicketGroupInput = {
+export type ChurrosTicketGroupInput = {
   capacity: Scalars['Int']['input'];
   id?: InputMaybe<Scalars['ID']['input']>;
   name: Scalars['String']['input'];
 };
 
-export type TicketInput = {
-  allowedPaymentMethods: Array<PaymentMethod>;
+export type ChurrosTicketInput = {
+  allowedPaymentMethods: Array<ChurrosPaymentMethod>;
   autojoinGroups: Array<Scalars['String']['input']>;
   capacity: Scalars['Int']['input'];
   closesAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -4766,7 +3077,7 @@ export type TicketInput = {
   godsonLimit: Scalars['Int']['input'];
   groupName?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
-  links: Array<LinkInput>;
+  links: Array<ChurrosLinkInput>;
   name: Scalars['String']['input'];
   onlyManagersCanProvide: Scalars['Boolean']['input'];
   openToAlumni?: InputMaybe<Scalars['Boolean']['input']>;
@@ -4781,90 +3092,90 @@ export type TicketInput = {
   price: Scalars['Float']['input'];
 };
 
-export type UpsertGroupInput = {
+export type ChurrosUpsertGroupInput = {
   address: Scalars['String']['input'];
   color?: InputMaybe<Scalars['String']['input']>;
   description: Scalars['String']['input'];
   email?: InputMaybe<Scalars['String']['input']>;
-  links: Array<LinkInput>;
+  links: Array<ChurrosLinkInput>;
   longDescription: Scalars['String']['input'];
   mailingList?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
-  parent?: InputMaybe<Scalars['UID']['input']>;
+  parent?: InputMaybe<Scalars['ChurrosUID']['input']>;
   related: Array<Scalars['String']['input']>;
-  school?: InputMaybe<Scalars['UID']['input']>;
+  school?: InputMaybe<Scalars['ChurrosUID']['input']>;
   selfJoinable: Scalars['Boolean']['input'];
-  studentAssociation?: InputMaybe<Scalars['UID']['input']>;
-  type: GroupType;
+  studentAssociation?: InputMaybe<Scalars['ChurrosUID']['input']>;
+  type: ChurrosGroupType;
   /** Ne sert qu'à la création du groupe. Il est impossible de modifier un uid existant */
-  uid?: InputMaybe<Scalars['UID']['input']>;
+  uid?: InputMaybe<Scalars['ChurrosUID']['input']>;
   website: Scalars['String']['input'];
 };
 
 /** Users are the people who use the app */
-export type User = Node & Pictured & {
+export type ChurrosUser = ChurrosNode & ChurrosPictured & {
   address: Scalars['String']['output'];
   admin: Scalars['Boolean']['output'];
   /** Vrai si cette personne est administratrice de l'association étudiante donnée */
   adminOf: Scalars['Boolean']['output'];
   /** @deprecated Use `authorizedApps` instead */
-  allowedApps: Array<ThirdPartyApp>;
+  allowedApps: Array<ChurrosThirdPartyApp>;
   /** Formulaires complètement répondus par l'utilisateur */
-  answeredForms: UserAnsweredFormsConnection;
+  answeredForms: ChurrosUserAnsweredFormsConnection;
   apprentice: Scalars['Boolean']['output'];
-  articles: UserArticlesConnection;
+  articles: ChurrosUserArticlesConnection;
   /** Applications tierces autorisées à accéder à ce compte utilisateur */
-  authorizedApps: Array<ThirdPartyApp>;
+  authorizedApps: Array<ChurrosThirdPartyApp>;
   birthday?: Maybe<Scalars['DateTime']['output']>;
   /** Les affiliations de l'utilisateur à des groupes dont iel est au bureau */
-  boardMemberships: Array<GroupMember>;
-  booking: Registration;
-  bookings: UserBookingsConnection;
+  boardMemberships: Array<ChurrosGroupMember>;
+  booking: ChurrosRegistration;
+  bookings: ChurrosUserBookingsConnection;
   /** Vrai si cet utilisateur est un bot (i.e. ne représente pas une personne physique) */
   bot: Scalars['Boolean']['output'];
   canAccessDocuments: Scalars['Boolean']['output'];
   canBeEdited: Scalars['Boolean']['output'];
   /** Groupes sur lesquels l'utilisateur·ice peut créer des posts */
-  canCreatePostsOn: Array<Group>;
+  canCreatePostsOn: Array<ChurrosGroup>;
   /** Vrai si cette personne peut éditer le groupe donné */
   canEditGroup: Scalars['Boolean']['output'];
   /** Vrai si cette personne peut éditer des groupes */
   canEditGroups: Scalars['Boolean']['output'];
   cededImageRightsToTVn7: Scalars['Boolean']['output'];
-  contributesTo: Array<StudentAssociation>;
-  contributesWith: Array<ContributionOption>;
+  contributesTo: Array<ChurrosStudentAssociation>;
+  contributesWith: Array<ChurrosContributionOption>;
   createdAt: Scalars['DateTime']['output'];
-  credentials: Array<Credential>;
+  credentials: Array<ChurrosCredential>;
   description: Scalars['String']['output'];
   descriptionHtml: Scalars['String']['output'];
   email: Scalars['String']['output'];
-  emailChangeRequests: Array<EmailChange>;
-  enabledNotificationChannels: Array<NotificationChannel>;
+  emailChangeRequests: Array<ChurrosEmailChange>;
+  enabledNotificationChannels: Array<ChurrosNotificationChannel>;
   external: Scalars['Boolean']['output'];
-  familyTree: FamilyTree;
+  familyTree: ChurrosFamilyTree;
   firstName: Scalars['String']['output'];
   fullName: Scalars['String']['output'];
-  godchildren: Array<User>;
-  godparent?: Maybe<User>;
+  godchildren: Array<ChurrosUser>;
+  godparent?: Maybe<ChurrosUser>;
   graduationYear: Scalars['Int']['output'];
-  groups: Array<GroupMember>;
+  groups: Array<ChurrosGroupMember>;
   id: Scalars['ID']['output'];
-  incomingGodparentRequests: Array<GodparentRequest>;
+  incomingGodparentRequests: Array<ChurrosGodparentRequest>;
   lastName: Scalars['String']['output'];
   latestVersionSeenInChangelog: Scalars['String']['output'];
-  links: Array<Link>;
+  links: Array<ChurrosLink>;
   /** L'identifiant local de la ressource (sans préfixe) */
-  localID: Scalars['LocalID']['output'];
-  major?: Maybe<Major>;
+  localID: Scalars['ChurrosLocalID']['output'];
+  major?: Maybe<ChurrosMajor>;
   majorId?: Maybe<Scalars['ID']['output']>;
-  managedEvents: Array<EventManager>;
-  minor?: Maybe<Minor>;
+  managedEvents: Array<ChurrosEventManager>;
+  minor?: Maybe<ChurrosMinor>;
   nickname: Scalars['String']['output'];
   otherEmails: Array<Scalars['String']['output']>;
-  outgoingGodparentRequests: Array<GodparentRequest>;
+  outgoingGodparentRequests: Array<ChurrosGodparentRequest>;
   /** Formulaires partiellement répondus par l'utilisateur */
-  partiallyAnsweredForms: UserPartiallyAnsweredFormsConnection;
-  pendingContributions: Array<ContributionOption>;
+  partiallyAnsweredForms: ChurrosUserPartiallyAnsweredFormsConnection;
+  pendingContributions: Array<ChurrosContributionOption>;
   phone: Scalars['String']['output'];
   pictureFile: Scalars['String']['output'];
   /** Le nom du fichier de l'image, en thème sombre */
@@ -4880,13 +3191,13 @@ export type User = Node & Pictured & {
 
 
 /** Users are the people who use the app */
-export type UseradminOfArgs = {
+export type ChurrosUseradminOfArgs = {
   studentAssociation: Scalars['String']['input'];
 };
 
 
 /** Users are the people who use the app */
-export type UseransweredFormsArgs = {
+export type ChurrosUseransweredFormsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -4895,7 +3206,7 @@ export type UseransweredFormsArgs = {
 
 
 /** Users are the people who use the app */
-export type UserarticlesArgs = {
+export type ChurrosUserarticlesArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -4904,14 +3215,14 @@ export type UserarticlesArgs = {
 
 
 /** Users are the people who use the app */
-export type UserbookingArgs = {
+export type ChurrosUserbookingArgs = {
   beneficiary?: InputMaybe<Scalars['String']['input']>;
   event: Scalars['ID']['input'];
 };
 
 
 /** Users are the people who use the app */
-export type UserbookingsArgs = {
+export type ChurrosUserbookingsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -4921,13 +3232,13 @@ export type UserbookingsArgs = {
 
 
 /** Users are the people who use the app */
-export type UsercanEditGroupArgs = {
+export type ChurrosUsercanEditGroupArgs = {
   uid: Scalars['String']['input'];
 };
 
 
 /** Users are the people who use the app */
-export type UserpartiallyAnsweredFormsArgs = {
+export type ChurrosUserpartiallyAnsweredFormsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -4936,45 +3247,45 @@ export type UserpartiallyAnsweredFormsArgs = {
 
 
 /** Users are the people who use the app */
-export type UserpictureURLArgs = {
+export type ChurrosUserpictureURLArgs = {
   dark?: Scalars['Boolean']['input'];
 };
 
-export type UserAnsweredFormsConnection = {
-  edges: Array<UserAnsweredFormsConnectionEdge>;
-  nodes: Array<Form>;
-  pageInfo: PageInfo;
+export type ChurrosUserAnsweredFormsConnection = {
+  edges: Array<ChurrosUserAnsweredFormsConnectionEdge>;
+  nodes: Array<ChurrosForm>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type UserAnsweredFormsConnectionEdge = {
+export type ChurrosUserAnsweredFormsConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: Form;
+  node: ChurrosForm;
 };
 
-export type UserArticlesConnection = {
-  edges: Array<UserArticlesConnectionEdge>;
-  nodes: Array<Article>;
-  pageInfo: PageInfo;
+export type ChurrosUserArticlesConnection = {
+  edges: Array<ChurrosUserArticlesConnectionEdge>;
+  nodes: Array<ChurrosArticle>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type UserArticlesConnectionEdge = {
+export type ChurrosUserArticlesConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: Article;
+  node: ChurrosArticle;
 };
 
-export type UserBookingsConnection = {
-  edges: Array<UserBookingsConnectionEdge>;
-  nodes: Array<Registration>;
-  pageInfo: PageInfo;
+export type ChurrosUserBookingsConnection = {
+  edges: Array<ChurrosUserBookingsConnectionEdge>;
+  nodes: Array<ChurrosRegistration>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type UserBookingsConnectionEdge = {
+export type ChurrosUserBookingsConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: Registration;
+  node: ChurrosRegistration;
 };
 
 /** UserCandidates are users in the registration process */
-export type UserCandidate = Node & {
+export type ChurrosUserCandidate = ChurrosNode & {
   address: Scalars['String']['output'];
   apprentice: Scalars['Boolean']['output'];
   birthday?: Maybe<Scalars['DateTime']['output']>;
@@ -4990,8 +3301,8 @@ export type UserCandidate = Node & {
   id: Scalars['ID']['output'];
   lastName: Scalars['String']['output'];
   /** L'identifiant local de la ressource (sans préfixe) */
-  localID: Scalars['LocalID']['output'];
-  major?: Maybe<Major>;
+  localID: Scalars['ChurrosLocalID']['output'];
+  major?: Maybe<ChurrosMajor>;
   majorId?: Maybe<Scalars['ID']['output']>;
   /** Vrai si l'utilisateur aura besoin d'une validation manuelle à la fin de l'inscription. Null si la notion n'a pas encore de sens. Si la filière n'a pas encore été renseignée, retourne vrai seulement si l'inscription devra être validée manuellement si une filière (peut importe laquelle) est choisie. Voir `needsManualValidationForMajor` pour être plus précis */
   needsManualValidation?: Maybe<Scalars['Boolean']['output']>;
@@ -5009,30 +3320,30 @@ export type UserCandidate = Node & {
 
 
 /** UserCandidates are users in the registration process */
-export type UserCandidateneedsManualValidationForMajorArgs = {
+export type ChurrosUserCandidateneedsManualValidationForMajorArgs = {
   major: Scalars['String']['input'];
 };
 
-export type UserPartiallyAnsweredFormsConnection = {
-  edges: Array<UserPartiallyAnsweredFormsConnectionEdge>;
-  nodes: Array<Form>;
-  pageInfo: PageInfo;
+export type ChurrosUserPartiallyAnsweredFormsConnection = {
+  edges: Array<ChurrosUserPartiallyAnsweredFormsConnectionEdge>;
+  nodes: Array<ChurrosForm>;
+  pageInfo: ChurrosPageInfo;
 };
 
-export type UserPartiallyAnsweredFormsConnectionEdge = {
+export type ChurrosUserPartiallyAnsweredFormsConnectionEdge = {
   cursor: Scalars['String']['output'];
-  node: Form;
+  node: ChurrosForm;
 };
 
-export type UserSearchResult = {
+export type ChurrosUserSearchResult = {
   highlightedDescription: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   rank?: Maybe<Scalars['Float']['output']>;
   similarity: Scalars['Float']['output'];
-  user: User;
+  user: ChurrosUser;
 };
 
-export type Visibility =
+export type ChurrosVisibility =
   | 'GroupRestricted'
   | 'Private'
   | 'Public'
@@ -5040,456 +3351,28 @@ export type Visibility =
   | 'Unlisted';
 
 /** A validation error, as a list of field errors. */
-export type ZodError = ErrorInterface & {
-  fieldErrors: Array<ZodFieldError>;
+export type ChurrosZodError = ChurrosErrorInterface & {
+  fieldErrors: Array<ChurrosZodFieldError>;
   message: Scalars['String']['output'];
 };
 
 /** A validation issue for a field. */
-export type ZodFieldError = {
+export type ChurrosZodFieldError = {
   message: Scalars['String']['output'];
   path: Array<Scalars['String']['output']>;
 };
 
   export type QuerySdk = {
-      /** Get all OAuth2 clients. Only admins can do this. **/
-  allApps: InContextSdkMethod<Query['allApps'], {}, MeshContext>,
-  /** Récupère tous les formulaires. Réservé aux admins. **/
-  allForms: InContextSdkMethod<Query['allForms'], QueryallFormsArgs, MeshContext>,
-  /** null **/
-  allUsers: InContextSdkMethod<Query['allUsers'], QueryallUsersArgs, MeshContext>,
-  /** null **/
-  announcement: InContextSdkMethod<Query['announcement'], QueryannouncementArgs, MeshContext>,
-  /** null **/
-  announcements: InContextSdkMethod<Query['announcements'], QueryannouncementsArgs, MeshContext>,
-  /** null **/
-  announcementsNow: InContextSdkMethod<Query['announcementsNow'], {}, MeshContext>,
-  /** null **/
-  article: InContextSdkMethod<Query['article'], QueryarticleArgs, MeshContext>,
-  /** Récupérer l'ID d'un article à partir de son groupe et de son slug. Pensé pour les redirections d'URLs anciennes. **/
-  articleID: InContextSdkMethod<Query['articleID'], QueryarticleIDArgs, MeshContext>,
-  /** null **/
-  barWeek: InContextSdkMethod<Query['barWeek'], QuerybarWeekArgs, MeshContext>,
-  /** null **/
-  barWeekNow: InContextSdkMethod<Query['barWeekNow'], QuerybarWeekNowArgs, MeshContext>,
-  /** null **/
-  barWeeks: InContextSdkMethod<Query['barWeeks'], {}, MeshContext>,
-  /** null **/
-  birthdays: InContextSdkMethod<Query['birthdays'], QuerybirthdaysArgs, MeshContext>,
-  /** Retourne des informations sur le build actuel de l'API **/
-  buildInfo: InContextSdkMethod<Query['buildInfo'], {}, MeshContext>,
-  /** null **/
-  changelog: InContextSdkMethod<Query['changelog'], QuerychangelogArgs, MeshContext>,
-  /** null **/
-  codeContributors: InContextSdkMethod<Query['codeContributors'], {}, MeshContext>,
-  /** A changelog for multiple versions. 
-Be careful, this range is (from, to]. I.e. **the first version is excluded, and the last is included**. 
-This is way more useful for querying a range of versions for a changelog, but not the usual way ranges are defined. **/
-  combinedChangelog: InContextSdkMethod<Query['combinedChangelog'], QuerycombinedChangelogArgs, MeshContext>,
-  /** null **/
-  contributionOptions: InContextSdkMethod<Query['contributionOptions'], {}, MeshContext>,
-  /** null **/
-  document: InContextSdkMethod<Query['document'], QuerydocumentArgs, MeshContext>,
-  /** null **/
-  documents: InContextSdkMethod<Query['documents'], QuerydocumentsArgs, MeshContext>,
-  /** null **/
-  event: InContextSdkMethod<Query['event'], QueryeventArgs, MeshContext>,
-  /** null **/
-  eventManager: InContextSdkMethod<Query['eventManager'], QueryeventManagerArgs, MeshContext>,
-  /** null **/
-  events: InContextSdkMethod<Query['events'], QueryeventsArgs, MeshContext>,
-  /** Tout les évènements, regroupés par date (de début). Les curseurs (before, after) peuvent être des dates au format YYYY-MM-DD **/
-  eventsByDay: InContextSdkMethod<Query['eventsByDay'], QueryeventsByDayArgs, MeshContext>,
-  /** null **/
-  eventsInWeek: InContextSdkMethod<Query['eventsInWeek'], QueryeventsInWeekArgs, MeshContext>,
-  /** null **/
-  existsInSchoolLdap: InContextSdkMethod<Query['existsInSchoolLdap'], QueryexistsInSchoolLdapArgs, MeshContext>,
-  /** Récupère un formulaire. On peut utiliser une subscription pour avoir la mise à jour en temps réel des réponses au formulaire. **/
-  form: InContextSdkMethod<Query['form'], QueryformArgs, MeshContext>,
-  /** Récupère les formulaires visibles par l'utilisateur·ice connecté·e. **/
-  forms: InContextSdkMethod<Query['forms'], QueryformsArgs, MeshContext>,
-  /** null **/
-  godparentRequest: InContextSdkMethod<Query['godparentRequest'], QuerygodparentRequestArgs, MeshContext>,
-  /** null **/
-  godparentRequests: InContextSdkMethod<Query['godparentRequests'], {}, MeshContext>,
-  /** null **/
+      /** null **/
   group: InContextSdkMethod<Query['group'], QuerygroupArgs, MeshContext>,
-  /** null **/
-  groupMembersCsv: InContextSdkMethod<Query['groupMembersCsv'], QuerygroupMembersCsvArgs, MeshContext>,
-  /** null **/
-  groups: InContextSdkMethod<Query['groups'], QuerygroupsArgs, MeshContext>,
-  /** - **Rate limit:** 5/seconde **/
-  healthcheck: InContextSdkMethod<Query['healthcheck'], {}, MeshContext>,
-  /** Gets the homepage articles, customized if the user is logged in. **/
-  homepage: InContextSdkMethod<Query['homepage'], QueryhomepageArgs, MeshContext>,
-  /** null **/
-  issue: InContextSdkMethod<Query['issue'], QueryissueArgs, MeshContext>,
-  /** null **/
-  issuesByUser: InContextSdkMethod<Query['issuesByUser'], {}, MeshContext>,
-  /** null **/
-  kioskReload: InContextSdkMethod<Query['kioskReload'], {}, MeshContext>,
-  /** null **/
-  logs: InContextSdkMethod<Query['logs'], QuerylogsArgs, MeshContext>,
-  /** null **/
-  lydiaAccount: InContextSdkMethod<Query['lydiaAccount'], QuerylydiaAccountArgs, MeshContext>,
-  /** null **/
-  lydiaAccounts: InContextSdkMethod<Query['lydiaAccounts'], {}, MeshContext>,
-  /** null **/
-  lydiaAccountsOfGroup: InContextSdkMethod<Query['lydiaAccountsOfGroup'], QuerylydiaAccountsOfGroupArgs, MeshContext>,
-  /** null **/
-  major: InContextSdkMethod<Query['major'], QuerymajorArgs, MeshContext>,
-  /** null **/
-  majors: InContextSdkMethod<Query['majors'], {}, MeshContext>,
   /** - **Rate limit:** 6000/minute **/
   me: InContextSdkMethod<Query['me'], {}, MeshContext>,
   /** null **/
-  minor: InContextSdkMethod<Query['minor'], QueryminorArgs, MeshContext>,
-  /** null **/
-  minors: InContextSdkMethod<Query['minors'], QueryminorsArgs, MeshContext>,
-  /** null **/
-  myApps: InContextSdkMethod<Query['myApps'], {}, MeshContext>,
-  /** null **/
-  notification: InContextSdkMethod<Query['notification'], QuerynotificationArgs, MeshContext>,
-  /** null **/
-  notificationSubscription: InContextSdkMethod<Query['notificationSubscription'], QuerynotificationSubscriptionArgs, MeshContext>,
-  /** null **/
-  notificationSubscriptions: InContextSdkMethod<Query['notificationSubscriptions'], {}, MeshContext>,
-  /** null **/
-  notifications: InContextSdkMethod<Query['notifications'], QuerynotificationsArgs, MeshContext>,
-  /** Returns how many people will be notified if an article of the given visibility and group is created. **/
-  notificationsSendCountForArticle: InContextSdkMethod<Query['notificationsSendCountForArticle'], QuerynotificationsSendCountForArticleArgs, MeshContext>,
-  /** Récupérer une page par son identifiant. Voir aussi `Group.page` et `StudentAssociation.page` pour des queries plus ergonomiques **/
-  page: InContextSdkMethod<Query['page'], QuerypageArgs, MeshContext>,
-  /** Récupère toutes les pages existantes. Réservé aux administrateur·ice.s. **/
-  pages: InContextSdkMethod<Query['pages'], QuerypagesArgs, MeshContext>,
-  /** null **/
-  quickSignups: InContextSdkMethod<Query['quickSignups'], QueryquickSignupsArgs, MeshContext>,
-  /** null **/
-  reaction: InContextSdkMethod<Query['reaction'], QueryreactionArgs, MeshContext>,
-  /** null **/
-  reactions: InContextSdkMethod<Query['reactions'], QueryreactionsArgs, MeshContext>,
-  /** null **/
-  registration: InContextSdkMethod<Query['registration'], QueryregistrationArgs, MeshContext>,
-  /** Returns an SVG path of the QR Code for the given registration **/
-  registrationQRCode: InContextSdkMethod<Query['registrationQRCode'], QueryregistrationQRCodeArgs, MeshContext>,
-  /** null **/
-  registrationsOfUser: InContextSdkMethod<Query['registrationsOfUser'], QueryregistrationsOfUserArgs, MeshContext>,
-  /** Rendu de markdown en HTML. Demande a être authentifié·e pour éviter tout abus. **/
-  renderMarkdown: InContextSdkMethod<Query['renderMarkdown'], QueryrenderMarkdownArgs, MeshContext>,
-  /** null **/
-  school: InContextSdkMethod<Query['school'], QueryschoolArgs, MeshContext>,
-  /** null **/
-  schoolGroups: InContextSdkMethod<Query['schoolGroups'], {}, MeshContext>,
-  /** null **/
-  schools: InContextSdkMethod<Query['schools'], {}, MeshContext>,
-  /** null **/
-  searchArticles: InContextSdkMethod<Query['searchArticles'], QuerysearchArticlesArgs, MeshContext>,
-  /** null **/
-  searchDocuments: InContextSdkMethod<Query['searchDocuments'], QuerysearchDocumentsArgs, MeshContext>,
-  /** null **/
-  searchEvents: InContextSdkMethod<Query['searchEvents'], QuerysearchEventsArgs, MeshContext>,
-  /** Recherche des formulaires **/
-  searchForms: InContextSdkMethod<Query['searchForms'], QuerysearchFormsArgs, MeshContext>,
-  /** null **/
-  searchGroups: InContextSdkMethod<Query['searchGroups'], QuerysearchGroupsArgs, MeshContext>,
-  /** null **/
-  searchUsers: InContextSdkMethod<Query['searchUsers'], QuerysearchUsersArgs, MeshContext>,
-  /** null **/
-  service: InContextSdkMethod<Query['service'], QueryserviceArgs, MeshContext>,
-  /** null **/
-  services: InContextSdkMethod<Query['services'], QueryservicesArgs, MeshContext>,
-  /** null **/
-  shopItem: InContextSdkMethod<Query['shopItem'], QueryshopItemArgs, MeshContext>,
-  /** null **/
-  shopPayments: InContextSdkMethod<Query['shopPayments'], QueryshopPaymentsArgs, MeshContext>,
-  /** null **/
-  studentAssociation: InContextSdkMethod<Query['studentAssociation'], QuerystudentAssociationArgs, MeshContext>,
-  /** null **/
-  studentAssociations: InContextSdkMethod<Query['studentAssociations'], QuerystudentAssociationsArgs, MeshContext>,
-  /** null **/
-  subject: InContextSdkMethod<Query['subject'], QuerysubjectArgs, MeshContext>,
-  /** null **/
-  subjects: InContextSdkMethod<Query['subjects'], {}, MeshContext>,
-  /** null **/
-  thirdPartyApp: InContextSdkMethod<Query['thirdPartyApp'], QuerythirdPartyAppArgs, MeshContext>,
-  /** null **/
-  ticketGroup: InContextSdkMethod<Query['ticketGroup'], QueryticketGroupArgs, MeshContext>,
-  /** Vérifie si un identifiant (un “@” dans l'interface) est disponible **/
-  uidIsAvailable: InContextSdkMethod<Query['uidIsAvailable'], QueryuidIsAvailableArgs, MeshContext>,
-  /** null **/
-  upcomingChangelog: InContextSdkMethod<Query['upcomingChangelog'], {}, MeshContext>,
-  /** null **/
-  user: InContextSdkMethod<Query['user'], QueryuserArgs, MeshContext>,
-  /** null **/
-  userByEmail: InContextSdkMethod<Query['userByEmail'], QueryuserByEmailArgs, MeshContext>,
-  /** null **/
-  userCandidate: InContextSdkMethod<Query['userCandidate'], QueryuserCandidateArgs, MeshContext>,
-  /** null **/
-  userCandidateByEmail: InContextSdkMethod<Query['userCandidateByEmail'], QueryuserCandidateByEmailArgs, MeshContext>,
-  /** null **/
-  userCandidates: InContextSdkMethod<Query['userCandidates'], QueryuserCandidatesArgs, MeshContext>,
-  /** null **/
-  userServices: InContextSdkMethod<Query['userServices'], {}, MeshContext>
+  user: InContextSdkMethod<Query['user'], QueryuserArgs, MeshContext>
   };
 
   export type MutationSdk = {
-      /** null **/
-  acceptRegistration: InContextSdkMethod<Mutation['acceptRegistration'], MutationacceptRegistrationArgs, MeshContext>,
-  /** Marks the user as having seen the given version's changelog. **/
-  acknowledgeChangelog: InContextSdkMethod<Mutation['acknowledgeChangelog'], MutationacknowledgeChangelogArgs, MeshContext>,
-  /** Activate a third-party app. Only admins can do this. **/
-  activateApp: InContextSdkMethod<Mutation['activateApp'], MutationactivateAppArgs, MeshContext>,
-  /** Ajouter un fichier à une page. Permet notamment d'ajouter des images pour s'en servir dans le contenu de la page. **/
-  addFileToPage: InContextSdkMethod<Mutation['addFileToPage'], MutationaddFileToPageArgs, MeshContext>,
-  /** null **/
-  addGroupMember: InContextSdkMethod<Mutation['addGroupMember'], MutationaddGroupMemberArgs, MeshContext>,
-  /** Répondre à une question de type `FileUpload` en uploadant un fichier **/
-  answerFileQuestion: InContextSdkMethod<Mutation['answerFileQuestion'], MutationanswerFileQuestionArgs, MeshContext>,
-  /** null **/
-  answerFormSection: InContextSdkMethod<Mutation['answerFormSection'], MutationanswerFormSectionArgs, MeshContext>,
-  /** 
-Authorize a third-party client to access the user's data. 
-Returns an access code. 
-
-Use the frontend's /authorize endpoint instead of this, as it requires already being logged-in.
-
-Do a `GET` request to `https://churros.inpt.fr/authorize?client_id=<clientId>&redirect_uri=<redirectUri>&response_type=code&state=<state>` with:
-
-- `<clientId>`: The client ID of the app. See registerApp to get this.
-- `<redirectUri>`: The URL that you want to redirect the user to. The frontend uses this on /authorize to redirect users to `<redirectUri>?code=<return value of this mutation>`
-- `<state>`: A random string generated from personal information used to prevent CSRF attacks.
-
-Use that code to get an access token with /token:
-
-Do a `POST` request to `https://churros.inpt.fr/token` with a `application/x-www-form-urlencoded` body with the following fields:
-
-- `grant_type`: `authorization_code`
-- `code`: The code returned by this endpoint
-- `client_id`: The client ID of the app
-- `client_secret`: The client secret of the app
-- `redirect_uri`: The redirect URI used in this request
-       **/
-  authorize: InContextSdkMethod<Mutation['authorize'], MutationauthorizeArgs, MeshContext>,
-  /** null **/
-  cancelPendingContribution: InContextSdkMethod<Mutation['cancelPendingContribution'], MutationcancelPendingContributionArgs, MeshContext>,
-  /** null **/
-  cancelRegistration: InContextSdkMethod<Mutation['cancelRegistration'], MutationcancelRegistrationArgs, MeshContext>,
-  /** null **/
-  checkIfRegistrationIsPaid: InContextSdkMethod<Mutation['checkIfRegistrationIsPaid'], MutationcheckIfRegistrationIsPaidArgs, MeshContext>,
-  /** null **/
-  claimPromotionCode: InContextSdkMethod<Mutation['claimPromotionCode'], MutationclaimPromotionCodeArgs, MeshContext>,
-  /** null **/
-  completeRegistration: InContextSdkMethod<Mutation['completeRegistration'], MutationcompleteRegistrationArgs, MeshContext>,
-  /** null **/
-  contribute: InContextSdkMethod<Mutation['contribute'], MutationcontributeArgs, MeshContext>,
-  /** null **/
-  createBot: InContextSdkMethod<Mutation['createBot'], MutationcreateBotArgs, MeshContext>,
-  /** null **/
-  createGitlabIssue: InContextSdkMethod<Mutation['createGitlabIssue'], MutationcreateGitlabIssueArgs, MeshContext>,
-  /** Créer un pass Google Wallet pour une réservation donnée. Renvoie l'URL a utiliser pour ajouter le pass à Google Wallet. **/
-  createGoogleWalletPass: InContextSdkMethod<Mutation['createGoogleWalletPass'], MutationcreateGoogleWalletPassArgs, MeshContext>,
-  /** Crée une feuille Google Sheets (si elle n'existe pas déjà) qui contiendra les réponses au formulaire (et sera mise à jour automatiquement). Renvoie l'URL de la feuille Google Sheets. **/
-  createLinkedGoogleSheet: InContextSdkMethod<Mutation['createLinkedGoogleSheet'], MutationcreateLinkedGoogleSheetArgs, MeshContext>,
-  /** Démarre une procédure de réinitialisation de mot de passe pour l'utilisateur associé à l'adresse e-mail ou l'uid fournie. Renvoie `true` même si l'utilisateur n'existe pas. **/
-  createPasswordReset: InContextSdkMethod<Mutation['createPasswordReset'], MutationcreatePasswordResetArgs, MeshContext>,
-  /** Créer un lien d'inscription rapide **/
-  createQuickSignup: InContextSdkMethod<Mutation['createQuickSignup'], MutationcreateQuickSignupArgs, MeshContext>,
-  /** Deactivate a third-party app. Only admins can do this. **/
-  deactivateApp: InContextSdkMethod<Mutation['deactivateApp'], MutationdeactivateAppArgs, MeshContext>,
-  /** null **/
-  deleteAnnouncement: InContextSdkMethod<Mutation['deleteAnnouncement'], MutationdeleteAnnouncementArgs, MeshContext>,
-  /** null **/
-  deleteArticle: InContextSdkMethod<Mutation['deleteArticle'], MutationdeleteArticleArgs, MeshContext>,
-  /** null **/
-  deleteArticlePicture: InContextSdkMethod<Mutation['deleteArticlePicture'], MutationdeleteArticlePictureArgs, MeshContext>,
-  /** null **/
-  deleteBarWeek: InContextSdkMethod<Mutation['deleteBarWeek'], MutationdeleteBarWeekArgs, MeshContext>,
-  /** null **/
-  deleteComment: InContextSdkMethod<Mutation['deleteComment'], MutationdeleteCommentArgs, MeshContext>,
-  /** null **/
-  deleteDocument: InContextSdkMethod<Mutation['deleteDocument'], MutationdeleteDocumentArgs, MeshContext>,
-  /** null **/
-  deleteDocumentFile: InContextSdkMethod<Mutation['deleteDocumentFile'], MutationdeleteDocumentFileArgs, MeshContext>,
-  /** null **/
-  deleteEvent: InContextSdkMethod<Mutation['deleteEvent'], MutationdeleteEventArgs, MeshContext>,
-  /** null **/
-  deleteEventManager: InContextSdkMethod<Mutation['deleteEventManager'], MutationdeleteEventManagerArgs, MeshContext>,
-  /** null **/
-  deleteEventPicture: InContextSdkMethod<Mutation['deleteEventPicture'], MutationdeleteEventPictureArgs, MeshContext>,
-  /** null **/
-  deleteGodchild: InContextSdkMethod<Mutation['deleteGodchild'], MutationdeleteGodchildArgs, MeshContext>,
-  /** Deletes a pending godparent request. If accept is true, the request will be accepted (and the godparent of the requester will be changed), otherwise it will be rejected (the godparent of the requester won't be changed) **/
-  deleteGodparentRequest: InContextSdkMethod<Mutation['deleteGodparentRequest'], MutationdeleteGodparentRequestArgs, MeshContext>,
-  /** null **/
-  deleteGroup: InContextSdkMethod<Mutation['deleteGroup'], MutationdeleteGroupArgs, MeshContext>,
-  /** null **/
-  deleteGroupMember: InContextSdkMethod<Mutation['deleteGroupMember'], MutationdeleteGroupMemberArgs, MeshContext>,
-  /** null **/
-  deleteGroupPicture: InContextSdkMethod<Mutation['deleteGroupPicture'], MutationdeleteGroupPictureArgs, MeshContext>,
-  /** null **/
-  deleteItemPicture: InContextSdkMethod<Mutation['deleteItemPicture'], MutationdeleteItemPictureArgs, MeshContext>,
-  /** null **/
-  deleteNotificationSubscription: InContextSdkMethod<Mutation['deleteNotificationSubscription'], MutationdeleteNotificationSubscriptionArgs, MeshContext>,
-  /** Supprime une page existante. On peut renseigner l'identifiant de la page ou son chemin ainsi que son groupe ou AE d'appartenance. **/
-  deletePage: InContextSdkMethod<Mutation['deletePage'], MutationdeletePageArgs, MeshContext>,
-  /** null **/
-  deleteQuickSignup: InContextSdkMethod<Mutation['deleteQuickSignup'], MutationdeleteQuickSignupArgs, MeshContext>,
-  /** null **/
-  deleteReaction: InContextSdkMethod<Mutation['deleteReaction'], MutationdeleteReactionArgs, MeshContext>,
-  /** null **/
-  deleteRegistration: InContextSdkMethod<Mutation['deleteRegistration'], MutationdeleteRegistrationArgs, MeshContext>,
-  /** null **/
-  deleteSchoolPicture: InContextSdkMethod<Mutation['deleteSchoolPicture'], MutationdeleteSchoolPictureArgs, MeshContext>,
-  /** null **/
-  deleteShopItem: InContextSdkMethod<Mutation['deleteShopItem'], MutationdeleteShopItemArgs, MeshContext>,
-  /** null **/
-  deleteShopOption: InContextSdkMethod<Mutation['deleteShopOption'], MutationdeleteShopOptionArgs, MeshContext>,
-  /** null **/
-  deleteTicket: InContextSdkMethod<Mutation['deleteTicket'], MutationdeleteTicketArgs, MeshContext>,
-  /** null **/
-  deleteTicketGroup: InContextSdkMethod<Mutation['deleteTicketGroup'], MutationdeleteTicketGroupArgs, MeshContext>,
-  /** null **/
-  deleteToken: InContextSdkMethod<Mutation['deleteToken'], MutationdeleteTokenArgs, MeshContext>,
-  /** null **/
-  deleteUserPicture: InContextSdkMethod<Mutation['deleteUserPicture'], MutationdeleteUserPictureArgs, MeshContext>,
-  /** Update a third-party app's details **/
-  editApp: InContextSdkMethod<Mutation['editApp'], MutationeditAppArgs, MeshContext>,
-  /** null **/
-  finishPaypalRegistrationPayment: InContextSdkMethod<Mutation['finishPaypalRegistrationPayment'], MutationfinishPaypalRegistrationPaymentArgs, MeshContext>,
-  /** null **/
-  kioskReload: InContextSdkMethod<Mutation['kioskReload'], MutationkioskReloadArgs, MeshContext>,
-  /** Logs a user in and returns a session token. **/
-  login: InContextSdkMethod<Mutation['login'], MutationloginArgs, MeshContext>,
-  /** Logs a user out and invalidates the session token. **/
-  logout: InContextSdkMethod<Mutation['logout'], {}, MeshContext>,
-  /** Envoie une copie des réponses de l'utilisateur·ice connecté·e à ce formulaire par email. Renvoie l'adresse mail à laquelle les réponses ont été envoyées. **/
-  mailFormAnswers: InContextSdkMethod<Mutation['mailFormAnswers'], MutationmailFormAnswersArgs, MeshContext>,
-  /** null **/
-  mergeDocuments: InContextSdkMethod<Mutation['mergeDocuments'], MutationmergeDocumentsArgs, MeshContext>,
-  /** null **/
-  opposeRegistration: InContextSdkMethod<Mutation['opposeRegistration'], MutationopposeRegistrationArgs, MeshContext>,
-  /** When paying with Paypal, returns the order id for a capture to finish the payment **/
-  paidRegistration: InContextSdkMethod<Mutation['paidRegistration'], MutationpaidRegistrationArgs, MeshContext>,
-  /** null **/
-  paidShopPayment: InContextSdkMethod<Mutation['paidShopPayment'], MutationpaidShopPaymentArgs, MeshContext>,
-  /** null **/
-  refuseRegistration: InContextSdkMethod<Mutation['refuseRegistration'], MutationrefuseRegistrationArgs, MeshContext>,
-  /** Register a third-party OAuth2 client. Returns the client secret. The client secret cannot be retrieved at any other time. Use refreshAppSecret to rotate your client secret. **/
-  registerApp: InContextSdkMethod<Mutation['registerApp'], MutationregisterAppArgs, MeshContext>,
-  /** Enregistrer un token OAuth2 Google pour l'utilisateur connecté. **/
-  registerGoogleCredential: InContextSdkMethod<Mutation['registerGoogleCredential'], MutationregisterGoogleCredentialArgs, MeshContext>,
-  /** Supprimer un fichier d'une page. **/
-  removeFileFromPage: InContextSdkMethod<Mutation['removeFileFromPage'], MutationremoveFileFromPageArgs, MeshContext>,
-  /** null **/
-  renameSession: InContextSdkMethod<Mutation['renameSession'], MutationrenameSessionArgs, MeshContext>,
-  /** null **/
-  requestEmailChange: InContextSdkMethod<Mutation['requestEmailChange'], MutationrequestEmailChangeArgs, MeshContext>,
-  /** null **/
-  resetPassword: InContextSdkMethod<Mutation['resetPassword'], MutationresetPasswordArgs, MeshContext>,
-  /** Révoque l'accès d'une application au compte utilisateur connecté. Renvoie `true` si l'opération a réussi. **/
-  revokeAuthorization: InContextSdkMethod<Mutation['revokeAuthorization'], MutationrevokeAuthorizationArgs, MeshContext>,
-  /** Rotate a third-party app's secret **/
-  rotateAppSecret: InContextSdkMethod<Mutation['rotateAppSecret'], MutationrotateAppSecretArgs, MeshContext>,
-  /** null **/
-  selfJoinGroup: InContextSdkMethod<Mutation['selfJoinGroup'], MutationselfJoinGroupArgs, MeshContext>,
-  /** Envoie une notification à l'utilisateur connecté. Limité à une notification par heure. Si l'utilisateur a désactivé les notifications de type “Autres” pour le groupe responsable du [client OAuth](/oauth) faisant la requête, la notification ne lui sera pas envoyée.
-
-- **Rate limit:** 1/heure **/
-  sendNotification: InContextSdkMethod<Mutation['sendNotification'], MutationsendNotificationArgs, MeshContext>,
-  /** null **/
-  setDocumentFileIsSolution: InContextSdkMethod<Mutation['setDocumentFileIsSolution'], MutationsetDocumentFileIsSolutionArgs, MeshContext>,
-  /** Coche ou décoche la case à cocher à côté des réponses à un formulaire pour un·e utilisateur·ice. **/
-  setFormAnswersCheckbox: InContextSdkMethod<Mutation['setFormAnswersCheckbox'], MutationsetFormAnswersCheckboxArgs, MeshContext>,
-  /** null **/
-  startRegistration: InContextSdkMethod<Mutation['startRegistration'], MutationstartRegistrationArgs, MeshContext>,
-  /** null **/
-  syncUserLdap: InContextSdkMethod<Mutation['syncUserLdap'], MutationsyncUserLdapArgs, MeshContext>,
-  /** null **/
-  testNotification: InContextSdkMethod<Mutation['testNotification'], MutationtestNotificationArgs, MeshContext>,
-  /** null **/
-  toggleReaction: InContextSdkMethod<Mutation['toggleReaction'], MutationtoggleReactionArgs, MeshContext>,
-  /** null **/
-  updateArticlePicture: InContextSdkMethod<Mutation['updateArticlePicture'], MutationupdateArticlePictureArgs, MeshContext>,
-  /** null **/
-  updateEventPicture: InContextSdkMethod<Mutation['updateEventPicture'], MutationupdateEventPictureArgs, MeshContext>,
-  /** null **/
-  updateGroupPicture: InContextSdkMethod<Mutation['updateGroupPicture'], MutationupdateGroupPictureArgs, MeshContext>,
-  /** null **/
-  updateItemPicture: InContextSdkMethod<Mutation['updateItemPicture'], MutationupdateItemPictureArgs, MeshContext>,
-  /** null **/
-  updateNotificationSettings: InContextSdkMethod<Mutation['updateNotificationSettings'], MutationupdateNotificationSettingsArgs, MeshContext>,
-  /** Changer si la salle d'un groupe est fermée ou ouvert **/
-  updateRoomOpenState: InContextSdkMethod<Mutation['updateRoomOpenState'], MutationupdateRoomOpenStateArgs, MeshContext>,
-  /** null **/
-  updateSchool: InContextSdkMethod<Mutation['updateSchool'], MutationupdateSchoolArgs, MeshContext>,
-  /** null **/
-  updateSchoolPicture: InContextSdkMethod<Mutation['updateSchoolPicture'], MutationupdateSchoolPictureArgs, MeshContext>,
-  /** null **/
-  updateStudentAssociationPicture: InContextSdkMethod<Mutation['updateStudentAssociationPicture'], MutationupdateStudentAssociationPictureArgs, MeshContext>,
-  /** null **/
-  updateSubjectsExamDates: InContextSdkMethod<Mutation['updateSubjectsExamDates'], {}, MeshContext>,
-  /** null **/
-  updateUser: InContextSdkMethod<Mutation['updateUser'], MutationupdateUserArgs, MeshContext>,
-  /** null **/
-  updateUserCandidate: InContextSdkMethod<Mutation['updateUserCandidate'], MutationupdateUserCandidateArgs, MeshContext>,
-  /** null **/
-  updateUserPermissions: InContextSdkMethod<Mutation['updateUserPermissions'], MutationupdateUserPermissionsArgs, MeshContext>,
-  /** null **/
-  updateUserPicture: InContextSdkMethod<Mutation['updateUserPicture'], MutationupdateUserPictureArgs, MeshContext>,
-  /** null **/
-  uploadDocumentFile: InContextSdkMethod<Mutation['uploadDocumentFile'], MutationuploadDocumentFileArgs, MeshContext>,
-  /** null **/
-  upsertAnnouncement: InContextSdkMethod<Mutation['upsertAnnouncement'], MutationupsertAnnouncementArgs, MeshContext>,
-  /** Crée ou met à jour un post **/
-  upsertArticle: InContextSdkMethod<Mutation['upsertArticle'], MutationupsertArticleArgs, MeshContext>,
-  /** null **/
-  upsertBarWeek: InContextSdkMethod<Mutation['upsertBarWeek'], MutationupsertBarWeekArgs, MeshContext>,
-  /** null **/
-  upsertComment: InContextSdkMethod<Mutation['upsertComment'], MutationupsertCommentArgs, MeshContext>,
-  /** null **/
-  upsertDocument: InContextSdkMethod<Mutation['upsertDocument'], MutationupsertDocumentArgs, MeshContext>,
-  /** null **/
-  upsertEvent: InContextSdkMethod<Mutation['upsertEvent'], MutationupsertEventArgs, MeshContext>,
-  /** Crée ou met à jour un formulaire. À la création, une section de formulaire vide sans titre est automatiquement créée. C'est pratique pour les formulaires sans section. **/
-  upsertForm: InContextSdkMethod<Mutation['upsertForm'], MutationupsertFormArgs, MeshContext>,
-  /** Crée ou met à jour une section de formulaire. **/
-  upsertFormSection: InContextSdkMethod<Mutation['upsertFormSection'], MutationupsertFormSectionArgs, MeshContext>,
-  /** null **/
-  upsertGodparentRequest: InContextSdkMethod<Mutation['upsertGodparentRequest'], MutationupsertGodparentRequestArgs, MeshContext>,
-  /** null **/
-  upsertGroup: InContextSdkMethod<Mutation['upsertGroup'], MutationupsertGroupArgs, MeshContext>,
-  /** null **/
-  upsertGroupMember: InContextSdkMethod<Mutation['upsertGroupMember'], MutationupsertGroupMemberArgs, MeshContext>,
-  /** null **/
-  upsertLydiaAccount: InContextSdkMethod<Mutation['upsertLydiaAccount'], MutationupsertLydiaAccountArgs, MeshContext>,
-  /** null **/
-  upsertManagersOfEvent: InContextSdkMethod<Mutation['upsertManagersOfEvent'], MutationupsertManagersOfEventArgs, MeshContext>,
-  /** null **/
-  upsertNotificationSubscription: InContextSdkMethod<Mutation['upsertNotificationSubscription'], MutationupsertNotificationSubscriptionArgs, MeshContext>,
-  /** Crée ou met à jour une page. **/
-  upsertPage: InContextSdkMethod<Mutation['upsertPage'], MutationupsertPageArgs, MeshContext>,
-  /** Crée ou met à jour une question. **/
-  upsertQuestion: InContextSdkMethod<Mutation['upsertQuestion'], MutationupsertQuestionArgs, MeshContext>,
-  /** null **/
-  upsertReaction: InContextSdkMethod<Mutation['upsertReaction'], MutationupsertReactionArgs, MeshContext>,
-  /** null **/
-  upsertRegistration: InContextSdkMethod<Mutation['upsertRegistration'], MutationupsertRegistrationArgs, MeshContext>,
-  /** null **/
-  upsertService: InContextSdkMethod<Mutation['upsertService'], MutationupsertServiceArgs, MeshContext>,
-  /** null **/
-  upsertShopItem: InContextSdkMethod<Mutation['upsertShopItem'], MutationupsertShopItemArgs, MeshContext>,
-  /** null **/
-  upsertShopOptions: InContextSdkMethod<Mutation['upsertShopOptions'], MutationupsertShopOptionsArgs, MeshContext>,
-  /** null **/
-  upsertShopPayment: InContextSdkMethod<Mutation['upsertShopPayment'], MutationupsertShopPaymentArgs, MeshContext>,
-  /** null **/
-  upsertTicketGroup: InContextSdkMethod<Mutation['upsertTicketGroup'], MutationupsertTicketGroupArgs, MeshContext>,
-  /** null **/
-  usePasswordReset: InContextSdkMethod<Mutation['usePasswordReset'], MutationusePasswordResetArgs, MeshContext>,
-  /** null **/
-  validateEmail: InContextSdkMethod<Mutation['validateEmail'], MutationvalidateEmailArgs, MeshContext>,
-  /** null **/
-  verifyBooking: InContextSdkMethod<Mutation['verifyBooking'], MutationverifyBookingArgs, MeshContext>
+    
   };
 
   export type SubscriptionSdk = {
