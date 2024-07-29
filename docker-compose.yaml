@@ -1,0 +1,10 @@
+include:
+  - ./docker-compose.churros.yaml
+  - ./docker-compose.authentik.yaml
+
+services:
+  smtp:
+    image: mailhog/mailhog
+    ports:
+      - 1025:1025
+      - 8025:8025

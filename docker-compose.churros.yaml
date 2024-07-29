@@ -1,0 +1,56 @@
+services:
+  churros_postgres:
+    image: docker.io/library/postgres:16-alpine
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    volumes:
+      - churros_database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: dev
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    env_file:
+      - .env
+  churros_redis:
+    image: redis/redis-stack:7.4.0-v0
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 3s
+    volumes:
+      - churros_redis:/data
+  churros_api:
+    image: harbor.k8s.inpt.fr/net7/centraverse/api:v1.68.5
+    ports:
+      - "4000:4000"
+    env_file:
+      - churros.env
+    volumes:
+      - churros_storage:/app/storage
+    depends_on:
+      - churros_postgres
+      - churros_redis
+  churros_app:
+    image: harbor.k8s.inpt.fr/net7/centraverse/app:v1.68.5
+    ports:
+      - "3000:3000"
+    env_file:
+      - churros.env
+    depends_on:
+      - churros_api
+
+volumes:
+  churros_database:
+    driver: local
+  churros_redis:
+    driver: local
+  churros_storage:
+    driver: local

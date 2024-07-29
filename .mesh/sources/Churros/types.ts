@@ -2784,7 +2784,7 @@ export type ChurrosSubjectDocumentsConnectionEdge = {
 
 /**
  * Permet de faire des requêtes de données temps-réel, via des _websockets_.
- * L'endpoint pour le temps réel est `wss://churros.inpt.fr/graphql`.
+ * L'endpoint pour le temps réel est `ws://localhost:4000/graphql`.
  *
  * Pour un client JavaScript, il y a par exemple [GraphQL-WebSocket](https://the-guild.dev/graphql/ws/get-started#use-the-client)
  *
@@ -2806,7 +2806,7 @@ export type Subscription = {
 
 /**
  * Permet de faire des requêtes de données temps-réel, via des _websockets_.
- * L'endpoint pour le temps réel est `wss://churros.inpt.fr/graphql`.
+ * L'endpoint pour le temps réel est `ws://localhost:4000/graphql`.
  *
  * Pour un client JavaScript, il y a par exemple [GraphQL-WebSocket](https://the-guild.dev/graphql/ws/get-started#use-the-client)
  *
@@ -2819,7 +2819,7 @@ export type SubscriptionarticleArgs = {
 
 /**
  * Permet de faire des requêtes de données temps-réel, via des _websockets_.
- * L'endpoint pour le temps réel est `wss://churros.inpt.fr/graphql`.
+ * L'endpoint pour le temps réel est `ws://localhost:4000/graphql`.
  *
  * Pour un client JavaScript, il y a par exemple [GraphQL-WebSocket](https://the-guild.dev/graphql/ws/get-started#use-the-client)
  *
@@ -2834,7 +2834,7 @@ export type SubscriptioneventArgs = {
 
 /**
  * Permet de faire des requêtes de données temps-réel, via des _websockets_.
- * L'endpoint pour le temps réel est `wss://churros.inpt.fr/graphql`.
+ * L'endpoint pour le temps réel est `ws://localhost:4000/graphql`.
  *
  * Pour un client JavaScript, il y a par exemple [GraphQL-WebSocket](https://the-guild.dev/graphql/ws/get-started#use-the-client)
  *
@@ -2847,7 +2847,7 @@ export type SubscriptionformArgs = {
 
 /**
  * Permet de faire des requêtes de données temps-réel, via des _websockets_.
- * L'endpoint pour le temps réel est `wss://churros.inpt.fr/graphql`.
+ * L'endpoint pour le temps réel est `ws://localhost:4000/graphql`.
  *
  * Pour un client JavaScript, il y a par exemple [GraphQL-WebSocket](https://the-guild.dev/graphql/ws/get-started#use-the-client)
  *
@@ -2863,7 +2863,7 @@ export type SubscriptionhomepageArgs = {
 
 /**
  * Permet de faire des requêtes de données temps-réel, via des _websockets_.
- * L'endpoint pour le temps réel est `wss://churros.inpt.fr/graphql`.
+ * L'endpoint pour le temps réel est `ws://localhost:4000/graphql`.
  *
  * Pour un client JavaScript, il y a par exemple [GraphQL-WebSocket](https://the-guild.dev/graphql/ws/get-started#use-the-client)
  *
@@ -2876,7 +2876,7 @@ export type SubscriptionregistrationArgs = {
 
 /**
  * Permet de faire des requêtes de données temps-réel, via des _websockets_.
- * L'endpoint pour le temps réel est `wss://churros.inpt.fr/graphql`.
+ * L'endpoint pour le temps réel est `ws://localhost:4000/graphql`.
  *
  * Pour un client JavaScript, il y a par exemple [GraphQL-WebSocket](https://the-guild.dev/graphql/ws/get-started#use-the-client)
  *

@@ -111,8 +111,8 @@ export type Scalars = {
   MutationInputCoreGroupsPartialUpdateInputName: { input: any; output: any; }
   MutationInputCoreTokensCreateInputIdentifier: { input: string; output: string; }
   MutationInputCoreTokensPartialUpdateInputIdentifier: { input: string; output: string; }
-  MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_1ClientId: { input: any; output: any; }
-  MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_1ClientSecret: { input: any; output: any; }
+  MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_3ClientId: { input: any; output: any; }
+  MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_3ClientSecret: { input: any; output: any; }
   MutationInputCoreUsersCreateInputUsername: { input: any; output: any; }
   MutationInputCoreUsersPartialUpdateInputUsername: { input: any; output: any; }
   MutationInputFlowsInstancesCreateInputSlug: { input: string; output: string; }
@@ -196,7 +196,7 @@ export type Query = {
   provider?: Maybe<ProvidersAllRetrieveResponse>;
   /** Get a list of all objects that use this object */
   providersAllUsedByList?: Maybe<Array<Maybe<ProvidersAllUsedByListResponse>>>;
-  /** Get all creatable provider types */
+  /** Get all creatable types */
   providersAllTypesList?: Maybe<Array<Maybe<ProvidersAllTypesListResponse>>>;
 };
 
@@ -317,7 +317,7 @@ export type QueryflowsInstancesUsedByListArgs = {
 
 export type QueryprovidersArgs = {
   applicationIsnull?: InputMaybe<Scalars['Boolean']['input']>;
-  backchannelOnly?: InputMaybe<Scalars['Boolean']['input']>;
+  backchannel?: InputMaybe<Scalars['Boolean']['input']>;
   ordering?: InputMaybe<Scalars['String']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   pageSize?: InputMaybe<Scalars['Int']['input']>;
@@ -422,11 +422,13 @@ export type SystemInfo = {
 /** Get versions */
 export type QueryAdminSystemRetrieveOneOf_0Runtime = {
   pythonVersion: Scalars['String']['output'];
-  gunicornVersion: Scalars['String']['output'];
   environment: Scalars['String']['output'];
   architecture: Scalars['String']['output'];
   platform: Scalars['String']['output'];
   uname: Scalars['String']['output'];
+  opensslVersion: Scalars['String']['output'];
+  opensslFipsEnabled?: Maybe<Scalars['Boolean']['output']>;
+  authentikVersion: Scalars['String']['output'];
 };
 
 export type AdminVersionRetrieveResponse = Version | ValidationError | GenericError;
@@ -845,7 +847,7 @@ export type CurrentBrand = {
 
 /** Links returned in Config API */
 export type FooterLink = {
-  href: Scalars['String']['output'];
+  href?: Maybe<Scalars['String']['output']>;
   name: Scalars['String']['output'];
 };
 
@@ -1241,6 +1243,7 @@ export type TypeCreate = {
   description: Scalars['String']['output'];
   component: Scalars['String']['output'];
   modelName: Scalars['String']['output'];
+  iconUrl?: Maybe<Scalars['String']['output']>;
   requiresEnterprise?: Maybe<Scalars['Boolean']['output']>;
 };
 
@@ -1337,6 +1340,8 @@ export type SystemTask = {
   duration: Scalars['Float']['output'];
   status: SystemTaskStatusEnum;
   messages: Array<Maybe<LogEvent>>;
+  expires?: Maybe<Scalars['DateTime']['output']>;
+  expiring?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type SystemTaskStatusEnum =
@@ -2148,6 +2153,11 @@ export type OutpostHealth = {
   uid: Scalars['String']['output'];
   lastSeen: Scalars['DateTime']['output'];
   version: Scalars['String']['output'];
+  golangVersion: Scalars['String']['output'];
+  opensslEnabled: Scalars['Boolean']['output'];
+  opensslVersion: Scalars['String']['output'];
+  /** Get FIPS enabled */
+  fipsEnabled?: Maybe<Scalars['Boolean']['output']>;
   versionShould: Scalars['String']['output'];
   versionOutdated: Scalars['Boolean']['output'];
   buildHash: Scalars['String']['output'];
@@ -2553,6 +2563,8 @@ export type AppEnum =
   | 'AUTHENTIK_CORE'
   | 'AUTHENTIK_ENTERPRISE'
   | 'AUTHENTIK_ENTERPRISE_AUDIT'
+  | 'AUTHENTIK_ENTERPRISE_PROVIDERS_GOOGLE_WORKSPACE'
+  | 'AUTHENTIK_ENTERPRISE_PROVIDERS_MICROSOFT_ENTRA'
   | 'AUTHENTIK_ENTERPRISE_PROVIDERS_RAC'
   | 'AUTHENTIK_ENTERPRISE_STAGES_SOURCE'
   | 'AUTHENTIK_EVENTS';
@@ -2625,6 +2637,10 @@ export type ModelEnum =
   | 'AUTHENTIK_CORE_APPLICATION'
   | 'AUTHENTIK_CORE_TOKEN'
   | 'AUTHENTIK_ENTERPRISE_LICENSE'
+  | 'AUTHENTIK_PROVIDERS_GOOGLE_WORKSPACE_GOOGLEWORKSPACEPROVIDER'
+  | 'AUTHENTIK_PROVIDERS_GOOGLE_WORKSPACE_GOOGLEWORKSPACEPROVIDERMAPPING'
+  | 'AUTHENTIK_PROVIDERS_MICROSOFT_ENTRA_MICROSOFTENTRAPROVIDER'
+  | 'AUTHENTIK_PROVIDERS_MICROSOFT_ENTRA_MICROSOFTENTRAPROVIDERMAPPING'
   | 'AUTHENTIK_PROVIDERS_RAC_RACPROVIDER'
   | 'AUTHENTIK_PROVIDERS_RAC_ENDPOINT'
   | 'AUTHENTIK_PROVIDERS_RAC_RACPROPERTYMAPPING'
@@ -2906,6 +2922,62 @@ export type PropertymappingsNotificationRetrieveResponse = NotificationWebhookMa
 
 export type PropertymappingsNotificationUsedByListResponse = UsedBy | ValidationError | GenericError;
 
+export type PropertymappingsProviderGoogleWorkspaceListResponse = PaginatedGoogleWorkspaceProviderMappingList | ValidationError | GenericError;
+
+export type PaginatedGoogleWorkspaceProviderMappingList = {
+  pagination: Pagination;
+  results: Array<Maybe<GoogleWorkspaceProviderMapping>>;
+};
+
+/** GoogleWorkspaceProviderMapping Serializer */
+export type GoogleWorkspaceProviderMapping = {
+  pk: Scalars['UUID']['output'];
+  /** Objects that are managed by authentik. These objects are created and updated automatically. This flag only indicates that an object can be overwritten by migrations. You can still modify the objects via the API, but expect changes to be overwritten in a later update. */
+  managed?: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
+  expression: Scalars['String']['output'];
+  /** Get object's component so that we know how to edit the object */
+  component: Scalars['String']['output'];
+  /** Return object's verbose_name */
+  verboseName: Scalars['String']['output'];
+  /** Return object's plural verbose_name */
+  verboseNamePlural: Scalars['String']['output'];
+  /** Return internal model name */
+  metaModelName: Scalars['String']['output'];
+};
+
+export type PropertymappingsProviderGoogleWorkspaceRetrieveResponse = GoogleWorkspaceProviderMapping | ValidationError | GenericError;
+
+export type PropertymappingsProviderGoogleWorkspaceUsedByListResponse = UsedBy | ValidationError | GenericError;
+
+export type PropertymappingsProviderMicrosoftEntraListResponse = PaginatedMicrosoftEntraProviderMappingList | ValidationError | GenericError;
+
+export type PaginatedMicrosoftEntraProviderMappingList = {
+  pagination: Pagination;
+  results: Array<Maybe<MicrosoftEntraProviderMapping>>;
+};
+
+/** MicrosoftEntraProviderMapping Serializer */
+export type MicrosoftEntraProviderMapping = {
+  pk: Scalars['UUID']['output'];
+  /** Objects that are managed by authentik. These objects are created and updated automatically. This flag only indicates that an object can be overwritten by migrations. You can still modify the objects via the API, but expect changes to be overwritten in a later update. */
+  managed?: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
+  expression: Scalars['String']['output'];
+  /** Get object's component so that we know how to edit the object */
+  component: Scalars['String']['output'];
+  /** Return object's verbose_name */
+  verboseName: Scalars['String']['output'];
+  /** Return object's plural verbose_name */
+  verboseNamePlural: Scalars['String']['output'];
+  /** Return internal model name */
+  metaModelName: Scalars['String']['output'];
+};
+
+export type PropertymappingsProviderMicrosoftEntraRetrieveResponse = MicrosoftEntraProviderMapping | ValidationError | GenericError;
+
+export type PropertymappingsProviderMicrosoftEntraUsedByListResponse = UsedBy | ValidationError | GenericError;
+
 export type PropertymappingsRacListResponse = PaginatedRacPropertyMappingList | ValidationError | GenericError;
 
 export type PaginatedRacPropertyMappingList = {
@@ -3038,6 +3110,101 @@ export type ProvidersAllUsedByListResponse = UsedBy | ValidationError | GenericE
 
 export type ProvidersAllTypesListResponse = TypeCreate | ValidationError | GenericError;
 
+export type ProvidersGoogleWorkspaceListResponse = PaginatedGoogleWorkspaceProviderList | ValidationError | GenericError;
+
+export type PaginatedGoogleWorkspaceProviderList = {
+  pagination: Pagination;
+  results: Array<Maybe<GoogleWorkspaceProvider>>;
+};
+
+/** GoogleWorkspaceProvider Serializer */
+export type GoogleWorkspaceProvider = {
+  pk: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  propertyMappings?: Maybe<Array<Maybe<Scalars['UUID']['output']>>>;
+  /** Property mappings used for group creation/updating. */
+  propertyMappingsGroup?: Maybe<Array<Maybe<Scalars['UUID']['output']>>>;
+  /** Get object component so that we know how to edit the object */
+  component: Scalars['String']['output'];
+  /** Internal application name, used in URLs. */
+  assignedBackchannelApplicationSlug: Scalars['String']['output'];
+  /** Application's display Name. */
+  assignedBackchannelApplicationName: Scalars['String']['output'];
+  /** Return object's verbose_name */
+  verboseName: Scalars['String']['output'];
+  /** Return object's plural verbose_name */
+  verboseNamePlural: Scalars['String']['output'];
+  /** Return internal model name */
+  metaModelName: Scalars['String']['output'];
+  delegatedSubject: Scalars['EmailAddress']['output'];
+  credentials: Scalars['JSON']['output'];
+  scopes?: Maybe<Scalars['String']['output']>;
+  excludeUsersServiceAccount?: Maybe<Scalars['Boolean']['output']>;
+  filterGroup?: Maybe<Scalars['UUID']['output']>;
+  userDeleteAction?: Maybe<OutgoingSyncDeleteAction>;
+  groupDeleteAction?: Maybe<OutgoingSyncDeleteAction>;
+  defaultGroupEmailDomain: Scalars['String']['output'];
+};
+
+export type OutgoingSyncDeleteAction =
+  | 'DO_NOTHING'
+  | 'DELETE'
+  | 'SUSPEND';
+
+export type ProvidersGoogleWorkspaceRetrieveResponse = GoogleWorkspaceProvider | ValidationError | GenericError;
+
+export type ProvidersGoogleWorkspaceSyncStatusRetrieveResponse = SyncStatus | ValidationError | GenericError;
+
+/** Provider sync status */
+export type SyncStatus = {
+  isRunning: Scalars['Boolean']['output'];
+  tasks: Array<Maybe<SystemTask>>;
+};
+
+export type ProvidersGoogleWorkspaceUsedByListResponse = UsedBy | ValidationError | GenericError;
+
+export type ProvidersGoogleWorkspaceGroupsListResponse = PaginatedGoogleWorkspaceProviderGroupList | ValidationError | GenericError;
+
+export type PaginatedGoogleWorkspaceProviderGroupList = {
+  pagination: Pagination;
+  results: Array<Maybe<GoogleWorkspaceProviderGroup>>;
+};
+
+/** GoogleWorkspaceProviderGroup Serializer */
+export type GoogleWorkspaceProviderGroup = {
+  id: Scalars['UUID']['output'];
+  googleId: Scalars['String']['output'];
+  group: Scalars['UUID']['output'];
+  groupObj: UserGroup;
+  provider: Scalars['Int']['output'];
+  attributes: Scalars['JSON']['output'];
+};
+
+export type ProvidersGoogleWorkspaceGroupsRetrieveResponse = GoogleWorkspaceProviderGroup | ValidationError | GenericError;
+
+export type ProvidersGoogleWorkspaceGroupsUsedByListResponse = UsedBy | ValidationError | GenericError;
+
+export type ProvidersGoogleWorkspaceUsersListResponse = PaginatedGoogleWorkspaceProviderUserList | ValidationError | GenericError;
+
+export type PaginatedGoogleWorkspaceProviderUserList = {
+  pagination: Pagination;
+  results: Array<Maybe<GoogleWorkspaceProviderUser>>;
+};
+
+/** GoogleWorkspaceProviderUser Serializer */
+export type GoogleWorkspaceProviderUser = {
+  id: Scalars['UUID']['output'];
+  googleId: Scalars['String']['output'];
+  user: Scalars['Int']['output'];
+  userObj: GroupMember;
+  provider: Scalars['Int']['output'];
+  attributes: Scalars['JSON']['output'];
+};
+
+export type ProvidersGoogleWorkspaceUsersRetrieveResponse = GoogleWorkspaceProviderUser | ValidationError | GenericError;
+
+export type ProvidersGoogleWorkspaceUsersUsedByListResponse = UsedBy | ValidationError | GenericError;
+
 export type ProvidersLdapListResponse = PaginatedLdapProviderList | ValidationError | GenericError;
 
 export type PaginatedLdapProviderList = {
@@ -3090,6 +3257,89 @@ export type LdapProvider = {
 export type ProvidersLdapRetrieveResponse = LdapProvider | ValidationError | GenericError;
 
 export type ProvidersLdapUsedByListResponse = UsedBy | ValidationError | GenericError;
+
+export type ProvidersMicrosoftEntraListResponse = PaginatedMicrosoftEntraProviderList | ValidationError | GenericError;
+
+export type PaginatedMicrosoftEntraProviderList = {
+  pagination: Pagination;
+  results: Array<Maybe<MicrosoftEntraProvider>>;
+};
+
+/** MicrosoftEntraProvider Serializer */
+export type MicrosoftEntraProvider = {
+  pk: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  propertyMappings?: Maybe<Array<Maybe<Scalars['UUID']['output']>>>;
+  /** Property mappings used for group creation/updating. */
+  propertyMappingsGroup?: Maybe<Array<Maybe<Scalars['UUID']['output']>>>;
+  /** Get object component so that we know how to edit the object */
+  component: Scalars['String']['output'];
+  /** Internal application name, used in URLs. */
+  assignedBackchannelApplicationSlug: Scalars['String']['output'];
+  /** Application's display Name. */
+  assignedBackchannelApplicationName: Scalars['String']['output'];
+  /** Return object's verbose_name */
+  verboseName: Scalars['String']['output'];
+  /** Return object's plural verbose_name */
+  verboseNamePlural: Scalars['String']['output'];
+  /** Return internal model name */
+  metaModelName: Scalars['String']['output'];
+  clientId: Scalars['String']['output'];
+  clientSecret: Scalars['String']['output'];
+  tenantId: Scalars['String']['output'];
+  excludeUsersServiceAccount?: Maybe<Scalars['Boolean']['output']>;
+  filterGroup?: Maybe<Scalars['UUID']['output']>;
+  userDeleteAction?: Maybe<OutgoingSyncDeleteAction>;
+  groupDeleteAction?: Maybe<OutgoingSyncDeleteAction>;
+};
+
+export type ProvidersMicrosoftEntraRetrieveResponse = MicrosoftEntraProvider | ValidationError | GenericError;
+
+export type ProvidersMicrosoftEntraSyncStatusRetrieveResponse = SyncStatus | ValidationError | GenericError;
+
+export type ProvidersMicrosoftEntraUsedByListResponse = UsedBy | ValidationError | GenericError;
+
+export type ProvidersMicrosoftEntraGroupsListResponse = PaginatedMicrosoftEntraProviderGroupList | ValidationError | GenericError;
+
+export type PaginatedMicrosoftEntraProviderGroupList = {
+  pagination: Pagination;
+  results: Array<Maybe<MicrosoftEntraProviderGroup>>;
+};
+
+/** MicrosoftEntraProviderGroup Serializer */
+export type MicrosoftEntraProviderGroup = {
+  id: Scalars['UUID']['output'];
+  microsoftId: Scalars['String']['output'];
+  group: Scalars['UUID']['output'];
+  groupObj: UserGroup;
+  provider: Scalars['Int']['output'];
+  attributes: Scalars['JSON']['output'];
+};
+
+export type ProvidersMicrosoftEntraGroupsRetrieveResponse = MicrosoftEntraProviderGroup | ValidationError | GenericError;
+
+export type ProvidersMicrosoftEntraGroupsUsedByListResponse = UsedBy | ValidationError | GenericError;
+
+export type ProvidersMicrosoftEntraUsersListResponse = PaginatedMicrosoftEntraProviderUserList | ValidationError | GenericError;
+
+export type PaginatedMicrosoftEntraProviderUserList = {
+  pagination: Pagination;
+  results: Array<Maybe<MicrosoftEntraProviderUser>>;
+};
+
+/** MicrosoftEntraProviderUser Serializer */
+export type MicrosoftEntraProviderUser = {
+  id: Scalars['UUID']['output'];
+  microsoftId: Scalars['String']['output'];
+  user: Scalars['Int']['output'];
+  userObj: GroupMember;
+  provider: Scalars['Int']['output'];
+  attributes: Scalars['JSON']['output'];
+};
+
+export type ProvidersMicrosoftEntraUsersRetrieveResponse = MicrosoftEntraProviderUser | ValidationError | GenericError;
+
+export type ProvidersMicrosoftEntraUsersUsedByListResponse = UsedBy | ValidationError | GenericError;
 
 export type ProvidersOauth2ListResponse = PaginatedOAuth2ProviderList | ValidationError | GenericError;
 
@@ -3466,15 +3716,49 @@ export type ScimProvider = {
 
 export type ProvidersScimRetrieveResponse = ScimProvider | ValidationError | GenericError;
 
-export type ProvidersScimSyncStatusRetrieveResponse = ScimSyncStatus | ValidationError | GenericError;
-
-/** SCIM Provider sync status */
-export type ScimSyncStatus = {
-  isRunning: Scalars['Boolean']['output'];
-  tasks: Array<Maybe<SystemTask>>;
-};
+export type ProvidersScimSyncStatusRetrieveResponse = SyncStatus | ValidationError | GenericError;
 
 export type ProvidersScimUsedByListResponse = UsedBy | ValidationError | GenericError;
+
+export type ProvidersScimGroupsListResponse = PaginatedScimProviderGroupList | ValidationError | GenericError;
+
+export type PaginatedScimProviderGroupList = {
+  pagination: Pagination;
+  results: Array<Maybe<ScimProviderGroup>>;
+};
+
+/** SCIMProviderGroup Serializer */
+export type ScimProviderGroup = {
+  id: Scalars['UUID']['output'];
+  scimId: Scalars['String']['output'];
+  group: Scalars['UUID']['output'];
+  groupObj: UserGroup;
+  provider: Scalars['Int']['output'];
+};
+
+export type ProvidersScimGroupsRetrieveResponse = ScimProviderGroup | ValidationError | GenericError;
+
+export type ProvidersScimGroupsUsedByListResponse = UsedBy | ValidationError | GenericError;
+
+export type ProvidersScimUsersListResponse = PaginatedScimProviderUserList | ValidationError | GenericError;
+
+export type PaginatedScimProviderUserList = {
+  pagination: Pagination;
+  results: Array<Maybe<ScimProviderUser>>;
+};
+
+/** SCIMProviderUser Serializer */
+export type ScimProviderUser = {
+  id: Scalars['UUID']['output'];
+  scimId: Scalars['String']['output'];
+  user: Scalars['Int']['output'];
+  userObj: GroupMember;
+  provider: Scalars['Int']['output'];
+};
+
+export type ProvidersScimUsersRetrieveResponse = ScimProviderUser | ValidationError | GenericError;
+
+export type ProvidersScimUsersUsedByListResponse = UsedBy | ValidationError | GenericError;
 
 export type RacConnectionTokensListResponse = PaginatedConnectionTokenList | ValidationError | GenericError;
 
@@ -3609,7 +3893,11 @@ export type QueryInputRbacPermissionsAssignedByRolesListModel =
   | 'AUTHENTIK_POLICIES_EXPRESSION_EXPRESSIONPOLICY'
   | 'AUTHENTIK_POLICIES_PASSWORD_PASSWORDPOLICY'
   | 'AUTHENTIK_POLICIES_REPUTATION_REPUTATIONPOLICY'
+  | 'AUTHENTIK_PROVIDERS_GOOGLE_WORKSPACE_GOOGLEWORKSPACEPROVIDER'
+  | 'AUTHENTIK_PROVIDERS_GOOGLE_WORKSPACE_GOOGLEWORKSPACEPROVIDERMAPPING'
   | 'AUTHENTIK_PROVIDERS_LDAP_LDAPPROVIDER'
+  | 'AUTHENTIK_PROVIDERS_MICROSOFT_ENTRA_MICROSOFTENTRAPROVIDER'
+  | 'AUTHENTIK_PROVIDERS_MICROSOFT_ENTRA_MICROSOFTENTRAPROVIDERMAPPING'
   | 'AUTHENTIK_PROVIDERS_OAUTH2_OAUTH2PROVIDER'
   | 'AUTHENTIK_PROVIDERS_OAUTH2_SCOPEMAPPING'
   | 'AUTHENTIK_PROVIDERS_PROXY_PROXYPROVIDER'
@@ -3720,7 +4008,11 @@ export type QueryInputRbacPermissionsAssignedByUsersListModel =
   | 'AUTHENTIK_POLICIES_EXPRESSION_EXPRESSIONPOLICY'
   | 'AUTHENTIK_POLICIES_PASSWORD_PASSWORDPOLICY'
   | 'AUTHENTIK_POLICIES_REPUTATION_REPUTATIONPOLICY'
+  | 'AUTHENTIK_PROVIDERS_GOOGLE_WORKSPACE_GOOGLEWORKSPACEPROVIDER'
+  | 'AUTHENTIK_PROVIDERS_GOOGLE_WORKSPACE_GOOGLEWORKSPACEPROVIDERMAPPING'
   | 'AUTHENTIK_PROVIDERS_LDAP_LDAPPROVIDER'
+  | 'AUTHENTIK_PROVIDERS_MICROSOFT_ENTRA_MICROSOFTENTRAPROVIDER'
+  | 'AUTHENTIK_PROVIDERS_MICROSOFT_ENTRA_MICROSOFTENTRAPROVIDERMAPPING'
   | 'AUTHENTIK_PROVIDERS_OAUTH2_OAUTH2PROVIDER'
   | 'AUTHENTIK_PROVIDERS_OAUTH2_SCOPEMAPPING'
   | 'AUTHENTIK_PROVIDERS_PROXY_PROXYPROVIDER'
@@ -4071,11 +4363,7 @@ export type LdapSource = {
   /** Objects that are managed by authentik. These objects are created and updated automatically. This flag only indicates that an object can be overwritten by migrations. You can still modify the objects via the API, but expect changes to be overwritten in a later update. */
   managed?: Maybe<Scalars['String']['output']>;
   userPathTemplate?: Maybe<Scalars['String']['output']>;
-  /**
-   * Get the URL to the Icon. If the name is /static or
-   * starts with http it is returned as-is
-   */
-  icon?: Maybe<Scalars['String']['output']>;
+  icon: Scalars['String']['output'];
   serverUri: Scalars['URL']['output'];
   /** Optionally verify the LDAP Server's Certificate against the CA Chain in this keypair. */
   peerCertificate?: Maybe<Scalars['UUID']['output']>;
@@ -4121,13 +4409,7 @@ export type LdapDebug = {
   membership: Array<Maybe<Scalars['JSON']['output']>>;
 };
 
-export type SourcesLdapSyncStatusRetrieveResponse = LdapSyncStatus | ValidationError | GenericError;
-
-/** LDAP Source sync status */
-export type LdapSyncStatus = {
-  isRunning: Scalars['Boolean']['output'];
-  tasks: Array<Maybe<SystemTask>>;
-};
+export type SourcesLdapSyncStatusRetrieveResponse = SyncStatus | ValidationError | GenericError;
 
 export type SourcesLdapUsedByListResponse = UsedBy | ValidationError | GenericError;
 
@@ -4162,10 +4444,6 @@ export type OAuthSource = {
   /** Objects that are managed by authentik. These objects are created and updated automatically. This flag only indicates that an object can be overwritten by migrations. You can still modify the objects via the API, but expect changes to be overwritten in a later update. */
   managed?: Maybe<Scalars['String']['output']>;
   userPathTemplate?: Maybe<Scalars['String']['output']>;
-  /**
-   * Get the URL to the Icon. If the name is /static or
-   * starts with http it is returned as-is
-   */
   icon?: Maybe<Scalars['String']['output']>;
   providerType: ProviderTypeEnum;
   /** URL used to request the initial token. This URL is only required for OAuth 1. */
@@ -4265,11 +4543,7 @@ export type PlexSource = {
   /** Objects that are managed by authentik. These objects are created and updated automatically. This flag only indicates that an object can be overwritten by migrations. You can still modify the objects via the API, but expect changes to be overwritten in a later update. */
   managed?: Maybe<Scalars['String']['output']>;
   userPathTemplate?: Maybe<Scalars['String']['output']>;
-  /**
-   * Get the URL to the Icon. If the name is /static or
-   * starts with http it is returned as-is
-   */
-  icon?: Maybe<Scalars['String']['output']>;
+  icon: Scalars['String']['output'];
   /** Client identifier used to talk to Plex. */
   clientId?: Maybe<Scalars['String']['output']>;
   /** Which servers a user has to be a member of to be granted access. Empty list allows every server. */
@@ -4327,11 +4601,7 @@ export type SamlSource = {
   /** Objects that are managed by authentik. These objects are created and updated automatically. This flag only indicates that an object can be overwritten by migrations. You can still modify the objects via the API, but expect changes to be overwritten in a later update. */
   managed?: Maybe<Scalars['String']['output']>;
   userPathTemplate?: Maybe<Scalars['String']['output']>;
-  /**
-   * Get the URL to the Icon. If the name is /static or
-   * starts with http it is returned as-is
-   */
-  icon?: Maybe<Scalars['String']['output']>;
+  icon: Scalars['String']['output'];
   /** Flow used before authentication. */
   preAuthenticationFlow: Scalars['UUID']['output'];
   /** Also known as Entity ID. Defaults the Metadata URL. */
@@ -4885,6 +5155,10 @@ export type CaptchaStage = {
   publicKey: Scalars['String']['output'];
   jsUrl?: Maybe<Scalars['String']['output']>;
   apiUrl?: Maybe<Scalars['String']['output']>;
+  scoreMinThreshold?: Maybe<Scalars['Float']['output']>;
+  scoreMaxThreshold?: Maybe<Scalars['Float']['output']>;
+  /** When enabled and the received captcha score is outside of the given threshold, the stage will show an error message. When not enabled, the flow will continue, but the data from the captcha will be available in the context for policy decisions */
+  errorOnInvalidScore?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type StagesCaptchaRetrieveResponse = CaptchaStage | ValidationError | GenericError;
@@ -5960,7 +6234,9 @@ export type TransactionApplicationRequestInput = {
 };
 
 export type ProviderModelEnum =
+  | 'AUTHENTIK_PROVIDERS_GOOGLE_WORKSPACE_GOOGLEWORKSPACEPROVIDER'
   | 'AUTHENTIK_PROVIDERS_LDAP_LDAPPROVIDER'
+  | 'AUTHENTIK_PROVIDERS_MICROSOFT_ENTRA_MICROSOFTENTRAPROVIDER'
   | 'AUTHENTIK_PROVIDERS_OAUTH2_OAUTH2PROVIDER'
   | 'AUTHENTIK_PROVIDERS_PROXY_PROXYPROVIDER'
   | 'AUTHENTIK_PROVIDERS_RAC_RACPROVIDER'
@@ -5969,13 +6245,31 @@ export type ProviderModelEnum =
   | 'AUTHENTIK_PROVIDERS_SCIM_SCIMPROVIDER';
 
 export type ModelRequestInput =
-  { ldapProviderRequestInput: LdapProviderRequestInput; oAuth2ProviderRequestInput?: never; proxyProviderRequestInput?: never; racProviderRequestInput?: never; radiusProviderRequestInput?: never; samlProviderRequestInput?: never; scimProviderRequestInput?: never; }
-  |  { ldapProviderRequestInput?: never; oAuth2ProviderRequestInput: OAuth2ProviderRequestInput; proxyProviderRequestInput?: never; racProviderRequestInput?: never; radiusProviderRequestInput?: never; samlProviderRequestInput?: never; scimProviderRequestInput?: never; }
-  |  { ldapProviderRequestInput?: never; oAuth2ProviderRequestInput?: never; proxyProviderRequestInput: ProxyProviderRequestInput; racProviderRequestInput?: never; radiusProviderRequestInput?: never; samlProviderRequestInput?: never; scimProviderRequestInput?: never; }
-  |  { ldapProviderRequestInput?: never; oAuth2ProviderRequestInput?: never; proxyProviderRequestInput?: never; racProviderRequestInput: RacProviderRequestInput; radiusProviderRequestInput?: never; samlProviderRequestInput?: never; scimProviderRequestInput?: never; }
-  |  { ldapProviderRequestInput?: never; oAuth2ProviderRequestInput?: never; proxyProviderRequestInput?: never; racProviderRequestInput?: never; radiusProviderRequestInput: RadiusProviderRequestInput; samlProviderRequestInput?: never; scimProviderRequestInput?: never; }
-  |  { ldapProviderRequestInput?: never; oAuth2ProviderRequestInput?: never; proxyProviderRequestInput?: never; racProviderRequestInput?: never; radiusProviderRequestInput?: never; samlProviderRequestInput: SamlProviderRequestInput; scimProviderRequestInput?: never; }
-  |  { ldapProviderRequestInput?: never; oAuth2ProviderRequestInput?: never; proxyProviderRequestInput?: never; racProviderRequestInput?: never; radiusProviderRequestInput?: never; samlProviderRequestInput?: never; scimProviderRequestInput: ScimProviderRequestInput; };
+  { googleWorkspaceProviderRequestInput: GoogleWorkspaceProviderRequestInput; ldapProviderRequestInput?: never; microsoftEntraProviderRequestInput?: never; oAuth2ProviderRequestInput?: never; proxyProviderRequestInput?: never; racProviderRequestInput?: never; radiusProviderRequestInput?: never; samlProviderRequestInput?: never; scimProviderRequestInput?: never; }
+  |  { googleWorkspaceProviderRequestInput?: never; ldapProviderRequestInput: LdapProviderRequestInput; microsoftEntraProviderRequestInput?: never; oAuth2ProviderRequestInput?: never; proxyProviderRequestInput?: never; racProviderRequestInput?: never; radiusProviderRequestInput?: never; samlProviderRequestInput?: never; scimProviderRequestInput?: never; }
+  |  { googleWorkspaceProviderRequestInput?: never; ldapProviderRequestInput?: never; microsoftEntraProviderRequestInput: MicrosoftEntraProviderRequestInput; oAuth2ProviderRequestInput?: never; proxyProviderRequestInput?: never; racProviderRequestInput?: never; radiusProviderRequestInput?: never; samlProviderRequestInput?: never; scimProviderRequestInput?: never; }
+  |  { googleWorkspaceProviderRequestInput?: never; ldapProviderRequestInput?: never; microsoftEntraProviderRequestInput?: never; oAuth2ProviderRequestInput: OAuth2ProviderRequestInput; proxyProviderRequestInput?: never; racProviderRequestInput?: never; radiusProviderRequestInput?: never; samlProviderRequestInput?: never; scimProviderRequestInput?: never; }
+  |  { googleWorkspaceProviderRequestInput?: never; ldapProviderRequestInput?: never; microsoftEntraProviderRequestInput?: never; oAuth2ProviderRequestInput?: never; proxyProviderRequestInput: ProxyProviderRequestInput; racProviderRequestInput?: never; radiusProviderRequestInput?: never; samlProviderRequestInput?: never; scimProviderRequestInput?: never; }
+  |  { googleWorkspaceProviderRequestInput?: never; ldapProviderRequestInput?: never; microsoftEntraProviderRequestInput?: never; oAuth2ProviderRequestInput?: never; proxyProviderRequestInput?: never; racProviderRequestInput: RacProviderRequestInput; radiusProviderRequestInput?: never; samlProviderRequestInput?: never; scimProviderRequestInput?: never; }
+  |  { googleWorkspaceProviderRequestInput?: never; ldapProviderRequestInput?: never; microsoftEntraProviderRequestInput?: never; oAuth2ProviderRequestInput?: never; proxyProviderRequestInput?: never; racProviderRequestInput?: never; radiusProviderRequestInput: RadiusProviderRequestInput; samlProviderRequestInput?: never; scimProviderRequestInput?: never; }
+  |  { googleWorkspaceProviderRequestInput?: never; ldapProviderRequestInput?: never; microsoftEntraProviderRequestInput?: never; oAuth2ProviderRequestInput?: never; proxyProviderRequestInput?: never; racProviderRequestInput?: never; radiusProviderRequestInput?: never; samlProviderRequestInput: SamlProviderRequestInput; scimProviderRequestInput?: never; }
+  |  { googleWorkspaceProviderRequestInput?: never; ldapProviderRequestInput?: never; microsoftEntraProviderRequestInput?: never; oAuth2ProviderRequestInput?: never; proxyProviderRequestInput?: never; racProviderRequestInput?: never; radiusProviderRequestInput?: never; samlProviderRequestInput?: never; scimProviderRequestInput: ScimProviderRequestInput; };
+
+/** GoogleWorkspaceProvider Serializer */
+export type GoogleWorkspaceProviderRequestInput = {
+  name: Scalars['NonEmptyString']['input'];
+  propertyMappings?: InputMaybe<Array<InputMaybe<Scalars['UUID']['input']>>>;
+  /** Property mappings used for group creation/updating. */
+  propertyMappingsGroup?: InputMaybe<Array<InputMaybe<Scalars['UUID']['input']>>>;
+  delegatedSubject: Scalars['EmailAddress']['input'];
+  credentials: Scalars['JSON']['input'];
+  scopes?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  excludeUsersServiceAccount?: InputMaybe<Scalars['Boolean']['input']>;
+  filterGroup?: InputMaybe<Scalars['UUID']['input']>;
+  userDeleteAction?: InputMaybe<OutgoingSyncDeleteAction>;
+  groupDeleteAction?: InputMaybe<OutgoingSyncDeleteAction>;
+  defaultGroupEmailDomain: Scalars['NonEmptyString']['input'];
+};
 
 /** LDAPProvider Serializer */
 export type LdapProviderRequestInput = {
@@ -6001,6 +6295,21 @@ export type LdapProviderRequestInput = {
   mfaSupport?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+/** MicrosoftEntraProvider Serializer */
+export type MicrosoftEntraProviderRequestInput = {
+  name: Scalars['NonEmptyString']['input'];
+  propertyMappings?: InputMaybe<Array<InputMaybe<Scalars['UUID']['input']>>>;
+  /** Property mappings used for group creation/updating. */
+  propertyMappingsGroup?: InputMaybe<Array<InputMaybe<Scalars['UUID']['input']>>>;
+  clientId: Scalars['NonEmptyString']['input'];
+  clientSecret: Scalars['NonEmptyString']['input'];
+  tenantId: Scalars['NonEmptyString']['input'];
+  excludeUsersServiceAccount?: InputMaybe<Scalars['Boolean']['input']>;
+  filterGroup?: InputMaybe<Scalars['UUID']['input']>;
+  userDeleteAction?: InputMaybe<OutgoingSyncDeleteAction>;
+  groupDeleteAction?: InputMaybe<OutgoingSyncDeleteAction>;
+};
+
 /** OAuth2Provider Serializer */
 export type OAuth2ProviderRequestInput = {
   name: Scalars['NonEmptyString']['input'];
@@ -6010,8 +6319,8 @@ export type OAuth2ProviderRequestInput = {
   authorizationFlow: Scalars['UUID']['input'];
   propertyMappings?: InputMaybe<Array<InputMaybe<Scalars['UUID']['input']>>>;
   clientType?: InputMaybe<ClientTypeEnum>;
-  clientId?: InputMaybe<Scalars['MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_1ClientId']['input']>;
-  clientSecret?: InputMaybe<Scalars['MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_1ClientSecret']['input']>;
+  clientId?: InputMaybe<Scalars['MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_3ClientId']['input']>;
+  clientSecret?: InputMaybe<Scalars['MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_3ClientSecret']['input']>;
   /** Access codes not valid on or after current time + this value (Format: hours=1;minutes=2;seconds=3). */
   accessCodeValidity?: InputMaybe<Scalars['NonEmptyString']['input']>;
   /** Tokens not valid on or after current time + this value (Format: hours=1;minutes=2;seconds=3). */
@@ -6993,6 +7302,13 @@ export type PropertyMappingTestResult = {
   successful: Scalars['Boolean']['output'];
 };
 
+/** Test property mapping execution for a user/group with context */
+export type PropertyMappingTestRequestInput = {
+  user?: InputMaybe<Scalars['Int']['input']>;
+  context?: InputMaybe<Scalars['JSON']['input']>;
+  group?: InputMaybe<Scalars['UUID']['input']>;
+};
+
 export type PropertymappingsLdapCreateResponse = LdapPropertyMapping | ValidationError | GenericError;
 
 /** LDAP PropertyMapping Serializer */
@@ -7038,6 +7354,54 @@ export type PatchedNotificationWebhookMappingRequestInput = {
 };
 
 export type PropertymappingsNotificationDestroyResponse = VoidContainer | ValidationError | GenericError;
+
+export type PropertymappingsProviderGoogleWorkspaceCreateResponse = GoogleWorkspaceProviderMapping | ValidationError | GenericError;
+
+/** GoogleWorkspaceProviderMapping Serializer */
+export type GoogleWorkspaceProviderMappingRequestInput = {
+  /** Objects that are managed by authentik. These objects are created and updated automatically. This flag only indicates that an object can be overwritten by migrations. You can still modify the objects via the API, but expect changes to be overwritten in a later update. */
+  managed?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  name: Scalars['NonEmptyString']['input'];
+  expression: Scalars['NonEmptyString']['input'];
+};
+
+export type PropertymappingsProviderGoogleWorkspaceUpdateResponse = GoogleWorkspaceProviderMapping | ValidationError | GenericError;
+
+export type PropertymappingsProviderGoogleWorkspacePartialUpdateResponse = GoogleWorkspaceProviderMapping | ValidationError | GenericError;
+
+/** GoogleWorkspaceProviderMapping Serializer */
+export type PatchedGoogleWorkspaceProviderMappingRequestInput = {
+  /** Objects that are managed by authentik. These objects are created and updated automatically. This flag only indicates that an object can be overwritten by migrations. You can still modify the objects via the API, but expect changes to be overwritten in a later update. */
+  managed?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  name?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  expression?: InputMaybe<Scalars['NonEmptyString']['input']>;
+};
+
+export type PropertymappingsProviderGoogleWorkspaceDestroyResponse = VoidContainer | ValidationError | GenericError;
+
+export type PropertymappingsProviderMicrosoftEntraCreateResponse = MicrosoftEntraProviderMapping | ValidationError | GenericError;
+
+/** MicrosoftEntraProviderMapping Serializer */
+export type MicrosoftEntraProviderMappingRequestInput = {
+  /** Objects that are managed by authentik. These objects are created and updated automatically. This flag only indicates that an object can be overwritten by migrations. You can still modify the objects via the API, but expect changes to be overwritten in a later update. */
+  managed?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  name: Scalars['NonEmptyString']['input'];
+  expression: Scalars['NonEmptyString']['input'];
+};
+
+export type PropertymappingsProviderMicrosoftEntraUpdateResponse = MicrosoftEntraProviderMapping | ValidationError | GenericError;
+
+export type PropertymappingsProviderMicrosoftEntraPartialUpdateResponse = MicrosoftEntraProviderMapping | ValidationError | GenericError;
+
+/** MicrosoftEntraProviderMapping Serializer */
+export type PatchedMicrosoftEntraProviderMappingRequestInput = {
+  /** Objects that are managed by authentik. These objects are created and updated automatically. This flag only indicates that an object can be overwritten by migrations. You can still modify the objects via the API, but expect changes to be overwritten in a later update. */
+  managed?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  name?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  expression?: InputMaybe<Scalars['NonEmptyString']['input']>;
+};
+
+export type PropertymappingsProviderMicrosoftEntraDestroyResponse = VoidContainer | ValidationError | GenericError;
 
 export type PropertymappingsRacCreateResponse = RacPropertyMapping | ValidationError | GenericError;
 
@@ -7151,6 +7515,52 @@ export type PropertymappingsScopeDestroyResponse = VoidContainer | ValidationErr
 
 export type ProvidersAllDestroyResponse = VoidContainer | ValidationError | GenericError;
 
+export type ProvidersGoogleWorkspaceCreateResponse = GoogleWorkspaceProvider | ValidationError | GenericError;
+
+export type ProvidersGoogleWorkspaceUpdateResponse = GoogleWorkspaceProvider | ValidationError | GenericError;
+
+export type ProvidersGoogleWorkspacePartialUpdateResponse = GoogleWorkspaceProvider | ValidationError | GenericError;
+
+/** GoogleWorkspaceProvider Serializer */
+export type PatchedGoogleWorkspaceProviderRequestInput = {
+  name?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  propertyMappings?: InputMaybe<Array<InputMaybe<Scalars['UUID']['input']>>>;
+  /** Property mappings used for group creation/updating. */
+  propertyMappingsGroup?: InputMaybe<Array<InputMaybe<Scalars['UUID']['input']>>>;
+  delegatedSubject?: InputMaybe<Scalars['EmailAddress']['input']>;
+  credentials?: InputMaybe<Scalars['JSON']['input']>;
+  scopes?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  excludeUsersServiceAccount?: InputMaybe<Scalars['Boolean']['input']>;
+  filterGroup?: InputMaybe<Scalars['UUID']['input']>;
+  userDeleteAction?: InputMaybe<OutgoingSyncDeleteAction>;
+  groupDeleteAction?: InputMaybe<OutgoingSyncDeleteAction>;
+  defaultGroupEmailDomain?: InputMaybe<Scalars['NonEmptyString']['input']>;
+};
+
+export type ProvidersGoogleWorkspaceDestroyResponse = VoidContainer | ValidationError | GenericError;
+
+export type ProvidersGoogleWorkspaceGroupsCreateResponse = GoogleWorkspaceProviderGroup | ValidationError | GenericError;
+
+/** GoogleWorkspaceProviderGroup Serializer */
+export type GoogleWorkspaceProviderGroupRequestInput = {
+  googleId: Scalars['NonEmptyString']['input'];
+  group: Scalars['UUID']['input'];
+  provider: Scalars['Int']['input'];
+};
+
+export type ProvidersGoogleWorkspaceGroupsDestroyResponse = VoidContainer | ValidationError | GenericError;
+
+export type ProvidersGoogleWorkspaceUsersCreateResponse = GoogleWorkspaceProviderUser | ValidationError | GenericError;
+
+/** GoogleWorkspaceProviderUser Serializer */
+export type GoogleWorkspaceProviderUserRequestInput = {
+  googleId: Scalars['NonEmptyString']['input'];
+  user: Scalars['Int']['input'];
+  provider: Scalars['Int']['input'];
+};
+
+export type ProvidersGoogleWorkspaceUsersDestroyResponse = VoidContainer | ValidationError | GenericError;
+
 export type ProvidersLdapCreateResponse = LdapProvider | ValidationError | GenericError;
 
 export type ProvidersLdapUpdateResponse = LdapProvider | ValidationError | GenericError;
@@ -7182,6 +7592,51 @@ export type PatchedLdapProviderRequestInput = {
 };
 
 export type ProvidersLdapDestroyResponse = VoidContainer | ValidationError | GenericError;
+
+export type ProvidersMicrosoftEntraCreateResponse = MicrosoftEntraProvider | ValidationError | GenericError;
+
+export type ProvidersMicrosoftEntraUpdateResponse = MicrosoftEntraProvider | ValidationError | GenericError;
+
+export type ProvidersMicrosoftEntraPartialUpdateResponse = MicrosoftEntraProvider | ValidationError | GenericError;
+
+/** MicrosoftEntraProvider Serializer */
+export type PatchedMicrosoftEntraProviderRequestInput = {
+  name?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  propertyMappings?: InputMaybe<Array<InputMaybe<Scalars['UUID']['input']>>>;
+  /** Property mappings used for group creation/updating. */
+  propertyMappingsGroup?: InputMaybe<Array<InputMaybe<Scalars['UUID']['input']>>>;
+  clientId?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  clientSecret?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  tenantId?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  excludeUsersServiceAccount?: InputMaybe<Scalars['Boolean']['input']>;
+  filterGroup?: InputMaybe<Scalars['UUID']['input']>;
+  userDeleteAction?: InputMaybe<OutgoingSyncDeleteAction>;
+  groupDeleteAction?: InputMaybe<OutgoingSyncDeleteAction>;
+};
+
+export type ProvidersMicrosoftEntraDestroyResponse = VoidContainer | ValidationError | GenericError;
+
+export type ProvidersMicrosoftEntraGroupsCreateResponse = MicrosoftEntraProviderGroup | ValidationError | GenericError;
+
+/** MicrosoftEntraProviderGroup Serializer */
+export type MicrosoftEntraProviderGroupRequestInput = {
+  microsoftId: Scalars['NonEmptyString']['input'];
+  group: Scalars['UUID']['input'];
+  provider: Scalars['Int']['input'];
+};
+
+export type ProvidersMicrosoftEntraGroupsDestroyResponse = VoidContainer | ValidationError | GenericError;
+
+export type ProvidersMicrosoftEntraUsersCreateResponse = MicrosoftEntraProviderUser | ValidationError | GenericError;
+
+/** MicrosoftEntraProviderUser Serializer */
+export type MicrosoftEntraProviderUserRequestInput = {
+  microsoftId: Scalars['NonEmptyString']['input'];
+  user: Scalars['Int']['input'];
+  provider: Scalars['Int']['input'];
+};
+
+export type ProvidersMicrosoftEntraUsersDestroyResponse = VoidContainer | ValidationError | GenericError;
 
 export type ProvidersOauth2CreateResponse = OAuth2Provider | ValidationError | GenericError;
 
@@ -7377,6 +7832,28 @@ export type PatchedScimProviderRequestInput = {
 };
 
 export type ProvidersScimDestroyResponse = VoidContainer | ValidationError | GenericError;
+
+export type ProvidersScimGroupsCreateResponse = ScimProviderGroup | ValidationError | GenericError;
+
+/** SCIMProviderGroup Serializer */
+export type ScimProviderGroupRequestInput = {
+  scimId: Scalars['NonEmptyString']['input'];
+  group: Scalars['UUID']['input'];
+  provider: Scalars['Int']['input'];
+};
+
+export type ProvidersScimGroupsDestroyResponse = VoidContainer | ValidationError | GenericError;
+
+export type ProvidersScimUsersCreateResponse = ScimProviderUser | ValidationError | GenericError;
+
+/** SCIMProviderUser Serializer */
+export type ScimProviderUserRequestInput = {
+  scimId: Scalars['NonEmptyString']['input'];
+  user: Scalars['Int']['input'];
+  provider: Scalars['Int']['input'];
+};
+
+export type ProvidersScimUsersDestroyResponse = VoidContainer | ValidationError | GenericError;
 
 export type RacConnectionTokensUpdateResponse = ConnectionToken | ValidationError | GenericError;
 
@@ -8188,6 +8665,10 @@ export type CaptchaStageRequestInput = {
   privateKey: Scalars['NonEmptyString']['input'];
   jsUrl?: InputMaybe<Scalars['NonEmptyString']['input']>;
   apiUrl?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  scoreMinThreshold?: InputMaybe<Scalars['Float']['input']>;
+  scoreMaxThreshold?: InputMaybe<Scalars['Float']['input']>;
+  /** When enabled and the received captcha score is outside of the given threshold, the stage will show an error message. When not enabled, the flow will continue, but the data from the captcha will be available in the context for policy decisions */
+  errorOnInvalidScore?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type StagesCaptchaUpdateResponse = CaptchaStage | ValidationError | GenericError;
@@ -8204,6 +8685,10 @@ export type PatchedCaptchaStageRequestInput = {
   privateKey?: InputMaybe<Scalars['NonEmptyString']['input']>;
   jsUrl?: InputMaybe<Scalars['NonEmptyString']['input']>;
   apiUrl?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  scoreMinThreshold?: InputMaybe<Scalars['Float']['input']>;
+  scoreMaxThreshold?: InputMaybe<Scalars['Float']['input']>;
+  /** When enabled and the received captcha score is outside of the given threshold, the stage will show an error message. When not enabled, the flow will continue, but the data from the captcha will be available in the context for policy decisions */
+  errorOnInvalidScore?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type StagesCaptchaDestroyResponse = VoidContainer | ValidationError | GenericError;
@@ -8740,7 +9225,7 @@ export type HttpMethod =
   provider: InContextSdkMethod<Query['provider'], QueryproviderArgs, MeshContext>,
   /** Get a list of all objects that use this object **/
   providersAllUsedByList: InContextSdkMethod<Query['providersAllUsedByList'], QueryprovidersAllUsedByListArgs, MeshContext>,
-  /** Get all creatable provider types **/
+  /** Get all creatable types **/
   providersAllTypesList: InContextSdkMethod<Query['providersAllTypesList'], {}, MeshContext>
   };
 

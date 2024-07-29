@@ -4,7 +4,7 @@ sources:
   - name: Churros
     handler:
       graphql:
-        endpoint: https://churros.inpt.fr/graphql
+        endpoint: http://localhost:4000/graphql
     transforms:
       - filterSchema:
           filters:
@@ -15,9 +15,9 @@ sources:
   - name: Authentik
     handler:
       openapi:
-        source: https://auth.inpt.fr/api/v3/schema/
+        source: http://localhost:9001/api/v3/schema/
         fallbackFormat: yaml
-        endpoint: https://auth.inpt.fr/api/v3/
+        endpoint: http://localhost:9001/api/v3/
         operationHeaders:
           Authorization: "{context.headers.authorization}"
     transforms:

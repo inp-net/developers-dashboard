@@ -1,4 +1,4 @@
-schema @transport(subgraph: "Authentik", kind: "rest", location: "https://auth.inpt.fr/api/v3/", headers: [["Authorization", "{context.headers.authorization}"]]) {
+schema @transport(subgraph: "Authentik", kind: "rest", location: "http://localhost:9001/api/v3/", headers: [["Authorization", "{context.headers.authorization}"]]) {
   query: Query
   mutation: Mutation
 }
@@ -149,7 +149,10 @@ type Query {
   """Provider Viewset"""
   providers(
     applicationIsnull: Boolean
-    backchannelOnly: Boolean
+    """
+    When not set all providers are returned. When set to true, only backchannel providers are returned. When set to false, backchannel providers are excluded
+    """
+    backchannel: Boolean
     """Which field to use when ordering the results."""
     ordering: String
     """A page number within the paginated result set."""
@@ -158,7 +161,7 @@ type Query {
     pageSize: Int
     """A search term."""
     search: String
-  ): ProvidersAllListResponse @httpOperation(subgraph: "Authentik", path: "/providers/all/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET, queryParamArgMap: "{\"application__isnull\":\"application__isnull\",\"backchannel_only\":\"backchannel_only\",\"ordering\":\"ordering\",\"page\":\"page\",\"page_size\":\"page_size\",\"search\":\"search\"}")
+  ): ProvidersAllListResponse @httpOperation(subgraph: "Authentik", path: "/providers/all/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET, queryParamArgMap: "{\"application__isnull\":\"application__isnull\",\"backchannel\":\"backchannel\",\"ordering\":\"ordering\",\"page\":\"page\",\"page_size\":\"page_size\",\"search\":\"search\"}")
   """Provider Viewset"""
   provider(
     """A unique integer value identifying this provider."""
@@ -169,7 +172,7 @@ type Query {
     """A unique integer value identifying this provider."""
     id: Int!
   ): [ProvidersAllUsedByListResponse] @httpOperation(subgraph: "Authentik", path: "/providers/all/{args.id}/used_by/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET)
-  """Get all creatable provider types"""
+  """Get all creatable types"""
   providersAllTypesList: [ProvidersAllTypesListResponse] @httpOperation(subgraph: "Authentik", path: "/providers/all/types/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET)
 }
 
@@ -273,11 +276,13 @@ type SystemInfo {
 """Get versions"""
 type QueryAdminSystemRetrieveOneOf_0Runtime {
   pythonVersion: String!
-  gunicornVersion: String!
   environment: String!
   architecture: String!
   platform: String!
   uname: String!
+  opensslVersion: String!
+  opensslFipsEnabled: Boolean
+  authentikVersion: String!
 }
 
 """
@@ -736,7 +741,7 @@ type CurrentBrand {
 
 """Links returned in Config API"""
 type FooterLink {
-  href: String!
+  href: String
   name: String!
 }
 
@@ -1170,6 +1175,7 @@ type TypeCreate {
   description: String!
   component: String!
   modelName: String!
+  iconUrl: String
   requiresEnterprise: Boolean
 }
 
@@ -1273,6 +1279,8 @@ type SystemTask {
   duration: Float!
   status: SystemTaskStatusEnum!
   messages: [LogEvent]!
+  expires: DateTime
+  expiring: Boolean
 }
 
 enum SystemTaskStatusEnum {
@@ -2146,6 +2154,11 @@ type OutpostHealth {
   uid: String!
   lastSeen: DateTime!
   version: String!
+  golangVersion: String!
+  opensslEnabled: Boolean!
+  opensslVersion: String!
+  """Get FIPS enabled"""
+  fipsEnabled: Boolean
   versionShould: String!
   versionOutdated: Boolean!
   buildHash: String!
@@ -2602,6 +2615,8 @@ enum AppEnum {
   AUTHENTIK_CORE @enum(subgraph: "Authentik", value: "\"authentik.core\"")
   AUTHENTIK_ENTERPRISE @enum(subgraph: "Authentik", value: "\"authentik.enterprise\"")
   AUTHENTIK_ENTERPRISE_AUDIT @enum(subgraph: "Authentik", value: "\"authentik.enterprise.audit\"")
+  AUTHENTIK_ENTERPRISE_PROVIDERS_GOOGLE_WORKSPACE @enum(subgraph: "Authentik", value: "\"authentik.enterprise.providers.google_workspace\"")
+  AUTHENTIK_ENTERPRISE_PROVIDERS_MICROSOFT_ENTRA @enum(subgraph: "Authentik", value: "\"authentik.enterprise.providers.microsoft_entra\"")
   AUTHENTIK_ENTERPRISE_PROVIDERS_RAC @enum(subgraph: "Authentik", value: "\"authentik.enterprise.providers.rac\"")
   AUTHENTIK_ENTERPRISE_STAGES_SOURCE @enum(subgraph: "Authentik", value: "\"authentik.enterprise.stages.source\"")
   AUTHENTIK_EVENTS @enum(subgraph: "Authentik", value: "\"authentik.events\"")
@@ -2675,6 +2690,10 @@ enum ModelEnum {
   AUTHENTIK_CORE_APPLICATION @enum(subgraph: "Authentik", value: "\"authentik_core.application\"")
   AUTHENTIK_CORE_TOKEN @enum(subgraph: "Authentik", value: "\"authentik_core.token\"")
   AUTHENTIK_ENTERPRISE_LICENSE @enum(subgraph: "Authentik", value: "\"authentik_enterprise.license\"")
+  AUTHENTIK_PROVIDERS_GOOGLE_WORKSPACE_GOOGLEWORKSPACEPROVIDER @enum(subgraph: "Authentik", value: "\"authentik_providers_google_workspace.googleworkspaceprovider\"")
+  AUTHENTIK_PROVIDERS_GOOGLE_WORKSPACE_GOOGLEWORKSPACEPROVIDERMAPPING @enum(subgraph: "Authentik", value: "\"authentik_providers_google_workspace.googleworkspaceprovidermapping\"")
+  AUTHENTIK_PROVIDERS_MICROSOFT_ENTRA_MICROSOFTENTRAPROVIDER @enum(subgraph: "Authentik", value: "\"authentik_providers_microsoft_entra.microsoftentraprovider\"")
+  AUTHENTIK_PROVIDERS_MICROSOFT_ENTRA_MICROSOFTENTRAPROVIDERMAPPING @enum(subgraph: "Authentik", value: "\"authentik_providers_microsoft_entra.microsoftentraprovidermapping\"")
   AUTHENTIK_PROVIDERS_RAC_RACPROVIDER @enum(subgraph: "Authentik", value: "\"authentik_providers_rac.racprovider\"")
   AUTHENTIK_PROVIDERS_RAC_ENDPOINT @enum(subgraph: "Authentik", value: "\"authentik_providers_rac.endpoint\"")
   AUTHENTIK_PROVIDERS_RAC_RACPROPERTYMAPPING @enum(subgraph: "Authentik", value: "\"authentik_providers_rac.racpropertymapping\"")
@@ -2979,6 +2998,66 @@ union PropertymappingsNotificationRetrieveResponse @statusCodeTypeName(subgraph:
 
 union PropertymappingsNotificationUsedByListResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "UsedBy") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = UsedBy | ValidationError | GenericError
 
+union PropertymappingsProviderGoogleWorkspaceListResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "PaginatedGoogleWorkspaceProviderMappingList") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = PaginatedGoogleWorkspaceProviderMappingList | ValidationError | GenericError
+
+type PaginatedGoogleWorkspaceProviderMappingList {
+  pagination: Pagination!
+  results: [GoogleWorkspaceProviderMapping]!
+}
+
+"""GoogleWorkspaceProviderMapping Serializer"""
+type GoogleWorkspaceProviderMapping {
+  pk: UUID!
+  """
+  Objects that are managed by authentik. These objects are created and updated automatically. This flag only indicates that an object can be overwritten by migrations. You can still modify the objects via the API, but expect changes to be overwritten in a later update.
+  """
+  managed: String
+  name: String!
+  expression: String!
+  """Get object's component so that we know how to edit the object"""
+  component: String!
+  """Return object's verbose_name"""
+  verboseName: String!
+  """Return object's plural verbose_name"""
+  verboseNamePlural: String!
+  """Return internal model name"""
+  metaModelName: String!
+}
+
+union PropertymappingsProviderGoogleWorkspaceRetrieveResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "GoogleWorkspaceProviderMapping") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = GoogleWorkspaceProviderMapping | ValidationError | GenericError
+
+union PropertymappingsProviderGoogleWorkspaceUsedByListResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "UsedBy") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = UsedBy | ValidationError | GenericError
+
+union PropertymappingsProviderMicrosoftEntraListResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "PaginatedMicrosoftEntraProviderMappingList") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = PaginatedMicrosoftEntraProviderMappingList | ValidationError | GenericError
+
+type PaginatedMicrosoftEntraProviderMappingList {
+  pagination: Pagination!
+  results: [MicrosoftEntraProviderMapping]!
+}
+
+"""MicrosoftEntraProviderMapping Serializer"""
+type MicrosoftEntraProviderMapping {
+  pk: UUID!
+  """
+  Objects that are managed by authentik. These objects are created and updated automatically. This flag only indicates that an object can be overwritten by migrations. You can still modify the objects via the API, but expect changes to be overwritten in a later update.
+  """
+  managed: String
+  name: String!
+  expression: String!
+  """Get object's component so that we know how to edit the object"""
+  component: String!
+  """Return object's verbose_name"""
+  verboseName: String!
+  """Return object's plural verbose_name"""
+  verboseNamePlural: String!
+  """Return internal model name"""
+  metaModelName: String!
+}
+
+union PropertymappingsProviderMicrosoftEntraRetrieveResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "MicrosoftEntraProviderMapping") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = MicrosoftEntraProviderMapping | ValidationError | GenericError
+
+union PropertymappingsProviderMicrosoftEntraUsedByListResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "UsedBy") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = UsedBy | ValidationError | GenericError
+
 union PropertymappingsRacListResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "PaginatedRACPropertyMappingList") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = PaginatedRacPropertyMappingList | ValidationError | GenericError
 
 type PaginatedRacPropertyMappingList {
@@ -3121,6 +3200,102 @@ union ProvidersAllUsedByListResponse @statusCodeTypeName(subgraph: "Authentik", 
 
 union ProvidersAllTypesListResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "TypeCreate") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = TypeCreate | ValidationError | GenericError
 
+union ProvidersGoogleWorkspaceListResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "PaginatedGoogleWorkspaceProviderList") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = PaginatedGoogleWorkspaceProviderList | ValidationError | GenericError
+
+type PaginatedGoogleWorkspaceProviderList {
+  pagination: Pagination!
+  results: [GoogleWorkspaceProvider]!
+}
+
+"""GoogleWorkspaceProvider Serializer"""
+type GoogleWorkspaceProvider {
+  pk: Int!
+  name: String!
+  propertyMappings: [UUID]
+  """Property mappings used for group creation/updating."""
+  propertyMappingsGroup: [UUID]
+  """Get object component so that we know how to edit the object"""
+  component: String!
+  """Internal application name, used in URLs."""
+  assignedBackchannelApplicationSlug: String!
+  """Application's display Name."""
+  assignedBackchannelApplicationName: String!
+  """Return object's verbose_name"""
+  verboseName: String!
+  """Return object's plural verbose_name"""
+  verboseNamePlural: String!
+  """Return internal model name"""
+  metaModelName: String!
+  delegatedSubject: EmailAddress!
+  credentials: JSON!
+  scopes: String
+  excludeUsersServiceAccount: Boolean
+  filterGroup: UUID
+  userDeleteAction: OutgoingSyncDeleteAction
+  groupDeleteAction: OutgoingSyncDeleteAction
+  defaultGroupEmailDomain: String!
+}
+
+enum OutgoingSyncDeleteAction {
+  DO_NOTHING
+  DELETE
+  SUSPEND
+}
+
+union ProvidersGoogleWorkspaceRetrieveResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "GoogleWorkspaceProvider") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = GoogleWorkspaceProvider | ValidationError | GenericError
+
+union ProvidersGoogleWorkspaceSyncStatusRetrieveResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "SyncStatus") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = SyncStatus | ValidationError | GenericError
+
+"""Provider sync status"""
+type SyncStatus {
+  isRunning: Boolean!
+  tasks: [SystemTask]!
+}
+
+union ProvidersGoogleWorkspaceUsedByListResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "UsedBy") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = UsedBy | ValidationError | GenericError
+
+union ProvidersGoogleWorkspaceGroupsListResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "PaginatedGoogleWorkspaceProviderGroupList") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = PaginatedGoogleWorkspaceProviderGroupList | ValidationError | GenericError
+
+type PaginatedGoogleWorkspaceProviderGroupList {
+  pagination: Pagination!
+  results: [GoogleWorkspaceProviderGroup]!
+}
+
+"""GoogleWorkspaceProviderGroup Serializer"""
+type GoogleWorkspaceProviderGroup {
+  id: UUID!
+  googleId: String!
+  group: UUID!
+  groupObj: UserGroup!
+  provider: Int!
+  attributes: JSON!
+}
+
+union ProvidersGoogleWorkspaceGroupsRetrieveResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "GoogleWorkspaceProviderGroup") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = GoogleWorkspaceProviderGroup | ValidationError | GenericError
+
+union ProvidersGoogleWorkspaceGroupsUsedByListResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "UsedBy") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = UsedBy | ValidationError | GenericError
+
+union ProvidersGoogleWorkspaceUsersListResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "PaginatedGoogleWorkspaceProviderUserList") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = PaginatedGoogleWorkspaceProviderUserList | ValidationError | GenericError
+
+type PaginatedGoogleWorkspaceProviderUserList {
+  pagination: Pagination!
+  results: [GoogleWorkspaceProviderUser]!
+}
+
+"""GoogleWorkspaceProviderUser Serializer"""
+type GoogleWorkspaceProviderUser {
+  id: UUID!
+  googleId: String!
+  user: Int!
+  userObj: GroupMember!
+  provider: Int!
+  attributes: JSON!
+}
+
+union ProvidersGoogleWorkspaceUsersRetrieveResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "GoogleWorkspaceProviderUser") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = GoogleWorkspaceProviderUser | ValidationError | GenericError
+
+union ProvidersGoogleWorkspaceUsersUsedByListResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "UsedBy") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = UsedBy | ValidationError | GenericError
+
 union ProvidersLdapListResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "PaginatedLDAPProviderList") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = PaginatedLdapProviderList | ValidationError | GenericError
 
 type PaginatedLdapProviderList {
@@ -3183,6 +3358,89 @@ type LdapProvider {
 union ProvidersLdapRetrieveResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "LDAPProvider") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = LdapProvider | ValidationError | GenericError
 
 union ProvidersLdapUsedByListResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "UsedBy") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = UsedBy | ValidationError | GenericError
+
+union ProvidersMicrosoftEntraListResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "PaginatedMicrosoftEntraProviderList") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = PaginatedMicrosoftEntraProviderList | ValidationError | GenericError
+
+type PaginatedMicrosoftEntraProviderList {
+  pagination: Pagination!
+  results: [MicrosoftEntraProvider]!
+}
+
+"""MicrosoftEntraProvider Serializer"""
+type MicrosoftEntraProvider {
+  pk: Int!
+  name: String!
+  propertyMappings: [UUID]
+  """Property mappings used for group creation/updating."""
+  propertyMappingsGroup: [UUID]
+  """Get object component so that we know how to edit the object"""
+  component: String!
+  """Internal application name, used in URLs."""
+  assignedBackchannelApplicationSlug: String!
+  """Application's display Name."""
+  assignedBackchannelApplicationName: String!
+  """Return object's verbose_name"""
+  verboseName: String!
+  """Return object's plural verbose_name"""
+  verboseNamePlural: String!
+  """Return internal model name"""
+  metaModelName: String!
+  clientId: String!
+  clientSecret: String!
+  tenantId: String!
+  excludeUsersServiceAccount: Boolean
+  filterGroup: UUID
+  userDeleteAction: OutgoingSyncDeleteAction
+  groupDeleteAction: OutgoingSyncDeleteAction
+}
+
+union ProvidersMicrosoftEntraRetrieveResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "MicrosoftEntraProvider") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = MicrosoftEntraProvider | ValidationError | GenericError
+
+union ProvidersMicrosoftEntraSyncStatusRetrieveResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "SyncStatus") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = SyncStatus | ValidationError | GenericError
+
+union ProvidersMicrosoftEntraUsedByListResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "UsedBy") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = UsedBy | ValidationError | GenericError
+
+union ProvidersMicrosoftEntraGroupsListResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "PaginatedMicrosoftEntraProviderGroupList") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = PaginatedMicrosoftEntraProviderGroupList | ValidationError | GenericError
+
+type PaginatedMicrosoftEntraProviderGroupList {
+  pagination: Pagination!
+  results: [MicrosoftEntraProviderGroup]!
+}
+
+"""MicrosoftEntraProviderGroup Serializer"""
+type MicrosoftEntraProviderGroup {
+  id: UUID!
+  microsoftId: String!
+  group: UUID!
+  groupObj: UserGroup!
+  provider: Int!
+  attributes: JSON!
+}
+
+union ProvidersMicrosoftEntraGroupsRetrieveResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "MicrosoftEntraProviderGroup") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = MicrosoftEntraProviderGroup | ValidationError | GenericError
+
+union ProvidersMicrosoftEntraGroupsUsedByListResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "UsedBy") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = UsedBy | ValidationError | GenericError
+
+union ProvidersMicrosoftEntraUsersListResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "PaginatedMicrosoftEntraProviderUserList") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = PaginatedMicrosoftEntraProviderUserList | ValidationError | GenericError
+
+type PaginatedMicrosoftEntraProviderUserList {
+  pagination: Pagination!
+  results: [MicrosoftEntraProviderUser]!
+}
+
+"""MicrosoftEntraProviderUser Serializer"""
+type MicrosoftEntraProviderUser {
+  id: UUID!
+  microsoftId: String!
+  user: Int!
+  userObj: GroupMember!
+  provider: Int!
+  attributes: JSON!
+}
+
+union ProvidersMicrosoftEntraUsersRetrieveResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "MicrosoftEntraProviderUser") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = MicrosoftEntraProviderUser | ValidationError | GenericError
+
+union ProvidersMicrosoftEntraUsersUsedByListResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "UsedBy") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = UsedBy | ValidationError | GenericError
 
 union ProvidersOauth2ListResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "PaginatedOAuth2ProviderList") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = PaginatedOAuth2ProviderList | ValidationError | GenericError
 
@@ -3621,15 +3879,49 @@ type ScimProvider {
 
 union ProvidersScimRetrieveResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "SCIMProvider") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = ScimProvider | ValidationError | GenericError
 
-union ProvidersScimSyncStatusRetrieveResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "SCIMSyncStatus") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = ScimSyncStatus | ValidationError | GenericError
-
-"""SCIM Provider sync status"""
-type ScimSyncStatus {
-  isRunning: Boolean!
-  tasks: [SystemTask]!
-}
+union ProvidersScimSyncStatusRetrieveResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "SyncStatus") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = SyncStatus | ValidationError | GenericError
 
 union ProvidersScimUsedByListResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "UsedBy") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = UsedBy | ValidationError | GenericError
+
+union ProvidersScimGroupsListResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "PaginatedSCIMProviderGroupList") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = PaginatedScimProviderGroupList | ValidationError | GenericError
+
+type PaginatedScimProviderGroupList {
+  pagination: Pagination!
+  results: [ScimProviderGroup]!
+}
+
+"""SCIMProviderGroup Serializer"""
+type ScimProviderGroup {
+  id: UUID!
+  scimId: String!
+  group: UUID!
+  groupObj: UserGroup!
+  provider: Int!
+}
+
+union ProvidersScimGroupsRetrieveResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "SCIMProviderGroup") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = ScimProviderGroup | ValidationError | GenericError
+
+union ProvidersScimGroupsUsedByListResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "UsedBy") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = UsedBy | ValidationError | GenericError
+
+union ProvidersScimUsersListResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "PaginatedSCIMProviderUserList") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = PaginatedScimProviderUserList | ValidationError | GenericError
+
+type PaginatedScimProviderUserList {
+  pagination: Pagination!
+  results: [ScimProviderUser]!
+}
+
+"""SCIMProviderUser Serializer"""
+type ScimProviderUser {
+  id: UUID!
+  scimId: String!
+  user: Int!
+  userObj: GroupMember!
+  provider: Int!
+}
+
+union ProvidersScimUsersRetrieveResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "SCIMProviderUser") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = ScimProviderUser | ValidationError | GenericError
+
+union ProvidersScimUsersUsedByListResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "UsedBy") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = UsedBy | ValidationError | GenericError
 
 union RacConnectionTokensListResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "PaginatedConnectionTokenList") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = PaginatedConnectionTokenList | ValidationError | GenericError
 
@@ -3770,7 +4062,11 @@ enum QueryInputRbacPermissionsAssignedByRolesListModel {
   AUTHENTIK_POLICIES_EXPRESSION_EXPRESSIONPOLICY @enum(subgraph: "Authentik", value: "\"authentik_policies_expression.expressionpolicy\"")
   AUTHENTIK_POLICIES_PASSWORD_PASSWORDPOLICY @enum(subgraph: "Authentik", value: "\"authentik_policies_password.passwordpolicy\"")
   AUTHENTIK_POLICIES_REPUTATION_REPUTATIONPOLICY @enum(subgraph: "Authentik", value: "\"authentik_policies_reputation.reputationpolicy\"")
+  AUTHENTIK_PROVIDERS_GOOGLE_WORKSPACE_GOOGLEWORKSPACEPROVIDER @enum(subgraph: "Authentik", value: "\"authentik_providers_google_workspace.googleworkspaceprovider\"")
+  AUTHENTIK_PROVIDERS_GOOGLE_WORKSPACE_GOOGLEWORKSPACEPROVIDERMAPPING @enum(subgraph: "Authentik", value: "\"authentik_providers_google_workspace.googleworkspaceprovidermapping\"")
   AUTHENTIK_PROVIDERS_LDAP_LDAPPROVIDER @enum(subgraph: "Authentik", value: "\"authentik_providers_ldap.ldapprovider\"")
+  AUTHENTIK_PROVIDERS_MICROSOFT_ENTRA_MICROSOFTENTRAPROVIDER @enum(subgraph: "Authentik", value: "\"authentik_providers_microsoft_entra.microsoftentraprovider\"")
+  AUTHENTIK_PROVIDERS_MICROSOFT_ENTRA_MICROSOFTENTRAPROVIDERMAPPING @enum(subgraph: "Authentik", value: "\"authentik_providers_microsoft_entra.microsoftentraprovidermapping\"")
   AUTHENTIK_PROVIDERS_OAUTH2_OAUTH2PROVIDER @enum(subgraph: "Authentik", value: "\"authentik_providers_oauth2.oauth2provider\"")
   AUTHENTIK_PROVIDERS_OAUTH2_SCOPEMAPPING @enum(subgraph: "Authentik", value: "\"authentik_providers_oauth2.scopemapping\"")
   AUTHENTIK_PROVIDERS_PROXY_PROXYPROVIDER @enum(subgraph: "Authentik", value: "\"authentik_providers_proxy.proxyprovider\"")
@@ -3886,7 +4182,11 @@ enum QueryInputRbacPermissionsAssignedByUsersListModel {
   AUTHENTIK_POLICIES_EXPRESSION_EXPRESSIONPOLICY @enum(subgraph: "Authentik", value: "\"authentik_policies_expression.expressionpolicy\"")
   AUTHENTIK_POLICIES_PASSWORD_PASSWORDPOLICY @enum(subgraph: "Authentik", value: "\"authentik_policies_password.passwordpolicy\"")
   AUTHENTIK_POLICIES_REPUTATION_REPUTATIONPOLICY @enum(subgraph: "Authentik", value: "\"authentik_policies_reputation.reputationpolicy\"")
+  AUTHENTIK_PROVIDERS_GOOGLE_WORKSPACE_GOOGLEWORKSPACEPROVIDER @enum(subgraph: "Authentik", value: "\"authentik_providers_google_workspace.googleworkspaceprovider\"")
+  AUTHENTIK_PROVIDERS_GOOGLE_WORKSPACE_GOOGLEWORKSPACEPROVIDERMAPPING @enum(subgraph: "Authentik", value: "\"authentik_providers_google_workspace.googleworkspaceprovidermapping\"")
   AUTHENTIK_PROVIDERS_LDAP_LDAPPROVIDER @enum(subgraph: "Authentik", value: "\"authentik_providers_ldap.ldapprovider\"")
+  AUTHENTIK_PROVIDERS_MICROSOFT_ENTRA_MICROSOFTENTRAPROVIDER @enum(subgraph: "Authentik", value: "\"authentik_providers_microsoft_entra.microsoftentraprovider\"")
+  AUTHENTIK_PROVIDERS_MICROSOFT_ENTRA_MICROSOFTENTRAPROVIDERMAPPING @enum(subgraph: "Authentik", value: "\"authentik_providers_microsoft_entra.microsoftentraprovidermapping\"")
   AUTHENTIK_PROVIDERS_OAUTH2_OAUTH2PROVIDER @enum(subgraph: "Authentik", value: "\"authentik_providers_oauth2.oauth2provider\"")
   AUTHENTIK_PROVIDERS_OAUTH2_SCOPEMAPPING @enum(subgraph: "Authentik", value: "\"authentik_providers_oauth2.scopemapping\"")
   AUTHENTIK_PROVIDERS_PROXY_PROXYPROVIDER @enum(subgraph: "Authentik", value: "\"authentik_providers_proxy.proxyprovider\"")
@@ -4248,11 +4548,7 @@ type LdapSource {
   """
   managed: String
   userPathTemplate: String
-  """
-  Get the URL to the Icon. If the name is /static or
-  starts with http it is returned as-is
-  """
-  icon: String
+  icon: String!
   serverUri: URL!
   """
   Optionally verify the LDAP Server's Certificate against the CA Chain in this keypair.
@@ -4306,13 +4602,7 @@ type LdapDebug {
   membership: [JSON]!
 }
 
-union SourcesLdapSyncStatusRetrieveResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "LDAPSyncStatus") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = LdapSyncStatus | ValidationError | GenericError
-
-"""LDAP Source sync status"""
-type LdapSyncStatus {
-  isRunning: Boolean!
-  tasks: [SystemTask]!
-}
+union SourcesLdapSyncStatusRetrieveResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "SyncStatus") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = SyncStatus | ValidationError | GenericError
 
 union SourcesLdapUsedByListResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "UsedBy") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = UsedBy | ValidationError | GenericError
 
@@ -4349,10 +4639,6 @@ type OAuthSource {
   """
   managed: String
   userPathTemplate: String
-  """
-  Get the URL to the Icon. If the name is /static or
-  starts with http it is returned as-is
-  """
   icon: String
   providerType: ProviderTypeEnum!
   """
@@ -4477,11 +4763,7 @@ type PlexSource {
   """
   managed: String
   userPathTemplate: String
-  """
-  Get the URL to the Icon. If the name is /static or
-  starts with http it is returned as-is
-  """
-  icon: String
+  icon: String!
   """Client identifier used to talk to Plex."""
   clientId: String
   """
@@ -4549,11 +4831,7 @@ type SamlSource {
   """
   managed: String
   userPathTemplate: String
-  """
-  Get the URL to the Icon. If the name is /static or
-  starts with http it is returned as-is
-  """
-  icon: String
+  icon: String!
   """Flow used before authentication."""
   preAuthenticationFlow: UUID!
   """Also known as Entity ID. Defaults the Metadata URL."""
@@ -5166,6 +5444,12 @@ type CaptchaStage {
   publicKey: String!
   jsUrl: String
   apiUrl: String
+  scoreMinThreshold: Float
+  scoreMaxThreshold: Float
+  """
+  When enabled and the received captcha score is outside of the given threshold, the stage will show an error message. When not enabled, the flow will continue, but the data from the captcha will be available in the context for policy decisions
+  """
+  errorOnInvalidScore: Boolean
 }
 
 union StagesCaptchaRetrieveResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "CaptchaStage") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = CaptchaStage | ValidationError | GenericError
@@ -6296,7 +6580,9 @@ input TransactionApplicationRequestInput {
 }
 
 enum ProviderModelEnum {
+  AUTHENTIK_PROVIDERS_GOOGLE_WORKSPACE_GOOGLEWORKSPACEPROVIDER @enum(subgraph: "Authentik", value: "\"authentik_providers_google_workspace.googleworkspaceprovider\"")
   AUTHENTIK_PROVIDERS_LDAP_LDAPPROVIDER @enum(subgraph: "Authentik", value: "\"authentik_providers_ldap.ldapprovider\"")
+  AUTHENTIK_PROVIDERS_MICROSOFT_ENTRA_MICROSOFTENTRAPROVIDER @enum(subgraph: "Authentik", value: "\"authentik_providers_microsoft_entra.microsoftentraprovider\"")
   AUTHENTIK_PROVIDERS_OAUTH2_OAUTH2PROVIDER @enum(subgraph: "Authentik", value: "\"authentik_providers_oauth2.oauth2provider\"")
   AUTHENTIK_PROVIDERS_PROXY_PROXYPROVIDER @enum(subgraph: "Authentik", value: "\"authentik_providers_proxy.proxyprovider\"")
   AUTHENTIK_PROVIDERS_RAC_RACPROVIDER @enum(subgraph: "Authentik", value: "\"authentik_providers_rac.racprovider\"")
@@ -6306,13 +6592,31 @@ enum ProviderModelEnum {
 }
 
 input ModelRequestInput @oneOf(subgraph: "Authentik") {
+  googleWorkspaceProviderRequestInput: GoogleWorkspaceProviderRequestInput
   ldapProviderRequestInput: LdapProviderRequestInput
+  microsoftEntraProviderRequestInput: MicrosoftEntraProviderRequestInput
   oAuth2ProviderRequestInput: OAuth2ProviderRequestInput
   proxyProviderRequestInput: ProxyProviderRequestInput
   racProviderRequestInput: RacProviderRequestInput
   radiusProviderRequestInput: RadiusProviderRequestInput
   samlProviderRequestInput: SamlProviderRequestInput
   scimProviderRequestInput: ScimProviderRequestInput
+}
+
+"""GoogleWorkspaceProvider Serializer"""
+input GoogleWorkspaceProviderRequestInput {
+  name: NonEmptyString!
+  propertyMappings: [UUID]
+  """Property mappings used for group creation/updating."""
+  propertyMappingsGroup: [UUID]
+  delegatedSubject: EmailAddress!
+  credentials: JSON!
+  scopes: NonEmptyString
+  excludeUsersServiceAccount: Boolean
+  filterGroup: UUID
+  userDeleteAction: OutgoingSyncDeleteAction
+  groupDeleteAction: OutgoingSyncDeleteAction
+  defaultGroupEmailDomain: NonEmptyString!
 }
 
 """LDAPProvider Serializer"""
@@ -6349,6 +6653,21 @@ input LdapProviderRequestInput {
   mfaSupport: Boolean
 }
 
+"""MicrosoftEntraProvider Serializer"""
+input MicrosoftEntraProviderRequestInput {
+  name: NonEmptyString!
+  propertyMappings: [UUID]
+  """Property mappings used for group creation/updating."""
+  propertyMappingsGroup: [UUID]
+  clientId: NonEmptyString!
+  clientSecret: NonEmptyString!
+  tenantId: NonEmptyString!
+  excludeUsersServiceAccount: Boolean
+  filterGroup: UUID
+  userDeleteAction: OutgoingSyncDeleteAction
+  groupDeleteAction: OutgoingSyncDeleteAction
+}
+
 """OAuth2Provider Serializer"""
 input OAuth2ProviderRequestInput {
   name: NonEmptyString!
@@ -6360,8 +6679,8 @@ input OAuth2ProviderRequestInput {
   authorizationFlow: UUID!
   propertyMappings: [UUID]
   clientType: ClientTypeEnum
-  clientId: MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_1ClientId
-  clientSecret: MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_1ClientSecret
+  clientId: MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_3ClientId
+  clientSecret: MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_3ClientSecret
   """
   Access codes not valid on or after current time + this value (Format: hours=1;minutes=2;seconds=3).
   """
@@ -6389,9 +6708,9 @@ input OAuth2ProviderRequestInput {
   jwksSources: [UUID]
 }
 
-scalar MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_1ClientId @length(subgraph: "Authentik", min: 1, max: 255)
+scalar MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_3ClientId @length(subgraph: "Authentik", min: 1, max: 255)
 
-scalar MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_1ClientSecret @length(subgraph: "Authentik", max: 255)
+scalar MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_3ClientSecret @length(subgraph: "Authentik", max: 255)
 
 """ProxyProvider Serializer"""
 input ProxyProviderRequestInput {
@@ -7497,6 +7816,13 @@ type PropertyMappingTestResult {
   successful: Boolean!
 }
 
+"""Test property mapping execution for a user/group with context"""
+input PropertyMappingTestRequestInput {
+  user: Int
+  context: JSON
+  group: UUID
+}
+
 union PropertymappingsLdapCreateResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 201, typeName: "LDAPPropertyMapping") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = LdapPropertyMapping | ValidationError | GenericError
 
 """LDAP PropertyMapping Serializer"""
@@ -7546,6 +7872,62 @@ input PatchedNotificationWebhookMappingRequestInput {
 }
 
 union PropertymappingsNotificationDestroyResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 204, typeName: "Void_container") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = VoidContainer | ValidationError | GenericError
+
+union PropertymappingsProviderGoogleWorkspaceCreateResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 201, typeName: "GoogleWorkspaceProviderMapping") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = GoogleWorkspaceProviderMapping | ValidationError | GenericError
+
+"""GoogleWorkspaceProviderMapping Serializer"""
+input GoogleWorkspaceProviderMappingRequestInput {
+  """
+  Objects that are managed by authentik. These objects are created and updated automatically. This flag only indicates that an object can be overwritten by migrations. You can still modify the objects via the API, but expect changes to be overwritten in a later update.
+  """
+  managed: NonEmptyString
+  name: NonEmptyString!
+  expression: NonEmptyString!
+}
+
+union PropertymappingsProviderGoogleWorkspaceUpdateResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "GoogleWorkspaceProviderMapping") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = GoogleWorkspaceProviderMapping | ValidationError | GenericError
+
+union PropertymappingsProviderGoogleWorkspacePartialUpdateResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "GoogleWorkspaceProviderMapping") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = GoogleWorkspaceProviderMapping | ValidationError | GenericError
+
+"""GoogleWorkspaceProviderMapping Serializer"""
+input PatchedGoogleWorkspaceProviderMappingRequestInput {
+  """
+  Objects that are managed by authentik. These objects are created and updated automatically. This flag only indicates that an object can be overwritten by migrations. You can still modify the objects via the API, but expect changes to be overwritten in a later update.
+  """
+  managed: NonEmptyString
+  name: NonEmptyString
+  expression: NonEmptyString
+}
+
+union PropertymappingsProviderGoogleWorkspaceDestroyResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 204, typeName: "Void_container") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = VoidContainer | ValidationError | GenericError
+
+union PropertymappingsProviderMicrosoftEntraCreateResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 201, typeName: "MicrosoftEntraProviderMapping") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = MicrosoftEntraProviderMapping | ValidationError | GenericError
+
+"""MicrosoftEntraProviderMapping Serializer"""
+input MicrosoftEntraProviderMappingRequestInput {
+  """
+  Objects that are managed by authentik. These objects are created and updated automatically. This flag only indicates that an object can be overwritten by migrations. You can still modify the objects via the API, but expect changes to be overwritten in a later update.
+  """
+  managed: NonEmptyString
+  name: NonEmptyString!
+  expression: NonEmptyString!
+}
+
+union PropertymappingsProviderMicrosoftEntraUpdateResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "MicrosoftEntraProviderMapping") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = MicrosoftEntraProviderMapping | ValidationError | GenericError
+
+union PropertymappingsProviderMicrosoftEntraPartialUpdateResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "MicrosoftEntraProviderMapping") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = MicrosoftEntraProviderMapping | ValidationError | GenericError
+
+"""MicrosoftEntraProviderMapping Serializer"""
+input PatchedMicrosoftEntraProviderMappingRequestInput {
+  """
+  Objects that are managed by authentik. These objects are created and updated automatically. This flag only indicates that an object can be overwritten by migrations. You can still modify the objects via the API, but expect changes to be overwritten in a later update.
+  """
+  managed: NonEmptyString
+  name: NonEmptyString
+  expression: NonEmptyString
+}
+
+union PropertymappingsProviderMicrosoftEntraDestroyResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 204, typeName: "Void_container") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = VoidContainer | ValidationError | GenericError
 
 union PropertymappingsRacCreateResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 201, typeName: "RACPropertyMapping") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = RacPropertyMapping | ValidationError | GenericError
 
@@ -7679,6 +8061,52 @@ union PropertymappingsScopeDestroyResponse @statusCodeTypeName(subgraph: "Authen
 
 union ProvidersAllDestroyResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 204, typeName: "Void_container") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = VoidContainer | ValidationError | GenericError
 
+union ProvidersGoogleWorkspaceCreateResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 201, typeName: "GoogleWorkspaceProvider") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = GoogleWorkspaceProvider | ValidationError | GenericError
+
+union ProvidersGoogleWorkspaceUpdateResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "GoogleWorkspaceProvider") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = GoogleWorkspaceProvider | ValidationError | GenericError
+
+union ProvidersGoogleWorkspacePartialUpdateResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "GoogleWorkspaceProvider") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = GoogleWorkspaceProvider | ValidationError | GenericError
+
+"""GoogleWorkspaceProvider Serializer"""
+input PatchedGoogleWorkspaceProviderRequestInput {
+  name: NonEmptyString
+  propertyMappings: [UUID]
+  """Property mappings used for group creation/updating."""
+  propertyMappingsGroup: [UUID]
+  delegatedSubject: EmailAddress
+  credentials: JSON
+  scopes: NonEmptyString
+  excludeUsersServiceAccount: Boolean
+  filterGroup: UUID
+  userDeleteAction: OutgoingSyncDeleteAction
+  groupDeleteAction: OutgoingSyncDeleteAction
+  defaultGroupEmailDomain: NonEmptyString
+}
+
+union ProvidersGoogleWorkspaceDestroyResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 204, typeName: "Void_container") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = VoidContainer | ValidationError | GenericError
+
+union ProvidersGoogleWorkspaceGroupsCreateResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 201, typeName: "GoogleWorkspaceProviderGroup") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = GoogleWorkspaceProviderGroup | ValidationError | GenericError
+
+"""GoogleWorkspaceProviderGroup Serializer"""
+input GoogleWorkspaceProviderGroupRequestInput {
+  googleId: NonEmptyString!
+  group: UUID!
+  provider: Int!
+}
+
+union ProvidersGoogleWorkspaceGroupsDestroyResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 204, typeName: "Void_container") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = VoidContainer | ValidationError | GenericError
+
+union ProvidersGoogleWorkspaceUsersCreateResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 201, typeName: "GoogleWorkspaceProviderUser") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = GoogleWorkspaceProviderUser | ValidationError | GenericError
+
+"""GoogleWorkspaceProviderUser Serializer"""
+input GoogleWorkspaceProviderUserRequestInput {
+  googleId: NonEmptyString!
+  user: Int!
+  provider: Int!
+}
+
+union ProvidersGoogleWorkspaceUsersDestroyResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 204, typeName: "Void_container") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = VoidContainer | ValidationError | GenericError
+
 union ProvidersLdapCreateResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 201, typeName: "LDAPProvider") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = LdapProvider | ValidationError | GenericError
 
 union ProvidersLdapUpdateResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "LDAPProvider") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = LdapProvider | ValidationError | GenericError
@@ -7720,6 +8148,51 @@ input PatchedLdapProviderRequestInput {
 }
 
 union ProvidersLdapDestroyResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 204, typeName: "Void_container") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = VoidContainer | ValidationError | GenericError
+
+union ProvidersMicrosoftEntraCreateResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 201, typeName: "MicrosoftEntraProvider") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = MicrosoftEntraProvider | ValidationError | GenericError
+
+union ProvidersMicrosoftEntraUpdateResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "MicrosoftEntraProvider") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = MicrosoftEntraProvider | ValidationError | GenericError
+
+union ProvidersMicrosoftEntraPartialUpdateResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "MicrosoftEntraProvider") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = MicrosoftEntraProvider | ValidationError | GenericError
+
+"""MicrosoftEntraProvider Serializer"""
+input PatchedMicrosoftEntraProviderRequestInput {
+  name: NonEmptyString
+  propertyMappings: [UUID]
+  """Property mappings used for group creation/updating."""
+  propertyMappingsGroup: [UUID]
+  clientId: NonEmptyString
+  clientSecret: NonEmptyString
+  tenantId: NonEmptyString
+  excludeUsersServiceAccount: Boolean
+  filterGroup: UUID
+  userDeleteAction: OutgoingSyncDeleteAction
+  groupDeleteAction: OutgoingSyncDeleteAction
+}
+
+union ProvidersMicrosoftEntraDestroyResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 204, typeName: "Void_container") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = VoidContainer | ValidationError | GenericError
+
+union ProvidersMicrosoftEntraGroupsCreateResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 201, typeName: "MicrosoftEntraProviderGroup") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = MicrosoftEntraProviderGroup | ValidationError | GenericError
+
+"""MicrosoftEntraProviderGroup Serializer"""
+input MicrosoftEntraProviderGroupRequestInput {
+  microsoftId: NonEmptyString!
+  group: UUID!
+  provider: Int!
+}
+
+union ProvidersMicrosoftEntraGroupsDestroyResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 204, typeName: "Void_container") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = VoidContainer | ValidationError | GenericError
+
+union ProvidersMicrosoftEntraUsersCreateResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 201, typeName: "MicrosoftEntraProviderUser") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = MicrosoftEntraProviderUser | ValidationError | GenericError
+
+"""MicrosoftEntraProviderUser Serializer"""
+input MicrosoftEntraProviderUserRequestInput {
+  microsoftId: NonEmptyString!
+  user: Int!
+  provider: Int!
+}
+
+union ProvidersMicrosoftEntraUsersDestroyResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 204, typeName: "Void_container") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = VoidContainer | ValidationError | GenericError
 
 union ProvidersOauth2CreateResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 201, typeName: "OAuth2Provider") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = OAuth2Provider | ValidationError | GenericError
 
@@ -7973,6 +8446,28 @@ input PatchedScimProviderRequestInput {
 }
 
 union ProvidersScimDestroyResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 204, typeName: "Void_container") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = VoidContainer | ValidationError | GenericError
+
+union ProvidersScimGroupsCreateResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 201, typeName: "SCIMProviderGroup") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = ScimProviderGroup | ValidationError | GenericError
+
+"""SCIMProviderGroup Serializer"""
+input ScimProviderGroupRequestInput {
+  scimId: NonEmptyString!
+  group: UUID!
+  provider: Int!
+}
+
+union ProvidersScimGroupsDestroyResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 204, typeName: "Void_container") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = VoidContainer | ValidationError | GenericError
+
+union ProvidersScimUsersCreateResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 201, typeName: "SCIMProviderUser") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = ScimProviderUser | ValidationError | GenericError
+
+"""SCIMProviderUser Serializer"""
+input ScimProviderUserRequestInput {
+  scimId: NonEmptyString!
+  user: Int!
+  provider: Int!
+}
+
+union ProvidersScimUsersDestroyResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 204, typeName: "Void_container") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = VoidContainer | ValidationError | GenericError
 
 union RacConnectionTokensUpdateResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "ConnectionToken") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = ConnectionToken | ValidationError | GenericError
 
@@ -8913,6 +9408,12 @@ input CaptchaStageRequestInput {
   privateKey: NonEmptyString!
   jsUrl: NonEmptyString
   apiUrl: NonEmptyString
+  scoreMinThreshold: Float
+  scoreMaxThreshold: Float
+  """
+  When enabled and the received captcha score is outside of the given threshold, the stage will show an error message. When not enabled, the flow will continue, but the data from the captcha will be available in the context for policy decisions
+  """
+  errorOnInvalidScore: Boolean
 }
 
 union StagesCaptchaUpdateResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 200, typeName: "CaptchaStage") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = CaptchaStage | ValidationError | GenericError
@@ -8929,6 +9430,12 @@ input PatchedCaptchaStageRequestInput {
   privateKey: NonEmptyString
   jsUrl: NonEmptyString
   apiUrl: NonEmptyString
+  scoreMinThreshold: Float
+  scoreMaxThreshold: Float
+  """
+  When enabled and the received captcha score is outside of the given threshold, the stage will show an error message. When not enabled, the flow will continue, but the data from the captcha will be available in the context for policy decisions
+  """
+  errorOnInvalidScore: Boolean
 }
 
 union StagesCaptchaDestroyResponse @statusCodeTypeName(subgraph: "Authentik", statusCode: 204, typeName: "Void_container") @statusCodeTypeName(subgraph: "Authentik", statusCode: 400, typeName: "ValidationError") @statusCodeTypeName(subgraph: "Authentik", statusCode: 403, typeName: "GenericError") = VoidContainer | ValidationError | GenericError

@@ -125,8 +125,8 @@ export type Scalars = {
   MutationInputCoreGroupsPartialUpdateInputName: { input: any; output: any; }
   MutationInputCoreTokensCreateInputIdentifier: { input: string; output: string; }
   MutationInputCoreTokensPartialUpdateInputIdentifier: { input: string; output: string; }
-  MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_1ClientId: { input: any; output: any; }
-  MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_1ClientSecret: { input: any; output: any; }
+  MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_3ClientId: { input: any; output: any; }
+  MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_3ClientSecret: { input: any; output: any; }
   MutationInputCoreUsersCreateInputUsername: { input: any; output: any; }
   MutationInputCoreUsersPartialUpdateInputUsername: { input: any; output: any; }
   MutationInputFlowsInstancesCreateInputSlug: { input: string; output: string; }
@@ -215,7 +215,7 @@ export type Query = {
   provider?: Maybe<ProvidersAllRetrieveResponse>;
   /** Get a list of all objects that use this object */
   providersAllUsedByList?: Maybe<Array<Maybe<ProvidersAllUsedByListResponse>>>;
-  /** Get all creatable provider types */
+  /** Get all creatable types */
   providersAllTypesList?: Maybe<Array<Maybe<ProvidersAllTypesListResponse>>>;
 };
 
@@ -347,7 +347,7 @@ export type QueryflowsInstancesUsedByListArgs = {
 
 export type QueryprovidersArgs = {
   applicationIsnull?: InputMaybe<Scalars['Boolean']['input']>;
-  backchannelOnly?: InputMaybe<Scalars['Boolean']['input']>;
+  backchannel?: InputMaybe<Scalars['Boolean']['input']>;
   ordering?: InputMaybe<Scalars['String']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
   pageSize?: InputMaybe<Scalars['Int']['input']>;
@@ -366,7 +366,7 @@ export type QueryprovidersAllUsedByListArgs = {
 
 /**
  * Permet de faire des requêtes de données temps-réel, via des _websockets_.
- * L'endpoint pour le temps réel est `wss://churros.inpt.fr/graphql`.
+ * L'endpoint pour le temps réel est `ws://localhost:4000/graphql`.
  *
  * Pour un client JavaScript, il y a par exemple [GraphQL-WebSocket](https://the-guild.dev/graphql/ws/get-started#use-the-client)
  *
@@ -388,7 +388,7 @@ export type Subscription = {
 
 /**
  * Permet de faire des requêtes de données temps-réel, via des _websockets_.
- * L'endpoint pour le temps réel est `wss://churros.inpt.fr/graphql`.
+ * L'endpoint pour le temps réel est `ws://localhost:4000/graphql`.
  *
  * Pour un client JavaScript, il y a par exemple [GraphQL-WebSocket](https://the-guild.dev/graphql/ws/get-started#use-the-client)
  *
@@ -401,7 +401,7 @@ export type SubscriptionarticleArgs = {
 
 /**
  * Permet de faire des requêtes de données temps-réel, via des _websockets_.
- * L'endpoint pour le temps réel est `wss://churros.inpt.fr/graphql`.
+ * L'endpoint pour le temps réel est `ws://localhost:4000/graphql`.
  *
  * Pour un client JavaScript, il y a par exemple [GraphQL-WebSocket](https://the-guild.dev/graphql/ws/get-started#use-the-client)
  *
@@ -416,7 +416,7 @@ export type SubscriptioneventArgs = {
 
 /**
  * Permet de faire des requêtes de données temps-réel, via des _websockets_.
- * L'endpoint pour le temps réel est `wss://churros.inpt.fr/graphql`.
+ * L'endpoint pour le temps réel est `ws://localhost:4000/graphql`.
  *
  * Pour un client JavaScript, il y a par exemple [GraphQL-WebSocket](https://the-guild.dev/graphql/ws/get-started#use-the-client)
  *
@@ -429,7 +429,7 @@ export type SubscriptionformArgs = {
 
 /**
  * Permet de faire des requêtes de données temps-réel, via des _websockets_.
- * L'endpoint pour le temps réel est `wss://churros.inpt.fr/graphql`.
+ * L'endpoint pour le temps réel est `ws://localhost:4000/graphql`.
  *
  * Pour un client JavaScript, il y a par exemple [GraphQL-WebSocket](https://the-guild.dev/graphql/ws/get-started#use-the-client)
  *
@@ -445,7 +445,7 @@ export type SubscriptionhomepageArgs = {
 
 /**
  * Permet de faire des requêtes de données temps-réel, via des _websockets_.
- * L'endpoint pour le temps réel est `wss://churros.inpt.fr/graphql`.
+ * L'endpoint pour le temps réel est `ws://localhost:4000/graphql`.
  *
  * Pour un client JavaScript, il y a par exemple [GraphQL-WebSocket](https://the-guild.dev/graphql/ws/get-started#use-the-client)
  *
@@ -458,7 +458,7 @@ export type SubscriptionregistrationArgs = {
 
 /**
  * Permet de faire des requêtes de données temps-réel, via des _websockets_.
- * L'endpoint pour le temps réel est `wss://churros.inpt.fr/graphql`.
+ * L'endpoint pour le temps réel est `ws://localhost:4000/graphql`.
  *
  * Pour un client JavaScript, il y a par exemple [GraphQL-WebSocket](https://the-guild.dev/graphql/ws/get-started#use-the-client)
  *
@@ -3913,11 +3913,13 @@ export type SystemInfo = {
 /** Get versions */
 export type QueryAdminSystemRetrieveOneOf_0Runtime = {
   pythonVersion: Scalars['String']['output'];
-  gunicornVersion: Scalars['String']['output'];
   environment: Scalars['String']['output'];
   architecture: Scalars['String']['output'];
   platform: Scalars['String']['output'];
   uname: Scalars['String']['output'];
+  opensslVersion: Scalars['String']['output'];
+  opensslFipsEnabled?: Maybe<Scalars['Boolean']['output']>;
+  authentikVersion: Scalars['String']['output'];
 };
 
 export type AdminVersionRetrieveResponse = Version | ValidationError | GenericError;
@@ -4339,7 +4341,7 @@ export type CurrentBrand = {
 
 /** Links returned in Config API */
 export type FooterLink = {
-  href: Scalars['String']['output'];
+  href?: Maybe<Scalars['String']['output']>;
   name: Scalars['String']['output'];
 };
 
@@ -4735,6 +4737,7 @@ export type TypeCreate = {
   description: Scalars['String']['output'];
   component: Scalars['String']['output'];
   modelName: Scalars['String']['output'];
+  iconUrl?: Maybe<Scalars['String']['output']>;
   requiresEnterprise?: Maybe<Scalars['Boolean']['output']>;
 };
 
@@ -4831,6 +4834,8 @@ export type SystemTask = {
   duration: Scalars['Float']['output'];
   status: SystemTaskStatusEnum;
   messages: Array<Maybe<LogEvent>>;
+  expires?: Maybe<Scalars['DateTime']['output']>;
+  expiring?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type SystemTaskStatusEnum =
@@ -5642,6 +5647,11 @@ export type OutpostHealth = {
   uid: Scalars['String']['output'];
   lastSeen: Scalars['DateTime']['output'];
   version: Scalars['String']['output'];
+  golangVersion: Scalars['String']['output'];
+  opensslEnabled: Scalars['Boolean']['output'];
+  opensslVersion: Scalars['String']['output'];
+  /** Get FIPS enabled */
+  fipsEnabled?: Maybe<Scalars['Boolean']['output']>;
   versionShould: Scalars['String']['output'];
   versionOutdated: Scalars['Boolean']['output'];
   buildHash: Scalars['String']['output'];
@@ -6047,6 +6057,8 @@ export type AppEnum =
   | 'AUTHENTIK_CORE'
   | 'AUTHENTIK_ENTERPRISE'
   | 'AUTHENTIK_ENTERPRISE_AUDIT'
+  | 'AUTHENTIK_ENTERPRISE_PROVIDERS_GOOGLE_WORKSPACE'
+  | 'AUTHENTIK_ENTERPRISE_PROVIDERS_MICROSOFT_ENTRA'
   | 'AUTHENTIK_ENTERPRISE_PROVIDERS_RAC'
   | 'AUTHENTIK_ENTERPRISE_STAGES_SOURCE'
   | 'AUTHENTIK_EVENTS';
@@ -6119,6 +6131,10 @@ export type ModelEnum =
   | 'AUTHENTIK_CORE_APPLICATION'
   | 'AUTHENTIK_CORE_TOKEN'
   | 'AUTHENTIK_ENTERPRISE_LICENSE'
+  | 'AUTHENTIK_PROVIDERS_GOOGLE_WORKSPACE_GOOGLEWORKSPACEPROVIDER'
+  | 'AUTHENTIK_PROVIDERS_GOOGLE_WORKSPACE_GOOGLEWORKSPACEPROVIDERMAPPING'
+  | 'AUTHENTIK_PROVIDERS_MICROSOFT_ENTRA_MICROSOFTENTRAPROVIDER'
+  | 'AUTHENTIK_PROVIDERS_MICROSOFT_ENTRA_MICROSOFTENTRAPROVIDERMAPPING'
   | 'AUTHENTIK_PROVIDERS_RAC_RACPROVIDER'
   | 'AUTHENTIK_PROVIDERS_RAC_ENDPOINT'
   | 'AUTHENTIK_PROVIDERS_RAC_RACPROPERTYMAPPING'
@@ -6400,6 +6416,62 @@ export type PropertymappingsNotificationRetrieveResponse = NotificationWebhookMa
 
 export type PropertymappingsNotificationUsedByListResponse = UsedBy | ValidationError | GenericError;
 
+export type PropertymappingsProviderGoogleWorkspaceListResponse = PaginatedGoogleWorkspaceProviderMappingList | ValidationError | GenericError;
+
+export type PaginatedGoogleWorkspaceProviderMappingList = {
+  pagination: Pagination;
+  results: Array<Maybe<GoogleWorkspaceProviderMapping>>;
+};
+
+/** GoogleWorkspaceProviderMapping Serializer */
+export type GoogleWorkspaceProviderMapping = {
+  pk: Scalars['UUID']['output'];
+  /** Objects that are managed by authentik. These objects are created and updated automatically. This flag only indicates that an object can be overwritten by migrations. You can still modify the objects via the API, but expect changes to be overwritten in a later update. */
+  managed?: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
+  expression: Scalars['String']['output'];
+  /** Get object's component so that we know how to edit the object */
+  component: Scalars['String']['output'];
+  /** Return object's verbose_name */
+  verboseName: Scalars['String']['output'];
+  /** Return object's plural verbose_name */
+  verboseNamePlural: Scalars['String']['output'];
+  /** Return internal model name */
+  metaModelName: Scalars['String']['output'];
+};
+
+export type PropertymappingsProviderGoogleWorkspaceRetrieveResponse = GoogleWorkspaceProviderMapping | ValidationError | GenericError;
+
+export type PropertymappingsProviderGoogleWorkspaceUsedByListResponse = UsedBy | ValidationError | GenericError;
+
+export type PropertymappingsProviderMicrosoftEntraListResponse = PaginatedMicrosoftEntraProviderMappingList | ValidationError | GenericError;
+
+export type PaginatedMicrosoftEntraProviderMappingList = {
+  pagination: Pagination;
+  results: Array<Maybe<MicrosoftEntraProviderMapping>>;
+};
+
+/** MicrosoftEntraProviderMapping Serializer */
+export type MicrosoftEntraProviderMapping = {
+  pk: Scalars['UUID']['output'];
+  /** Objects that are managed by authentik. These objects are created and updated automatically. This flag only indicates that an object can be overwritten by migrations. You can still modify the objects via the API, but expect changes to be overwritten in a later update. */
+  managed?: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
+  expression: Scalars['String']['output'];
+  /** Get object's component so that we know how to edit the object */
+  component: Scalars['String']['output'];
+  /** Return object's verbose_name */
+  verboseName: Scalars['String']['output'];
+  /** Return object's plural verbose_name */
+  verboseNamePlural: Scalars['String']['output'];
+  /** Return internal model name */
+  metaModelName: Scalars['String']['output'];
+};
+
+export type PropertymappingsProviderMicrosoftEntraRetrieveResponse = MicrosoftEntraProviderMapping | ValidationError | GenericError;
+
+export type PropertymappingsProviderMicrosoftEntraUsedByListResponse = UsedBy | ValidationError | GenericError;
+
 export type PropertymappingsRacListResponse = PaginatedRacPropertyMappingList | ValidationError | GenericError;
 
 export type PaginatedRacPropertyMappingList = {
@@ -6532,6 +6604,101 @@ export type ProvidersAllUsedByListResponse = UsedBy | ValidationError | GenericE
 
 export type ProvidersAllTypesListResponse = TypeCreate | ValidationError | GenericError;
 
+export type ProvidersGoogleWorkspaceListResponse = PaginatedGoogleWorkspaceProviderList | ValidationError | GenericError;
+
+export type PaginatedGoogleWorkspaceProviderList = {
+  pagination: Pagination;
+  results: Array<Maybe<GoogleWorkspaceProvider>>;
+};
+
+/** GoogleWorkspaceProvider Serializer */
+export type GoogleWorkspaceProvider = {
+  pk: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  propertyMappings?: Maybe<Array<Maybe<Scalars['UUID']['output']>>>;
+  /** Property mappings used for group creation/updating. */
+  propertyMappingsGroup?: Maybe<Array<Maybe<Scalars['UUID']['output']>>>;
+  /** Get object component so that we know how to edit the object */
+  component: Scalars['String']['output'];
+  /** Internal application name, used in URLs. */
+  assignedBackchannelApplicationSlug: Scalars['String']['output'];
+  /** Application's display Name. */
+  assignedBackchannelApplicationName: Scalars['String']['output'];
+  /** Return object's verbose_name */
+  verboseName: Scalars['String']['output'];
+  /** Return object's plural verbose_name */
+  verboseNamePlural: Scalars['String']['output'];
+  /** Return internal model name */
+  metaModelName: Scalars['String']['output'];
+  delegatedSubject: Scalars['EmailAddress']['output'];
+  credentials: Scalars['JSON']['output'];
+  scopes?: Maybe<Scalars['String']['output']>;
+  excludeUsersServiceAccount?: Maybe<Scalars['Boolean']['output']>;
+  filterGroup?: Maybe<Scalars['UUID']['output']>;
+  userDeleteAction?: Maybe<OutgoingSyncDeleteAction>;
+  groupDeleteAction?: Maybe<OutgoingSyncDeleteAction>;
+  defaultGroupEmailDomain: Scalars['String']['output'];
+};
+
+export type OutgoingSyncDeleteAction =
+  | 'DO_NOTHING'
+  | 'DELETE'
+  | 'SUSPEND';
+
+export type ProvidersGoogleWorkspaceRetrieveResponse = GoogleWorkspaceProvider | ValidationError | GenericError;
+
+export type ProvidersGoogleWorkspaceSyncStatusRetrieveResponse = SyncStatus | ValidationError | GenericError;
+
+/** Provider sync status */
+export type SyncStatus = {
+  isRunning: Scalars['Boolean']['output'];
+  tasks: Array<Maybe<SystemTask>>;
+};
+
+export type ProvidersGoogleWorkspaceUsedByListResponse = UsedBy | ValidationError | GenericError;
+
+export type ProvidersGoogleWorkspaceGroupsListResponse = PaginatedGoogleWorkspaceProviderGroupList | ValidationError | GenericError;
+
+export type PaginatedGoogleWorkspaceProviderGroupList = {
+  pagination: Pagination;
+  results: Array<Maybe<GoogleWorkspaceProviderGroup>>;
+};
+
+/** GoogleWorkspaceProviderGroup Serializer */
+export type GoogleWorkspaceProviderGroup = {
+  id: Scalars['UUID']['output'];
+  googleId: Scalars['String']['output'];
+  group: Scalars['UUID']['output'];
+  groupObj: UserGroup;
+  provider: Scalars['Int']['output'];
+  attributes: Scalars['JSON']['output'];
+};
+
+export type ProvidersGoogleWorkspaceGroupsRetrieveResponse = GoogleWorkspaceProviderGroup | ValidationError | GenericError;
+
+export type ProvidersGoogleWorkspaceGroupsUsedByListResponse = UsedBy | ValidationError | GenericError;
+
+export type ProvidersGoogleWorkspaceUsersListResponse = PaginatedGoogleWorkspaceProviderUserList | ValidationError | GenericError;
+
+export type PaginatedGoogleWorkspaceProviderUserList = {
+  pagination: Pagination;
+  results: Array<Maybe<GoogleWorkspaceProviderUser>>;
+};
+
+/** GoogleWorkspaceProviderUser Serializer */
+export type GoogleWorkspaceProviderUser = {
+  id: Scalars['UUID']['output'];
+  googleId: Scalars['String']['output'];
+  user: Scalars['Int']['output'];
+  userObj: GroupMember;
+  provider: Scalars['Int']['output'];
+  attributes: Scalars['JSON']['output'];
+};
+
+export type ProvidersGoogleWorkspaceUsersRetrieveResponse = GoogleWorkspaceProviderUser | ValidationError | GenericError;
+
+export type ProvidersGoogleWorkspaceUsersUsedByListResponse = UsedBy | ValidationError | GenericError;
+
 export type ProvidersLdapListResponse = PaginatedLdapProviderList | ValidationError | GenericError;
 
 export type PaginatedLdapProviderList = {
@@ -6584,6 +6751,89 @@ export type LdapProvider = {
 export type ProvidersLdapRetrieveResponse = LdapProvider | ValidationError | GenericError;
 
 export type ProvidersLdapUsedByListResponse = UsedBy | ValidationError | GenericError;
+
+export type ProvidersMicrosoftEntraListResponse = PaginatedMicrosoftEntraProviderList | ValidationError | GenericError;
+
+export type PaginatedMicrosoftEntraProviderList = {
+  pagination: Pagination;
+  results: Array<Maybe<MicrosoftEntraProvider>>;
+};
+
+/** MicrosoftEntraProvider Serializer */
+export type MicrosoftEntraProvider = {
+  pk: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  propertyMappings?: Maybe<Array<Maybe<Scalars['UUID']['output']>>>;
+  /** Property mappings used for group creation/updating. */
+  propertyMappingsGroup?: Maybe<Array<Maybe<Scalars['UUID']['output']>>>;
+  /** Get object component so that we know how to edit the object */
+  component: Scalars['String']['output'];
+  /** Internal application name, used in URLs. */
+  assignedBackchannelApplicationSlug: Scalars['String']['output'];
+  /** Application's display Name. */
+  assignedBackchannelApplicationName: Scalars['String']['output'];
+  /** Return object's verbose_name */
+  verboseName: Scalars['String']['output'];
+  /** Return object's plural verbose_name */
+  verboseNamePlural: Scalars['String']['output'];
+  /** Return internal model name */
+  metaModelName: Scalars['String']['output'];
+  clientId: Scalars['String']['output'];
+  clientSecret: Scalars['String']['output'];
+  tenantId: Scalars['String']['output'];
+  excludeUsersServiceAccount?: Maybe<Scalars['Boolean']['output']>;
+  filterGroup?: Maybe<Scalars['UUID']['output']>;
+  userDeleteAction?: Maybe<OutgoingSyncDeleteAction>;
+  groupDeleteAction?: Maybe<OutgoingSyncDeleteAction>;
+};
+
+export type ProvidersMicrosoftEntraRetrieveResponse = MicrosoftEntraProvider | ValidationError | GenericError;
+
+export type ProvidersMicrosoftEntraSyncStatusRetrieveResponse = SyncStatus | ValidationError | GenericError;
+
+export type ProvidersMicrosoftEntraUsedByListResponse = UsedBy | ValidationError | GenericError;
+
+export type ProvidersMicrosoftEntraGroupsListResponse = PaginatedMicrosoftEntraProviderGroupList | ValidationError | GenericError;
+
+export type PaginatedMicrosoftEntraProviderGroupList = {
+  pagination: Pagination;
+  results: Array<Maybe<MicrosoftEntraProviderGroup>>;
+};
+
+/** MicrosoftEntraProviderGroup Serializer */
+export type MicrosoftEntraProviderGroup = {
+  id: Scalars['UUID']['output'];
+  microsoftId: Scalars['String']['output'];
+  group: Scalars['UUID']['output'];
+  groupObj: UserGroup;
+  provider: Scalars['Int']['output'];
+  attributes: Scalars['JSON']['output'];
+};
+
+export type ProvidersMicrosoftEntraGroupsRetrieveResponse = MicrosoftEntraProviderGroup | ValidationError | GenericError;
+
+export type ProvidersMicrosoftEntraGroupsUsedByListResponse = UsedBy | ValidationError | GenericError;
+
+export type ProvidersMicrosoftEntraUsersListResponse = PaginatedMicrosoftEntraProviderUserList | ValidationError | GenericError;
+
+export type PaginatedMicrosoftEntraProviderUserList = {
+  pagination: Pagination;
+  results: Array<Maybe<MicrosoftEntraProviderUser>>;
+};
+
+/** MicrosoftEntraProviderUser Serializer */
+export type MicrosoftEntraProviderUser = {
+  id: Scalars['UUID']['output'];
+  microsoftId: Scalars['String']['output'];
+  user: Scalars['Int']['output'];
+  userObj: GroupMember;
+  provider: Scalars['Int']['output'];
+  attributes: Scalars['JSON']['output'];
+};
+
+export type ProvidersMicrosoftEntraUsersRetrieveResponse = MicrosoftEntraProviderUser | ValidationError | GenericError;
+
+export type ProvidersMicrosoftEntraUsersUsedByListResponse = UsedBy | ValidationError | GenericError;
 
 export type ProvidersOauth2ListResponse = PaginatedOAuth2ProviderList | ValidationError | GenericError;
 
@@ -6960,15 +7210,49 @@ export type ScimProvider = {
 
 export type ProvidersScimRetrieveResponse = ScimProvider | ValidationError | GenericError;
 
-export type ProvidersScimSyncStatusRetrieveResponse = ScimSyncStatus | ValidationError | GenericError;
-
-/** SCIM Provider sync status */
-export type ScimSyncStatus = {
-  isRunning: Scalars['Boolean']['output'];
-  tasks: Array<Maybe<SystemTask>>;
-};
+export type ProvidersScimSyncStatusRetrieveResponse = SyncStatus | ValidationError | GenericError;
 
 export type ProvidersScimUsedByListResponse = UsedBy | ValidationError | GenericError;
+
+export type ProvidersScimGroupsListResponse = PaginatedScimProviderGroupList | ValidationError | GenericError;
+
+export type PaginatedScimProviderGroupList = {
+  pagination: Pagination;
+  results: Array<Maybe<ScimProviderGroup>>;
+};
+
+/** SCIMProviderGroup Serializer */
+export type ScimProviderGroup = {
+  id: Scalars['UUID']['output'];
+  scimId: Scalars['String']['output'];
+  group: Scalars['UUID']['output'];
+  groupObj: UserGroup;
+  provider: Scalars['Int']['output'];
+};
+
+export type ProvidersScimGroupsRetrieveResponse = ScimProviderGroup | ValidationError | GenericError;
+
+export type ProvidersScimGroupsUsedByListResponse = UsedBy | ValidationError | GenericError;
+
+export type ProvidersScimUsersListResponse = PaginatedScimProviderUserList | ValidationError | GenericError;
+
+export type PaginatedScimProviderUserList = {
+  pagination: Pagination;
+  results: Array<Maybe<ScimProviderUser>>;
+};
+
+/** SCIMProviderUser Serializer */
+export type ScimProviderUser = {
+  id: Scalars['UUID']['output'];
+  scimId: Scalars['String']['output'];
+  user: Scalars['Int']['output'];
+  userObj: GroupMember;
+  provider: Scalars['Int']['output'];
+};
+
+export type ProvidersScimUsersRetrieveResponse = ScimProviderUser | ValidationError | GenericError;
+
+export type ProvidersScimUsersUsedByListResponse = UsedBy | ValidationError | GenericError;
 
 export type RacConnectionTokensListResponse = PaginatedConnectionTokenList | ValidationError | GenericError;
 
@@ -7103,7 +7387,11 @@ export type QueryInputRbacPermissionsAssignedByRolesListModel =
   | 'AUTHENTIK_POLICIES_EXPRESSION_EXPRESSIONPOLICY'
   | 'AUTHENTIK_POLICIES_PASSWORD_PASSWORDPOLICY'
   | 'AUTHENTIK_POLICIES_REPUTATION_REPUTATIONPOLICY'
+  | 'AUTHENTIK_PROVIDERS_GOOGLE_WORKSPACE_GOOGLEWORKSPACEPROVIDER'
+  | 'AUTHENTIK_PROVIDERS_GOOGLE_WORKSPACE_GOOGLEWORKSPACEPROVIDERMAPPING'
   | 'AUTHENTIK_PROVIDERS_LDAP_LDAPPROVIDER'
+  | 'AUTHENTIK_PROVIDERS_MICROSOFT_ENTRA_MICROSOFTENTRAPROVIDER'
+  | 'AUTHENTIK_PROVIDERS_MICROSOFT_ENTRA_MICROSOFTENTRAPROVIDERMAPPING'
   | 'AUTHENTIK_PROVIDERS_OAUTH2_OAUTH2PROVIDER'
   | 'AUTHENTIK_PROVIDERS_OAUTH2_SCOPEMAPPING'
   | 'AUTHENTIK_PROVIDERS_PROXY_PROXYPROVIDER'
@@ -7214,7 +7502,11 @@ export type QueryInputRbacPermissionsAssignedByUsersListModel =
   | 'AUTHENTIK_POLICIES_EXPRESSION_EXPRESSIONPOLICY'
   | 'AUTHENTIK_POLICIES_PASSWORD_PASSWORDPOLICY'
   | 'AUTHENTIK_POLICIES_REPUTATION_REPUTATIONPOLICY'
+  | 'AUTHENTIK_PROVIDERS_GOOGLE_WORKSPACE_GOOGLEWORKSPACEPROVIDER'
+  | 'AUTHENTIK_PROVIDERS_GOOGLE_WORKSPACE_GOOGLEWORKSPACEPROVIDERMAPPING'
   | 'AUTHENTIK_PROVIDERS_LDAP_LDAPPROVIDER'
+  | 'AUTHENTIK_PROVIDERS_MICROSOFT_ENTRA_MICROSOFTENTRAPROVIDER'
+  | 'AUTHENTIK_PROVIDERS_MICROSOFT_ENTRA_MICROSOFTENTRAPROVIDERMAPPING'
   | 'AUTHENTIK_PROVIDERS_OAUTH2_OAUTH2PROVIDER'
   | 'AUTHENTIK_PROVIDERS_OAUTH2_SCOPEMAPPING'
   | 'AUTHENTIK_PROVIDERS_PROXY_PROXYPROVIDER'
@@ -7565,11 +7857,7 @@ export type LdapSource = {
   /** Objects that are managed by authentik. These objects are created and updated automatically. This flag only indicates that an object can be overwritten by migrations. You can still modify the objects via the API, but expect changes to be overwritten in a later update. */
   managed?: Maybe<Scalars['String']['output']>;
   userPathTemplate?: Maybe<Scalars['String']['output']>;
-  /**
-   * Get the URL to the Icon. If the name is /static or
-   * starts with http it is returned as-is
-   */
-  icon?: Maybe<Scalars['String']['output']>;
+  icon: Scalars['String']['output'];
   serverUri: Scalars['URL']['output'];
   /** Optionally verify the LDAP Server's Certificate against the CA Chain in this keypair. */
   peerCertificate?: Maybe<Scalars['UUID']['output']>;
@@ -7615,13 +7903,7 @@ export type LdapDebug = {
   membership: Array<Maybe<Scalars['JSON']['output']>>;
 };
 
-export type SourcesLdapSyncStatusRetrieveResponse = LdapSyncStatus | ValidationError | GenericError;
-
-/** LDAP Source sync status */
-export type LdapSyncStatus = {
-  isRunning: Scalars['Boolean']['output'];
-  tasks: Array<Maybe<SystemTask>>;
-};
+export type SourcesLdapSyncStatusRetrieveResponse = SyncStatus | ValidationError | GenericError;
 
 export type SourcesLdapUsedByListResponse = UsedBy | ValidationError | GenericError;
 
@@ -7656,10 +7938,6 @@ export type OAuthSource = {
   /** Objects that are managed by authentik. These objects are created and updated automatically. This flag only indicates that an object can be overwritten by migrations. You can still modify the objects via the API, but expect changes to be overwritten in a later update. */
   managed?: Maybe<Scalars['String']['output']>;
   userPathTemplate?: Maybe<Scalars['String']['output']>;
-  /**
-   * Get the URL to the Icon. If the name is /static or
-   * starts with http it is returned as-is
-   */
   icon?: Maybe<Scalars['String']['output']>;
   providerType: ProviderTypeEnum;
   /** URL used to request the initial token. This URL is only required for OAuth 1. */
@@ -7759,11 +8037,7 @@ export type PlexSource = {
   /** Objects that are managed by authentik. These objects are created and updated automatically. This flag only indicates that an object can be overwritten by migrations. You can still modify the objects via the API, but expect changes to be overwritten in a later update. */
   managed?: Maybe<Scalars['String']['output']>;
   userPathTemplate?: Maybe<Scalars['String']['output']>;
-  /**
-   * Get the URL to the Icon. If the name is /static or
-   * starts with http it is returned as-is
-   */
-  icon?: Maybe<Scalars['String']['output']>;
+  icon: Scalars['String']['output'];
   /** Client identifier used to talk to Plex. */
   clientId?: Maybe<Scalars['String']['output']>;
   /** Which servers a user has to be a member of to be granted access. Empty list allows every server. */
@@ -7821,11 +8095,7 @@ export type SamlSource = {
   /** Objects that are managed by authentik. These objects are created and updated automatically. This flag only indicates that an object can be overwritten by migrations. You can still modify the objects via the API, but expect changes to be overwritten in a later update. */
   managed?: Maybe<Scalars['String']['output']>;
   userPathTemplate?: Maybe<Scalars['String']['output']>;
-  /**
-   * Get the URL to the Icon. If the name is /static or
-   * starts with http it is returned as-is
-   */
-  icon?: Maybe<Scalars['String']['output']>;
+  icon: Scalars['String']['output'];
   /** Flow used before authentication. */
   preAuthenticationFlow: Scalars['UUID']['output'];
   /** Also known as Entity ID. Defaults the Metadata URL. */
@@ -8379,6 +8649,10 @@ export type CaptchaStage = {
   publicKey: Scalars['String']['output'];
   jsUrl?: Maybe<Scalars['String']['output']>;
   apiUrl?: Maybe<Scalars['String']['output']>;
+  scoreMinThreshold?: Maybe<Scalars['Float']['output']>;
+  scoreMaxThreshold?: Maybe<Scalars['Float']['output']>;
+  /** When enabled and the received captcha score is outside of the given threshold, the stage will show an error message. When not enabled, the flow will continue, but the data from the captcha will be available in the context for policy decisions */
+  errorOnInvalidScore?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type StagesCaptchaRetrieveResponse = CaptchaStage | ValidationError | GenericError;
@@ -9304,7 +9578,9 @@ export type TransactionApplicationRequestInput = {
 };
 
 export type ProviderModelEnum =
+  | 'AUTHENTIK_PROVIDERS_GOOGLE_WORKSPACE_GOOGLEWORKSPACEPROVIDER'
   | 'AUTHENTIK_PROVIDERS_LDAP_LDAPPROVIDER'
+  | 'AUTHENTIK_PROVIDERS_MICROSOFT_ENTRA_MICROSOFTENTRAPROVIDER'
   | 'AUTHENTIK_PROVIDERS_OAUTH2_OAUTH2PROVIDER'
   | 'AUTHENTIK_PROVIDERS_PROXY_PROXYPROVIDER'
   | 'AUTHENTIK_PROVIDERS_RAC_RACPROVIDER'
@@ -9313,13 +9589,31 @@ export type ProviderModelEnum =
   | 'AUTHENTIK_PROVIDERS_SCIM_SCIMPROVIDER';
 
 export type ModelRequestInput =
-  { ldapProviderRequestInput: LdapProviderRequestInput; oAuth2ProviderRequestInput?: never; proxyProviderRequestInput?: never; racProviderRequestInput?: never; radiusProviderRequestInput?: never; samlProviderRequestInput?: never; scimProviderRequestInput?: never; }
-  |  { ldapProviderRequestInput?: never; oAuth2ProviderRequestInput: OAuth2ProviderRequestInput; proxyProviderRequestInput?: never; racProviderRequestInput?: never; radiusProviderRequestInput?: never; samlProviderRequestInput?: never; scimProviderRequestInput?: never; }
-  |  { ldapProviderRequestInput?: never; oAuth2ProviderRequestInput?: never; proxyProviderRequestInput: ProxyProviderRequestInput; racProviderRequestInput?: never; radiusProviderRequestInput?: never; samlProviderRequestInput?: never; scimProviderRequestInput?: never; }
-  |  { ldapProviderRequestInput?: never; oAuth2ProviderRequestInput?: never; proxyProviderRequestInput?: never; racProviderRequestInput: RacProviderRequestInput; radiusProviderRequestInput?: never; samlProviderRequestInput?: never; scimProviderRequestInput?: never; }
-  |  { ldapProviderRequestInput?: never; oAuth2ProviderRequestInput?: never; proxyProviderRequestInput?: never; racProviderRequestInput?: never; radiusProviderRequestInput: RadiusProviderRequestInput; samlProviderRequestInput?: never; scimProviderRequestInput?: never; }
-  |  { ldapProviderRequestInput?: never; oAuth2ProviderRequestInput?: never; proxyProviderRequestInput?: never; racProviderRequestInput?: never; radiusProviderRequestInput?: never; samlProviderRequestInput: SamlProviderRequestInput; scimProviderRequestInput?: never; }
-  |  { ldapProviderRequestInput?: never; oAuth2ProviderRequestInput?: never; proxyProviderRequestInput?: never; racProviderRequestInput?: never; radiusProviderRequestInput?: never; samlProviderRequestInput?: never; scimProviderRequestInput: ScimProviderRequestInput; };
+  { googleWorkspaceProviderRequestInput: GoogleWorkspaceProviderRequestInput; ldapProviderRequestInput?: never; microsoftEntraProviderRequestInput?: never; oAuth2ProviderRequestInput?: never; proxyProviderRequestInput?: never; racProviderRequestInput?: never; radiusProviderRequestInput?: never; samlProviderRequestInput?: never; scimProviderRequestInput?: never; }
+  |  { googleWorkspaceProviderRequestInput?: never; ldapProviderRequestInput: LdapProviderRequestInput; microsoftEntraProviderRequestInput?: never; oAuth2ProviderRequestInput?: never; proxyProviderRequestInput?: never; racProviderRequestInput?: never; radiusProviderRequestInput?: never; samlProviderRequestInput?: never; scimProviderRequestInput?: never; }
+  |  { googleWorkspaceProviderRequestInput?: never; ldapProviderRequestInput?: never; microsoftEntraProviderRequestInput: MicrosoftEntraProviderRequestInput; oAuth2ProviderRequestInput?: never; proxyProviderRequestInput?: never; racProviderRequestInput?: never; radiusProviderRequestInput?: never; samlProviderRequestInput?: never; scimProviderRequestInput?: never; }
+  |  { googleWorkspaceProviderRequestInput?: never; ldapProviderRequestInput?: never; microsoftEntraProviderRequestInput?: never; oAuth2ProviderRequestInput: OAuth2ProviderRequestInput; proxyProviderRequestInput?: never; racProviderRequestInput?: never; radiusProviderRequestInput?: never; samlProviderRequestInput?: never; scimProviderRequestInput?: never; }
+  |  { googleWorkspaceProviderRequestInput?: never; ldapProviderRequestInput?: never; microsoftEntraProviderRequestInput?: never; oAuth2ProviderRequestInput?: never; proxyProviderRequestInput: ProxyProviderRequestInput; racProviderRequestInput?: never; radiusProviderRequestInput?: never; samlProviderRequestInput?: never; scimProviderRequestInput?: never; }
+  |  { googleWorkspaceProviderRequestInput?: never; ldapProviderRequestInput?: never; microsoftEntraProviderRequestInput?: never; oAuth2ProviderRequestInput?: never; proxyProviderRequestInput?: never; racProviderRequestInput: RacProviderRequestInput; radiusProviderRequestInput?: never; samlProviderRequestInput?: never; scimProviderRequestInput?: never; }
+  |  { googleWorkspaceProviderRequestInput?: never; ldapProviderRequestInput?: never; microsoftEntraProviderRequestInput?: never; oAuth2ProviderRequestInput?: never; proxyProviderRequestInput?: never; racProviderRequestInput?: never; radiusProviderRequestInput: RadiusProviderRequestInput; samlProviderRequestInput?: never; scimProviderRequestInput?: never; }
+  |  { googleWorkspaceProviderRequestInput?: never; ldapProviderRequestInput?: never; microsoftEntraProviderRequestInput?: never; oAuth2ProviderRequestInput?: never; proxyProviderRequestInput?: never; racProviderRequestInput?: never; radiusProviderRequestInput?: never; samlProviderRequestInput: SamlProviderRequestInput; scimProviderRequestInput?: never; }
+  |  { googleWorkspaceProviderRequestInput?: never; ldapProviderRequestInput?: never; microsoftEntraProviderRequestInput?: never; oAuth2ProviderRequestInput?: never; proxyProviderRequestInput?: never; racProviderRequestInput?: never; radiusProviderRequestInput?: never; samlProviderRequestInput?: never; scimProviderRequestInput: ScimProviderRequestInput; };
+
+/** GoogleWorkspaceProvider Serializer */
+export type GoogleWorkspaceProviderRequestInput = {
+  name: Scalars['NonEmptyString']['input'];
+  propertyMappings?: InputMaybe<Array<InputMaybe<Scalars['UUID']['input']>>>;
+  /** Property mappings used for group creation/updating. */
+  propertyMappingsGroup?: InputMaybe<Array<InputMaybe<Scalars['UUID']['input']>>>;
+  delegatedSubject: Scalars['EmailAddress']['input'];
+  credentials: Scalars['JSON']['input'];
+  scopes?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  excludeUsersServiceAccount?: InputMaybe<Scalars['Boolean']['input']>;
+  filterGroup?: InputMaybe<Scalars['UUID']['input']>;
+  userDeleteAction?: InputMaybe<OutgoingSyncDeleteAction>;
+  groupDeleteAction?: InputMaybe<OutgoingSyncDeleteAction>;
+  defaultGroupEmailDomain: Scalars['NonEmptyString']['input'];
+};
 
 /** LDAPProvider Serializer */
 export type LdapProviderRequestInput = {
@@ -9345,6 +9639,21 @@ export type LdapProviderRequestInput = {
   mfaSupport?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+/** MicrosoftEntraProvider Serializer */
+export type MicrosoftEntraProviderRequestInput = {
+  name: Scalars['NonEmptyString']['input'];
+  propertyMappings?: InputMaybe<Array<InputMaybe<Scalars['UUID']['input']>>>;
+  /** Property mappings used for group creation/updating. */
+  propertyMappingsGroup?: InputMaybe<Array<InputMaybe<Scalars['UUID']['input']>>>;
+  clientId: Scalars['NonEmptyString']['input'];
+  clientSecret: Scalars['NonEmptyString']['input'];
+  tenantId: Scalars['NonEmptyString']['input'];
+  excludeUsersServiceAccount?: InputMaybe<Scalars['Boolean']['input']>;
+  filterGroup?: InputMaybe<Scalars['UUID']['input']>;
+  userDeleteAction?: InputMaybe<OutgoingSyncDeleteAction>;
+  groupDeleteAction?: InputMaybe<OutgoingSyncDeleteAction>;
+};
+
 /** OAuth2Provider Serializer */
 export type OAuth2ProviderRequestInput = {
   name: Scalars['NonEmptyString']['input'];
@@ -9354,8 +9663,8 @@ export type OAuth2ProviderRequestInput = {
   authorizationFlow: Scalars['UUID']['input'];
   propertyMappings?: InputMaybe<Array<InputMaybe<Scalars['UUID']['input']>>>;
   clientType?: InputMaybe<ClientTypeEnum>;
-  clientId?: InputMaybe<Scalars['MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_1ClientId']['input']>;
-  clientSecret?: InputMaybe<Scalars['MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_1ClientSecret']['input']>;
+  clientId?: InputMaybe<Scalars['MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_3ClientId']['input']>;
+  clientSecret?: InputMaybe<Scalars['MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_3ClientSecret']['input']>;
   /** Access codes not valid on or after current time + this value (Format: hours=1;minutes=2;seconds=3). */
   accessCodeValidity?: InputMaybe<Scalars['NonEmptyString']['input']>;
   /** Tokens not valid on or after current time + this value (Format: hours=1;minutes=2;seconds=3). */
@@ -10337,6 +10646,13 @@ export type PropertyMappingTestResult = {
   successful: Scalars['Boolean']['output'];
 };
 
+/** Test property mapping execution for a user/group with context */
+export type PropertyMappingTestRequestInput = {
+  user?: InputMaybe<Scalars['Int']['input']>;
+  context?: InputMaybe<Scalars['JSON']['input']>;
+  group?: InputMaybe<Scalars['UUID']['input']>;
+};
+
 export type PropertymappingsLdapCreateResponse = LdapPropertyMapping | ValidationError | GenericError;
 
 /** LDAP PropertyMapping Serializer */
@@ -10382,6 +10698,54 @@ export type PatchedNotificationWebhookMappingRequestInput = {
 };
 
 export type PropertymappingsNotificationDestroyResponse = VoidContainer | ValidationError | GenericError;
+
+export type PropertymappingsProviderGoogleWorkspaceCreateResponse = GoogleWorkspaceProviderMapping | ValidationError | GenericError;
+
+/** GoogleWorkspaceProviderMapping Serializer */
+export type GoogleWorkspaceProviderMappingRequestInput = {
+  /** Objects that are managed by authentik. These objects are created and updated automatically. This flag only indicates that an object can be overwritten by migrations. You can still modify the objects via the API, but expect changes to be overwritten in a later update. */
+  managed?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  name: Scalars['NonEmptyString']['input'];
+  expression: Scalars['NonEmptyString']['input'];
+};
+
+export type PropertymappingsProviderGoogleWorkspaceUpdateResponse = GoogleWorkspaceProviderMapping | ValidationError | GenericError;
+
+export type PropertymappingsProviderGoogleWorkspacePartialUpdateResponse = GoogleWorkspaceProviderMapping | ValidationError | GenericError;
+
+/** GoogleWorkspaceProviderMapping Serializer */
+export type PatchedGoogleWorkspaceProviderMappingRequestInput = {
+  /** Objects that are managed by authentik. These objects are created and updated automatically. This flag only indicates that an object can be overwritten by migrations. You can still modify the objects via the API, but expect changes to be overwritten in a later update. */
+  managed?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  name?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  expression?: InputMaybe<Scalars['NonEmptyString']['input']>;
+};
+
+export type PropertymappingsProviderGoogleWorkspaceDestroyResponse = VoidContainer | ValidationError | GenericError;
+
+export type PropertymappingsProviderMicrosoftEntraCreateResponse = MicrosoftEntraProviderMapping | ValidationError | GenericError;
+
+/** MicrosoftEntraProviderMapping Serializer */
+export type MicrosoftEntraProviderMappingRequestInput = {
+  /** Objects that are managed by authentik. These objects are created and updated automatically. This flag only indicates that an object can be overwritten by migrations. You can still modify the objects via the API, but expect changes to be overwritten in a later update. */
+  managed?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  name: Scalars['NonEmptyString']['input'];
+  expression: Scalars['NonEmptyString']['input'];
+};
+
+export type PropertymappingsProviderMicrosoftEntraUpdateResponse = MicrosoftEntraProviderMapping | ValidationError | GenericError;
+
+export type PropertymappingsProviderMicrosoftEntraPartialUpdateResponse = MicrosoftEntraProviderMapping | ValidationError | GenericError;
+
+/** MicrosoftEntraProviderMapping Serializer */
+export type PatchedMicrosoftEntraProviderMappingRequestInput = {
+  /** Objects that are managed by authentik. These objects are created and updated automatically. This flag only indicates that an object can be overwritten by migrations. You can still modify the objects via the API, but expect changes to be overwritten in a later update. */
+  managed?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  name?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  expression?: InputMaybe<Scalars['NonEmptyString']['input']>;
+};
+
+export type PropertymappingsProviderMicrosoftEntraDestroyResponse = VoidContainer | ValidationError | GenericError;
 
 export type PropertymappingsRacCreateResponse = RacPropertyMapping | ValidationError | GenericError;
 
@@ -10495,6 +10859,52 @@ export type PropertymappingsScopeDestroyResponse = VoidContainer | ValidationErr
 
 export type ProvidersAllDestroyResponse = VoidContainer | ValidationError | GenericError;
 
+export type ProvidersGoogleWorkspaceCreateResponse = GoogleWorkspaceProvider | ValidationError | GenericError;
+
+export type ProvidersGoogleWorkspaceUpdateResponse = GoogleWorkspaceProvider | ValidationError | GenericError;
+
+export type ProvidersGoogleWorkspacePartialUpdateResponse = GoogleWorkspaceProvider | ValidationError | GenericError;
+
+/** GoogleWorkspaceProvider Serializer */
+export type PatchedGoogleWorkspaceProviderRequestInput = {
+  name?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  propertyMappings?: InputMaybe<Array<InputMaybe<Scalars['UUID']['input']>>>;
+  /** Property mappings used for group creation/updating. */
+  propertyMappingsGroup?: InputMaybe<Array<InputMaybe<Scalars['UUID']['input']>>>;
+  delegatedSubject?: InputMaybe<Scalars['EmailAddress']['input']>;
+  credentials?: InputMaybe<Scalars['JSON']['input']>;
+  scopes?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  excludeUsersServiceAccount?: InputMaybe<Scalars['Boolean']['input']>;
+  filterGroup?: InputMaybe<Scalars['UUID']['input']>;
+  userDeleteAction?: InputMaybe<OutgoingSyncDeleteAction>;
+  groupDeleteAction?: InputMaybe<OutgoingSyncDeleteAction>;
+  defaultGroupEmailDomain?: InputMaybe<Scalars['NonEmptyString']['input']>;
+};
+
+export type ProvidersGoogleWorkspaceDestroyResponse = VoidContainer | ValidationError | GenericError;
+
+export type ProvidersGoogleWorkspaceGroupsCreateResponse = GoogleWorkspaceProviderGroup | ValidationError | GenericError;
+
+/** GoogleWorkspaceProviderGroup Serializer */
+export type GoogleWorkspaceProviderGroupRequestInput = {
+  googleId: Scalars['NonEmptyString']['input'];
+  group: Scalars['UUID']['input'];
+  provider: Scalars['Int']['input'];
+};
+
+export type ProvidersGoogleWorkspaceGroupsDestroyResponse = VoidContainer | ValidationError | GenericError;
+
+export type ProvidersGoogleWorkspaceUsersCreateResponse = GoogleWorkspaceProviderUser | ValidationError | GenericError;
+
+/** GoogleWorkspaceProviderUser Serializer */
+export type GoogleWorkspaceProviderUserRequestInput = {
+  googleId: Scalars['NonEmptyString']['input'];
+  user: Scalars['Int']['input'];
+  provider: Scalars['Int']['input'];
+};
+
+export type ProvidersGoogleWorkspaceUsersDestroyResponse = VoidContainer | ValidationError | GenericError;
+
 export type ProvidersLdapCreateResponse = LdapProvider | ValidationError | GenericError;
 
 export type ProvidersLdapUpdateResponse = LdapProvider | ValidationError | GenericError;
@@ -10526,6 +10936,51 @@ export type PatchedLdapProviderRequestInput = {
 };
 
 export type ProvidersLdapDestroyResponse = VoidContainer | ValidationError | GenericError;
+
+export type ProvidersMicrosoftEntraCreateResponse = MicrosoftEntraProvider | ValidationError | GenericError;
+
+export type ProvidersMicrosoftEntraUpdateResponse = MicrosoftEntraProvider | ValidationError | GenericError;
+
+export type ProvidersMicrosoftEntraPartialUpdateResponse = MicrosoftEntraProvider | ValidationError | GenericError;
+
+/** MicrosoftEntraProvider Serializer */
+export type PatchedMicrosoftEntraProviderRequestInput = {
+  name?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  propertyMappings?: InputMaybe<Array<InputMaybe<Scalars['UUID']['input']>>>;
+  /** Property mappings used for group creation/updating. */
+  propertyMappingsGroup?: InputMaybe<Array<InputMaybe<Scalars['UUID']['input']>>>;
+  clientId?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  clientSecret?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  tenantId?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  excludeUsersServiceAccount?: InputMaybe<Scalars['Boolean']['input']>;
+  filterGroup?: InputMaybe<Scalars['UUID']['input']>;
+  userDeleteAction?: InputMaybe<OutgoingSyncDeleteAction>;
+  groupDeleteAction?: InputMaybe<OutgoingSyncDeleteAction>;
+};
+
+export type ProvidersMicrosoftEntraDestroyResponse = VoidContainer | ValidationError | GenericError;
+
+export type ProvidersMicrosoftEntraGroupsCreateResponse = MicrosoftEntraProviderGroup | ValidationError | GenericError;
+
+/** MicrosoftEntraProviderGroup Serializer */
+export type MicrosoftEntraProviderGroupRequestInput = {
+  microsoftId: Scalars['NonEmptyString']['input'];
+  group: Scalars['UUID']['input'];
+  provider: Scalars['Int']['input'];
+};
+
+export type ProvidersMicrosoftEntraGroupsDestroyResponse = VoidContainer | ValidationError | GenericError;
+
+export type ProvidersMicrosoftEntraUsersCreateResponse = MicrosoftEntraProviderUser | ValidationError | GenericError;
+
+/** MicrosoftEntraProviderUser Serializer */
+export type MicrosoftEntraProviderUserRequestInput = {
+  microsoftId: Scalars['NonEmptyString']['input'];
+  user: Scalars['Int']['input'];
+  provider: Scalars['Int']['input'];
+};
+
+export type ProvidersMicrosoftEntraUsersDestroyResponse = VoidContainer | ValidationError | GenericError;
 
 export type ProvidersOauth2CreateResponse = OAuth2Provider | ValidationError | GenericError;
 
@@ -10721,6 +11176,28 @@ export type PatchedScimProviderRequestInput = {
 };
 
 export type ProvidersScimDestroyResponse = VoidContainer | ValidationError | GenericError;
+
+export type ProvidersScimGroupsCreateResponse = ScimProviderGroup | ValidationError | GenericError;
+
+/** SCIMProviderGroup Serializer */
+export type ScimProviderGroupRequestInput = {
+  scimId: Scalars['NonEmptyString']['input'];
+  group: Scalars['UUID']['input'];
+  provider: Scalars['Int']['input'];
+};
+
+export type ProvidersScimGroupsDestroyResponse = VoidContainer | ValidationError | GenericError;
+
+export type ProvidersScimUsersCreateResponse = ScimProviderUser | ValidationError | GenericError;
+
+/** SCIMProviderUser Serializer */
+export type ScimProviderUserRequestInput = {
+  scimId: Scalars['NonEmptyString']['input'];
+  user: Scalars['Int']['input'];
+  provider: Scalars['Int']['input'];
+};
+
+export type ProvidersScimUsersDestroyResponse = VoidContainer | ValidationError | GenericError;
 
 export type RacConnectionTokensUpdateResponse = ConnectionToken | ValidationError | GenericError;
 
@@ -11532,6 +12009,10 @@ export type CaptchaStageRequestInput = {
   privateKey: Scalars['NonEmptyString']['input'];
   jsUrl?: InputMaybe<Scalars['NonEmptyString']['input']>;
   apiUrl?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  scoreMinThreshold?: InputMaybe<Scalars['Float']['input']>;
+  scoreMaxThreshold?: InputMaybe<Scalars['Float']['input']>;
+  /** When enabled and the received captcha score is outside of the given threshold, the stage will show an error message. When not enabled, the flow will continue, but the data from the captcha will be available in the context for policy decisions */
+  errorOnInvalidScore?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type StagesCaptchaUpdateResponse = CaptchaStage | ValidationError | GenericError;
@@ -11548,6 +12029,10 @@ export type PatchedCaptchaStageRequestInput = {
   privateKey?: InputMaybe<Scalars['NonEmptyString']['input']>;
   jsUrl?: InputMaybe<Scalars['NonEmptyString']['input']>;
   apiUrl?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  scoreMinThreshold?: InputMaybe<Scalars['Float']['input']>;
+  scoreMaxThreshold?: InputMaybe<Scalars['Float']['input']>;
+  /** When enabled and the received captcha score is outside of the given threshold, the stage will show an error message. When not enabled, the flow will continue, but the data from the captcha will be available in the context for policy decisions */
+  errorOnInvalidScore?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type StagesCaptchaDestroyResponse = VoidContainer | ValidationError | GenericError;
@@ -12353,6 +12838,12 @@ export type ResolversUnionTypes<_RefType extends Record<string, unknown>> = Reso
   PropertymappingsNotificationListResponse: ( PaginatedNotificationWebhookMappingList ) | ( ValidationError ) | ( GenericError );
   PropertymappingsNotificationRetrieveResponse: ( NotificationWebhookMapping ) | ( ValidationError ) | ( GenericError );
   PropertymappingsNotificationUsedByListResponse: ( UsedBy ) | ( ValidationError ) | ( GenericError );
+  PropertymappingsProviderGoogleWorkspaceListResponse: ( PaginatedGoogleWorkspaceProviderMappingList ) | ( ValidationError ) | ( GenericError );
+  PropertymappingsProviderGoogleWorkspaceRetrieveResponse: ( GoogleWorkspaceProviderMapping ) | ( ValidationError ) | ( GenericError );
+  PropertymappingsProviderGoogleWorkspaceUsedByListResponse: ( UsedBy ) | ( ValidationError ) | ( GenericError );
+  PropertymappingsProviderMicrosoftEntraListResponse: ( PaginatedMicrosoftEntraProviderMappingList ) | ( ValidationError ) | ( GenericError );
+  PropertymappingsProviderMicrosoftEntraRetrieveResponse: ( MicrosoftEntraProviderMapping ) | ( ValidationError ) | ( GenericError );
+  PropertymappingsProviderMicrosoftEntraUsedByListResponse: ( UsedBy ) | ( ValidationError ) | ( GenericError );
   PropertymappingsRacListResponse: ( PaginatedRacPropertyMappingList ) | ( ValidationError ) | ( GenericError );
   PropertymappingsRacRetrieveResponse: ( RacPropertyMapping ) | ( ValidationError ) | ( GenericError );
   PropertymappingsRacUsedByListResponse: ( UsedBy ) | ( ValidationError ) | ( GenericError );
@@ -12369,9 +12860,29 @@ export type ResolversUnionTypes<_RefType extends Record<string, unknown>> = Reso
   ProvidersAllRetrieveResponse: ( Omit<Provider, 'application'> & { application?: Maybe<_RefType['CoreApplicationsRetrieveResponse']> } ) | ( ValidationError ) | ( GenericError );
   ProvidersAllUsedByListResponse: ( UsedBy ) | ( ValidationError ) | ( GenericError );
   ProvidersAllTypesListResponse: ( TypeCreate ) | ( ValidationError ) | ( GenericError );
+  ProvidersGoogleWorkspaceListResponse: ( PaginatedGoogleWorkspaceProviderList ) | ( ValidationError ) | ( GenericError );
+  ProvidersGoogleWorkspaceRetrieveResponse: ( GoogleWorkspaceProvider ) | ( ValidationError ) | ( GenericError );
+  ProvidersGoogleWorkspaceSyncStatusRetrieveResponse: ( SyncStatus ) | ( ValidationError ) | ( GenericError );
+  ProvidersGoogleWorkspaceUsedByListResponse: ( UsedBy ) | ( ValidationError ) | ( GenericError );
+  ProvidersGoogleWorkspaceGroupsListResponse: ( PaginatedGoogleWorkspaceProviderGroupList ) | ( ValidationError ) | ( GenericError );
+  ProvidersGoogleWorkspaceGroupsRetrieveResponse: ( GoogleWorkspaceProviderGroup ) | ( ValidationError ) | ( GenericError );
+  ProvidersGoogleWorkspaceGroupsUsedByListResponse: ( UsedBy ) | ( ValidationError ) | ( GenericError );
+  ProvidersGoogleWorkspaceUsersListResponse: ( PaginatedGoogleWorkspaceProviderUserList ) | ( ValidationError ) | ( GenericError );
+  ProvidersGoogleWorkspaceUsersRetrieveResponse: ( GoogleWorkspaceProviderUser ) | ( ValidationError ) | ( GenericError );
+  ProvidersGoogleWorkspaceUsersUsedByListResponse: ( UsedBy ) | ( ValidationError ) | ( GenericError );
   ProvidersLdapListResponse: ( PaginatedLdapProviderList ) | ( ValidationError ) | ( GenericError );
   ProvidersLdapRetrieveResponse: ( LdapProvider ) | ( ValidationError ) | ( GenericError );
   ProvidersLdapUsedByListResponse: ( UsedBy ) | ( ValidationError ) | ( GenericError );
+  ProvidersMicrosoftEntraListResponse: ( PaginatedMicrosoftEntraProviderList ) | ( ValidationError ) | ( GenericError );
+  ProvidersMicrosoftEntraRetrieveResponse: ( MicrosoftEntraProvider ) | ( ValidationError ) | ( GenericError );
+  ProvidersMicrosoftEntraSyncStatusRetrieveResponse: ( SyncStatus ) | ( ValidationError ) | ( GenericError );
+  ProvidersMicrosoftEntraUsedByListResponse: ( UsedBy ) | ( ValidationError ) | ( GenericError );
+  ProvidersMicrosoftEntraGroupsListResponse: ( PaginatedMicrosoftEntraProviderGroupList ) | ( ValidationError ) | ( GenericError );
+  ProvidersMicrosoftEntraGroupsRetrieveResponse: ( MicrosoftEntraProviderGroup ) | ( ValidationError ) | ( GenericError );
+  ProvidersMicrosoftEntraGroupsUsedByListResponse: ( UsedBy ) | ( ValidationError ) | ( GenericError );
+  ProvidersMicrosoftEntraUsersListResponse: ( PaginatedMicrosoftEntraProviderUserList ) | ( ValidationError ) | ( GenericError );
+  ProvidersMicrosoftEntraUsersRetrieveResponse: ( MicrosoftEntraProviderUser ) | ( ValidationError ) | ( GenericError );
+  ProvidersMicrosoftEntraUsersUsedByListResponse: ( UsedBy ) | ( ValidationError ) | ( GenericError );
   ProvidersOauth2ListResponse: ( PaginatedOAuth2ProviderList ) | ( ValidationError ) | ( GenericError );
   ProvidersOauth2RetrieveResponse: ( OAuth2Provider ) | ( ValidationError ) | ( GenericError );
   ProvidersOauth2PreviewUserRetrieveResponse: ( PropertyMappingPreview ) | ( GenericError );
@@ -12393,8 +12904,14 @@ export type ResolversUnionTypes<_RefType extends Record<string, unknown>> = Reso
   ProvidersSamlUsedByListResponse: ( UsedBy ) | ( ValidationError ) | ( GenericError );
   ProvidersScimListResponse: ( PaginatedScimProviderList ) | ( ValidationError ) | ( GenericError );
   ProvidersScimRetrieveResponse: ( ScimProvider ) | ( ValidationError ) | ( GenericError );
-  ProvidersScimSyncStatusRetrieveResponse: ( ScimSyncStatus ) | ( ValidationError ) | ( GenericError );
+  ProvidersScimSyncStatusRetrieveResponse: ( SyncStatus ) | ( ValidationError ) | ( GenericError );
   ProvidersScimUsedByListResponse: ( UsedBy ) | ( ValidationError ) | ( GenericError );
+  ProvidersScimGroupsListResponse: ( PaginatedScimProviderGroupList ) | ( ValidationError ) | ( GenericError );
+  ProvidersScimGroupsRetrieveResponse: ( ScimProviderGroup ) | ( ValidationError ) | ( GenericError );
+  ProvidersScimGroupsUsedByListResponse: ( UsedBy ) | ( ValidationError ) | ( GenericError );
+  ProvidersScimUsersListResponse: ( PaginatedScimProviderUserList ) | ( ValidationError ) | ( GenericError );
+  ProvidersScimUsersRetrieveResponse: ( ScimProviderUser ) | ( ValidationError ) | ( GenericError );
+  ProvidersScimUsersUsedByListResponse: ( UsedBy ) | ( ValidationError ) | ( GenericError );
   RacConnectionTokensListResponse: ( PaginatedConnectionTokenList ) | ( ValidationError ) | ( GenericError );
   RacConnectionTokensRetrieveResponse: ( ConnectionToken ) | ( ValidationError ) | ( GenericError );
   RacConnectionTokensUsedByListResponse: ( UsedBy ) | ( ValidationError ) | ( GenericError );
@@ -12420,7 +12937,7 @@ export type ResolversUnionTypes<_RefType extends Record<string, unknown>> = Reso
   SourcesLdapListResponse: ( PaginatedLdapSourceList ) | ( ValidationError ) | ( GenericError );
   SourcesLdapRetrieveResponse: ( LdapSource ) | ( ValidationError ) | ( GenericError );
   SourcesLdapDebugRetrieveResponse: ( LdapDebug ) | ( ValidationError ) | ( GenericError );
-  SourcesLdapSyncStatusRetrieveResponse: ( LdapSyncStatus ) | ( ValidationError ) | ( GenericError );
+  SourcesLdapSyncStatusRetrieveResponse: ( SyncStatus ) | ( ValidationError ) | ( GenericError );
   SourcesLdapUsedByListResponse: ( UsedBy ) | ( ValidationError ) | ( GenericError );
   SourcesOauthListResponse: ( PaginatedOAuthSourceList ) | ( ValidationError ) | ( GenericError );
   SourcesOauthRetrieveResponse: ( OAuthSource ) | ( ValidationError ) | ( GenericError );
@@ -12698,6 +13215,14 @@ export type ResolversUnionTypes<_RefType extends Record<string, unknown>> = Reso
   PropertymappingsNotificationUpdateResponse: ( NotificationWebhookMapping ) | ( ValidationError ) | ( GenericError );
   PropertymappingsNotificationPartialUpdateResponse: ( NotificationWebhookMapping ) | ( ValidationError ) | ( GenericError );
   PropertymappingsNotificationDestroyResponse: ( VoidContainer ) | ( ValidationError ) | ( GenericError );
+  PropertymappingsProviderGoogleWorkspaceCreateResponse: ( GoogleWorkspaceProviderMapping ) | ( ValidationError ) | ( GenericError );
+  PropertymappingsProviderGoogleWorkspaceUpdateResponse: ( GoogleWorkspaceProviderMapping ) | ( ValidationError ) | ( GenericError );
+  PropertymappingsProviderGoogleWorkspacePartialUpdateResponse: ( GoogleWorkspaceProviderMapping ) | ( ValidationError ) | ( GenericError );
+  PropertymappingsProviderGoogleWorkspaceDestroyResponse: ( VoidContainer ) | ( ValidationError ) | ( GenericError );
+  PropertymappingsProviderMicrosoftEntraCreateResponse: ( MicrosoftEntraProviderMapping ) | ( ValidationError ) | ( GenericError );
+  PropertymappingsProviderMicrosoftEntraUpdateResponse: ( MicrosoftEntraProviderMapping ) | ( ValidationError ) | ( GenericError );
+  PropertymappingsProviderMicrosoftEntraPartialUpdateResponse: ( MicrosoftEntraProviderMapping ) | ( ValidationError ) | ( GenericError );
+  PropertymappingsProviderMicrosoftEntraDestroyResponse: ( VoidContainer ) | ( ValidationError ) | ( GenericError );
   PropertymappingsRacCreateResponse: ( RacPropertyMapping ) | ( ValidationError ) | ( GenericError );
   PropertymappingsRacUpdateResponse: ( RacPropertyMapping ) | ( ValidationError ) | ( GenericError );
   PropertymappingsRacPartialUpdateResponse: ( RacPropertyMapping ) | ( ValidationError ) | ( GenericError );
@@ -12715,10 +13240,26 @@ export type ResolversUnionTypes<_RefType extends Record<string, unknown>> = Reso
   PropertymappingsScopePartialUpdateResponse: ( ScopeMapping ) | ( ValidationError ) | ( GenericError );
   PropertymappingsScopeDestroyResponse: ( VoidContainer ) | ( ValidationError ) | ( GenericError );
   ProvidersAllDestroyResponse: ( VoidContainer ) | ( ValidationError ) | ( GenericError );
+  ProvidersGoogleWorkspaceCreateResponse: ( GoogleWorkspaceProvider ) | ( ValidationError ) | ( GenericError );
+  ProvidersGoogleWorkspaceUpdateResponse: ( GoogleWorkspaceProvider ) | ( ValidationError ) | ( GenericError );
+  ProvidersGoogleWorkspacePartialUpdateResponse: ( GoogleWorkspaceProvider ) | ( ValidationError ) | ( GenericError );
+  ProvidersGoogleWorkspaceDestroyResponse: ( VoidContainer ) | ( ValidationError ) | ( GenericError );
+  ProvidersGoogleWorkspaceGroupsCreateResponse: ( GoogleWorkspaceProviderGroup ) | ( ValidationError ) | ( GenericError );
+  ProvidersGoogleWorkspaceGroupsDestroyResponse: ( VoidContainer ) | ( ValidationError ) | ( GenericError );
+  ProvidersGoogleWorkspaceUsersCreateResponse: ( GoogleWorkspaceProviderUser ) | ( ValidationError ) | ( GenericError );
+  ProvidersGoogleWorkspaceUsersDestroyResponse: ( VoidContainer ) | ( ValidationError ) | ( GenericError );
   ProvidersLdapCreateResponse: ( LdapProvider ) | ( ValidationError ) | ( GenericError );
   ProvidersLdapUpdateResponse: ( LdapProvider ) | ( ValidationError ) | ( GenericError );
   ProvidersLdapPartialUpdateResponse: ( LdapProvider ) | ( ValidationError ) | ( GenericError );
   ProvidersLdapDestroyResponse: ( VoidContainer ) | ( ValidationError ) | ( GenericError );
+  ProvidersMicrosoftEntraCreateResponse: ( MicrosoftEntraProvider ) | ( ValidationError ) | ( GenericError );
+  ProvidersMicrosoftEntraUpdateResponse: ( MicrosoftEntraProvider ) | ( ValidationError ) | ( GenericError );
+  ProvidersMicrosoftEntraPartialUpdateResponse: ( MicrosoftEntraProvider ) | ( ValidationError ) | ( GenericError );
+  ProvidersMicrosoftEntraDestroyResponse: ( VoidContainer ) | ( ValidationError ) | ( GenericError );
+  ProvidersMicrosoftEntraGroupsCreateResponse: ( MicrosoftEntraProviderGroup ) | ( ValidationError ) | ( GenericError );
+  ProvidersMicrosoftEntraGroupsDestroyResponse: ( VoidContainer ) | ( ValidationError ) | ( GenericError );
+  ProvidersMicrosoftEntraUsersCreateResponse: ( MicrosoftEntraProviderUser ) | ( ValidationError ) | ( GenericError );
+  ProvidersMicrosoftEntraUsersDestroyResponse: ( VoidContainer ) | ( ValidationError ) | ( GenericError );
   ProvidersOauth2CreateResponse: ( OAuth2Provider ) | ( ValidationError ) | ( GenericError );
   ProvidersOauth2UpdateResponse: ( OAuth2Provider ) | ( ValidationError ) | ( GenericError );
   ProvidersOauth2PartialUpdateResponse: ( OAuth2Provider ) | ( ValidationError ) | ( GenericError );
@@ -12744,6 +13285,10 @@ export type ResolversUnionTypes<_RefType extends Record<string, unknown>> = Reso
   ProvidersScimUpdateResponse: ( ScimProvider ) | ( ValidationError ) | ( GenericError );
   ProvidersScimPartialUpdateResponse: ( ScimProvider ) | ( ValidationError ) | ( GenericError );
   ProvidersScimDestroyResponse: ( VoidContainer ) | ( ValidationError ) | ( GenericError );
+  ProvidersScimGroupsCreateResponse: ( ScimProviderGroup ) | ( ValidationError ) | ( GenericError );
+  ProvidersScimGroupsDestroyResponse: ( VoidContainer ) | ( ValidationError ) | ( GenericError );
+  ProvidersScimUsersCreateResponse: ( ScimProviderUser ) | ( ValidationError ) | ( GenericError );
+  ProvidersScimUsersDestroyResponse: ( VoidContainer ) | ( ValidationError ) | ( GenericError );
   RacConnectionTokensUpdateResponse: ( ConnectionToken ) | ( ValidationError ) | ( GenericError );
   RacConnectionTokensPartialUpdateResponse: ( ConnectionToken ) | ( ValidationError ) | ( GenericError );
   RacConnectionTokensDestroyResponse: ( VoidContainer ) | ( ValidationError ) | ( GenericError );
@@ -13643,6 +14188,16 @@ export type ResolversTypes = ResolversObject<{
   NotificationWebhookMapping: ResolverTypeWrapper<NotificationWebhookMapping>;
   PropertymappingsNotificationRetrieveResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['PropertymappingsNotificationRetrieveResponse']>;
   PropertymappingsNotificationUsedByListResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['PropertymappingsNotificationUsedByListResponse']>;
+  PropertymappingsProviderGoogleWorkspaceListResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['PropertymappingsProviderGoogleWorkspaceListResponse']>;
+  PaginatedGoogleWorkspaceProviderMappingList: ResolverTypeWrapper<PaginatedGoogleWorkspaceProviderMappingList>;
+  GoogleWorkspaceProviderMapping: ResolverTypeWrapper<GoogleWorkspaceProviderMapping>;
+  PropertymappingsProviderGoogleWorkspaceRetrieveResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['PropertymappingsProviderGoogleWorkspaceRetrieveResponse']>;
+  PropertymappingsProviderGoogleWorkspaceUsedByListResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['PropertymappingsProviderGoogleWorkspaceUsedByListResponse']>;
+  PropertymappingsProviderMicrosoftEntraListResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['PropertymappingsProviderMicrosoftEntraListResponse']>;
+  PaginatedMicrosoftEntraProviderMappingList: ResolverTypeWrapper<PaginatedMicrosoftEntraProviderMappingList>;
+  MicrosoftEntraProviderMapping: ResolverTypeWrapper<MicrosoftEntraProviderMapping>;
+  PropertymappingsProviderMicrosoftEntraRetrieveResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['PropertymappingsProviderMicrosoftEntraRetrieveResponse']>;
+  PropertymappingsProviderMicrosoftEntraUsedByListResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['PropertymappingsProviderMicrosoftEntraUsedByListResponse']>;
   PropertymappingsRacListResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['PropertymappingsRacListResponse']>;
   PaginatedRacPropertyMappingList: ResolverTypeWrapper<PaginatedRacPropertyMappingList>;
   RacPropertyMapping: ResolverTypeWrapper<RacPropertyMapping>;
@@ -13668,11 +14223,45 @@ export type ResolversTypes = ResolversObject<{
   ProvidersAllRetrieveResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersAllRetrieveResponse']>;
   ProvidersAllUsedByListResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersAllUsedByListResponse']>;
   ProvidersAllTypesListResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersAllTypesListResponse']>;
+  ProvidersGoogleWorkspaceListResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersGoogleWorkspaceListResponse']>;
+  PaginatedGoogleWorkspaceProviderList: ResolverTypeWrapper<PaginatedGoogleWorkspaceProviderList>;
+  GoogleWorkspaceProvider: ResolverTypeWrapper<GoogleWorkspaceProvider>;
+  OutgoingSyncDeleteAction: OutgoingSyncDeleteAction;
+  ProvidersGoogleWorkspaceRetrieveResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersGoogleWorkspaceRetrieveResponse']>;
+  ProvidersGoogleWorkspaceSyncStatusRetrieveResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersGoogleWorkspaceSyncStatusRetrieveResponse']>;
+  SyncStatus: ResolverTypeWrapper<SyncStatus>;
+  ProvidersGoogleWorkspaceUsedByListResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersGoogleWorkspaceUsedByListResponse']>;
+  ProvidersGoogleWorkspaceGroupsListResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersGoogleWorkspaceGroupsListResponse']>;
+  PaginatedGoogleWorkspaceProviderGroupList: ResolverTypeWrapper<PaginatedGoogleWorkspaceProviderGroupList>;
+  GoogleWorkspaceProviderGroup: ResolverTypeWrapper<GoogleWorkspaceProviderGroup>;
+  ProvidersGoogleWorkspaceGroupsRetrieveResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersGoogleWorkspaceGroupsRetrieveResponse']>;
+  ProvidersGoogleWorkspaceGroupsUsedByListResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersGoogleWorkspaceGroupsUsedByListResponse']>;
+  ProvidersGoogleWorkspaceUsersListResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersGoogleWorkspaceUsersListResponse']>;
+  PaginatedGoogleWorkspaceProviderUserList: ResolverTypeWrapper<PaginatedGoogleWorkspaceProviderUserList>;
+  GoogleWorkspaceProviderUser: ResolverTypeWrapper<GoogleWorkspaceProviderUser>;
+  ProvidersGoogleWorkspaceUsersRetrieveResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersGoogleWorkspaceUsersRetrieveResponse']>;
+  ProvidersGoogleWorkspaceUsersUsedByListResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersGoogleWorkspaceUsersUsedByListResponse']>;
   ProvidersLdapListResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersLdapListResponse']>;
   PaginatedLdapProviderList: ResolverTypeWrapper<PaginatedLdapProviderList>;
   LdapProvider: ResolverTypeWrapper<LdapProvider>;
   ProvidersLdapRetrieveResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersLdapRetrieveResponse']>;
   ProvidersLdapUsedByListResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersLdapUsedByListResponse']>;
+  ProvidersMicrosoftEntraListResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersMicrosoftEntraListResponse']>;
+  PaginatedMicrosoftEntraProviderList: ResolverTypeWrapper<PaginatedMicrosoftEntraProviderList>;
+  MicrosoftEntraProvider: ResolverTypeWrapper<MicrosoftEntraProvider>;
+  ProvidersMicrosoftEntraRetrieveResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersMicrosoftEntraRetrieveResponse']>;
+  ProvidersMicrosoftEntraSyncStatusRetrieveResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersMicrosoftEntraSyncStatusRetrieveResponse']>;
+  ProvidersMicrosoftEntraUsedByListResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersMicrosoftEntraUsedByListResponse']>;
+  ProvidersMicrosoftEntraGroupsListResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersMicrosoftEntraGroupsListResponse']>;
+  PaginatedMicrosoftEntraProviderGroupList: ResolverTypeWrapper<PaginatedMicrosoftEntraProviderGroupList>;
+  MicrosoftEntraProviderGroup: ResolverTypeWrapper<MicrosoftEntraProviderGroup>;
+  ProvidersMicrosoftEntraGroupsRetrieveResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersMicrosoftEntraGroupsRetrieveResponse']>;
+  ProvidersMicrosoftEntraGroupsUsedByListResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersMicrosoftEntraGroupsUsedByListResponse']>;
+  ProvidersMicrosoftEntraUsersListResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersMicrosoftEntraUsersListResponse']>;
+  PaginatedMicrosoftEntraProviderUserList: ResolverTypeWrapper<PaginatedMicrosoftEntraProviderUserList>;
+  MicrosoftEntraProviderUser: ResolverTypeWrapper<MicrosoftEntraProviderUser>;
+  ProvidersMicrosoftEntraUsersRetrieveResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersMicrosoftEntraUsersRetrieveResponse']>;
+  ProvidersMicrosoftEntraUsersUsedByListResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersMicrosoftEntraUsersUsedByListResponse']>;
   ProvidersOauth2ListResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersOauth2ListResponse']>;
   PaginatedOAuth2ProviderList: ResolverTypeWrapper<PaginatedOAuth2ProviderList>;
   QueryInputProvidersOauth2ListClientType: QueryInputProvidersOauth2ListClientType;
@@ -13720,8 +14309,17 @@ export type ResolversTypes = ResolversObject<{
   ScimProvider: ResolverTypeWrapper<ScimProvider>;
   ProvidersScimRetrieveResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersScimRetrieveResponse']>;
   ProvidersScimSyncStatusRetrieveResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersScimSyncStatusRetrieveResponse']>;
-  ScimSyncStatus: ResolverTypeWrapper<ScimSyncStatus>;
   ProvidersScimUsedByListResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersScimUsedByListResponse']>;
+  ProvidersScimGroupsListResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersScimGroupsListResponse']>;
+  PaginatedScimProviderGroupList: ResolverTypeWrapper<PaginatedScimProviderGroupList>;
+  ScimProviderGroup: ResolverTypeWrapper<ScimProviderGroup>;
+  ProvidersScimGroupsRetrieveResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersScimGroupsRetrieveResponse']>;
+  ProvidersScimGroupsUsedByListResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersScimGroupsUsedByListResponse']>;
+  ProvidersScimUsersListResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersScimUsersListResponse']>;
+  PaginatedScimProviderUserList: ResolverTypeWrapper<PaginatedScimProviderUserList>;
+  ScimProviderUser: ResolverTypeWrapper<ScimProviderUser>;
+  ProvidersScimUsersRetrieveResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersScimUsersRetrieveResponse']>;
+  ProvidersScimUsersUsedByListResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersScimUsersUsedByListResponse']>;
   RacConnectionTokensListResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['RacConnectionTokensListResponse']>;
   PaginatedConnectionTokenList: ResolverTypeWrapper<PaginatedConnectionTokenList>;
   ConnectionToken: ResolverTypeWrapper<ConnectionToken>;
@@ -13787,7 +14385,6 @@ export type ResolversTypes = ResolversObject<{
   SourcesLdapDebugRetrieveResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['SourcesLdapDebugRetrieveResponse']>;
   LdapDebug: ResolverTypeWrapper<LdapDebug>;
   SourcesLdapSyncStatusRetrieveResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['SourcesLdapSyncStatusRetrieveResponse']>;
-  LdapSyncStatus: ResolverTypeWrapper<LdapSyncStatus>;
   SourcesLdapUsedByListResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['SourcesLdapUsedByListResponse']>;
   SourcesOauthListResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['SourcesOauthListResponse']>;
   PaginatedOAuthSourceList: ResolverTypeWrapper<PaginatedOAuthSourceList>;
@@ -14116,10 +14713,12 @@ export type ResolversTypes = ResolversObject<{
   TransactionApplicationRequestInput: TransactionApplicationRequestInput;
   ProviderModelEnum: ProviderModelEnum;
   ModelRequestInput: ModelRequestInput;
+  GoogleWorkspaceProviderRequestInput: GoogleWorkspaceProviderRequestInput;
   LdapProviderRequestInput: LdapProviderRequestInput;
+  MicrosoftEntraProviderRequestInput: MicrosoftEntraProviderRequestInput;
   OAuth2ProviderRequestInput: OAuth2ProviderRequestInput;
-  MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_1ClientId: ResolverTypeWrapper<Scalars['MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_1ClientId']['output']>;
-  MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_1ClientSecret: ResolverTypeWrapper<Scalars['MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_1ClientSecret']['output']>;
+  MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_3ClientId: ResolverTypeWrapper<Scalars['MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_3ClientId']['output']>;
+  MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_3ClientSecret: ResolverTypeWrapper<Scalars['MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_3ClientSecret']['output']>;
   ProxyProviderRequestInput: ProxyProviderRequestInput;
   RacProviderRequestInput: RacProviderRequestInput;
   RadiusProviderRequestInput: RadiusProviderRequestInput;
@@ -14301,6 +14900,7 @@ export type ResolversTypes = ResolversObject<{
   PropertymappingsAllDestroyResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['PropertymappingsAllDestroyResponse']>;
   PropertymappingsAllTestCreateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['PropertymappingsAllTestCreateResponse']>;
   PropertyMappingTestResult: ResolverTypeWrapper<PropertyMappingTestResult>;
+  PropertyMappingTestRequestInput: PropertyMappingTestRequestInput;
   PropertymappingsLdapCreateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['PropertymappingsLdapCreateResponse']>;
   LdapPropertyMappingRequestInput: LdapPropertyMappingRequestInput;
   PropertymappingsLdapUpdateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['PropertymappingsLdapUpdateResponse']>;
@@ -14313,6 +14913,18 @@ export type ResolversTypes = ResolversObject<{
   PropertymappingsNotificationPartialUpdateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['PropertymappingsNotificationPartialUpdateResponse']>;
   PatchedNotificationWebhookMappingRequestInput: PatchedNotificationWebhookMappingRequestInput;
   PropertymappingsNotificationDestroyResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['PropertymappingsNotificationDestroyResponse']>;
+  PropertymappingsProviderGoogleWorkspaceCreateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['PropertymappingsProviderGoogleWorkspaceCreateResponse']>;
+  GoogleWorkspaceProviderMappingRequestInput: GoogleWorkspaceProviderMappingRequestInput;
+  PropertymappingsProviderGoogleWorkspaceUpdateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['PropertymappingsProviderGoogleWorkspaceUpdateResponse']>;
+  PropertymappingsProviderGoogleWorkspacePartialUpdateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['PropertymappingsProviderGoogleWorkspacePartialUpdateResponse']>;
+  PatchedGoogleWorkspaceProviderMappingRequestInput: PatchedGoogleWorkspaceProviderMappingRequestInput;
+  PropertymappingsProviderGoogleWorkspaceDestroyResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['PropertymappingsProviderGoogleWorkspaceDestroyResponse']>;
+  PropertymappingsProviderMicrosoftEntraCreateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['PropertymappingsProviderMicrosoftEntraCreateResponse']>;
+  MicrosoftEntraProviderMappingRequestInput: MicrosoftEntraProviderMappingRequestInput;
+  PropertymappingsProviderMicrosoftEntraUpdateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['PropertymappingsProviderMicrosoftEntraUpdateResponse']>;
+  PropertymappingsProviderMicrosoftEntraPartialUpdateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['PropertymappingsProviderMicrosoftEntraPartialUpdateResponse']>;
+  PatchedMicrosoftEntraProviderMappingRequestInput: PatchedMicrosoftEntraProviderMappingRequestInput;
+  PropertymappingsProviderMicrosoftEntraDestroyResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['PropertymappingsProviderMicrosoftEntraDestroyResponse']>;
   PropertymappingsRacCreateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['PropertymappingsRacCreateResponse']>;
   RacPropertyMappingRequestInput: RacPropertyMappingRequestInput;
   PropertymappingsRacUpdateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['PropertymappingsRacUpdateResponse']>;
@@ -14338,11 +14950,33 @@ export type ResolversTypes = ResolversObject<{
   PatchedScopeMappingRequestInput: PatchedScopeMappingRequestInput;
   PropertymappingsScopeDestroyResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['PropertymappingsScopeDestroyResponse']>;
   ProvidersAllDestroyResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersAllDestroyResponse']>;
+  ProvidersGoogleWorkspaceCreateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersGoogleWorkspaceCreateResponse']>;
+  ProvidersGoogleWorkspaceUpdateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersGoogleWorkspaceUpdateResponse']>;
+  ProvidersGoogleWorkspacePartialUpdateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersGoogleWorkspacePartialUpdateResponse']>;
+  PatchedGoogleWorkspaceProviderRequestInput: PatchedGoogleWorkspaceProviderRequestInput;
+  ProvidersGoogleWorkspaceDestroyResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersGoogleWorkspaceDestroyResponse']>;
+  ProvidersGoogleWorkspaceGroupsCreateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersGoogleWorkspaceGroupsCreateResponse']>;
+  GoogleWorkspaceProviderGroupRequestInput: GoogleWorkspaceProviderGroupRequestInput;
+  ProvidersGoogleWorkspaceGroupsDestroyResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersGoogleWorkspaceGroupsDestroyResponse']>;
+  ProvidersGoogleWorkspaceUsersCreateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersGoogleWorkspaceUsersCreateResponse']>;
+  GoogleWorkspaceProviderUserRequestInput: GoogleWorkspaceProviderUserRequestInput;
+  ProvidersGoogleWorkspaceUsersDestroyResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersGoogleWorkspaceUsersDestroyResponse']>;
   ProvidersLdapCreateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersLdapCreateResponse']>;
   ProvidersLdapUpdateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersLdapUpdateResponse']>;
   ProvidersLdapPartialUpdateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersLdapPartialUpdateResponse']>;
   PatchedLdapProviderRequestInput: PatchedLdapProviderRequestInput;
   ProvidersLdapDestroyResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersLdapDestroyResponse']>;
+  ProvidersMicrosoftEntraCreateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersMicrosoftEntraCreateResponse']>;
+  ProvidersMicrosoftEntraUpdateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersMicrosoftEntraUpdateResponse']>;
+  ProvidersMicrosoftEntraPartialUpdateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersMicrosoftEntraPartialUpdateResponse']>;
+  PatchedMicrosoftEntraProviderRequestInput: PatchedMicrosoftEntraProviderRequestInput;
+  ProvidersMicrosoftEntraDestroyResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersMicrosoftEntraDestroyResponse']>;
+  ProvidersMicrosoftEntraGroupsCreateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersMicrosoftEntraGroupsCreateResponse']>;
+  MicrosoftEntraProviderGroupRequestInput: MicrosoftEntraProviderGroupRequestInput;
+  ProvidersMicrosoftEntraGroupsDestroyResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersMicrosoftEntraGroupsDestroyResponse']>;
+  ProvidersMicrosoftEntraUsersCreateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersMicrosoftEntraUsersCreateResponse']>;
+  MicrosoftEntraProviderUserRequestInput: MicrosoftEntraProviderUserRequestInput;
+  ProvidersMicrosoftEntraUsersDestroyResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersMicrosoftEntraUsersDestroyResponse']>;
   ProvidersOauth2CreateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersOauth2CreateResponse']>;
   ProvidersOauth2UpdateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersOauth2UpdateResponse']>;
   ProvidersOauth2PartialUpdateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersOauth2PartialUpdateResponse']>;
@@ -14377,6 +15011,12 @@ export type ResolversTypes = ResolversObject<{
   ProvidersScimPartialUpdateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersScimPartialUpdateResponse']>;
   PatchedScimProviderRequestInput: PatchedScimProviderRequestInput;
   ProvidersScimDestroyResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersScimDestroyResponse']>;
+  ProvidersScimGroupsCreateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersScimGroupsCreateResponse']>;
+  ScimProviderGroupRequestInput: ScimProviderGroupRequestInput;
+  ProvidersScimGroupsDestroyResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersScimGroupsDestroyResponse']>;
+  ProvidersScimUsersCreateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersScimUsersCreateResponse']>;
+  ScimProviderUserRequestInput: ScimProviderUserRequestInput;
+  ProvidersScimUsersDestroyResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ProvidersScimUsersDestroyResponse']>;
   RacConnectionTokensUpdateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['RacConnectionTokensUpdateResponse']>;
   ConnectionTokenRequestInput: ConnectionTokenRequestInput;
   RacConnectionTokensPartialUpdateResponse: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['RacConnectionTokensPartialUpdateResponse']>;
@@ -15317,6 +15957,16 @@ export type ResolversParentTypes = ResolversObject<{
   NotificationWebhookMapping: NotificationWebhookMapping;
   PropertymappingsNotificationRetrieveResponse: ResolversUnionTypes<ResolversParentTypes>['PropertymappingsNotificationRetrieveResponse'];
   PropertymappingsNotificationUsedByListResponse: ResolversUnionTypes<ResolversParentTypes>['PropertymappingsNotificationUsedByListResponse'];
+  PropertymappingsProviderGoogleWorkspaceListResponse: ResolversUnionTypes<ResolversParentTypes>['PropertymappingsProviderGoogleWorkspaceListResponse'];
+  PaginatedGoogleWorkspaceProviderMappingList: PaginatedGoogleWorkspaceProviderMappingList;
+  GoogleWorkspaceProviderMapping: GoogleWorkspaceProviderMapping;
+  PropertymappingsProviderGoogleWorkspaceRetrieveResponse: ResolversUnionTypes<ResolversParentTypes>['PropertymappingsProviderGoogleWorkspaceRetrieveResponse'];
+  PropertymappingsProviderGoogleWorkspaceUsedByListResponse: ResolversUnionTypes<ResolversParentTypes>['PropertymappingsProviderGoogleWorkspaceUsedByListResponse'];
+  PropertymappingsProviderMicrosoftEntraListResponse: ResolversUnionTypes<ResolversParentTypes>['PropertymappingsProviderMicrosoftEntraListResponse'];
+  PaginatedMicrosoftEntraProviderMappingList: PaginatedMicrosoftEntraProviderMappingList;
+  MicrosoftEntraProviderMapping: MicrosoftEntraProviderMapping;
+  PropertymappingsProviderMicrosoftEntraRetrieveResponse: ResolversUnionTypes<ResolversParentTypes>['PropertymappingsProviderMicrosoftEntraRetrieveResponse'];
+  PropertymappingsProviderMicrosoftEntraUsedByListResponse: ResolversUnionTypes<ResolversParentTypes>['PropertymappingsProviderMicrosoftEntraUsedByListResponse'];
   PropertymappingsRacListResponse: ResolversUnionTypes<ResolversParentTypes>['PropertymappingsRacListResponse'];
   PaginatedRacPropertyMappingList: PaginatedRacPropertyMappingList;
   RacPropertyMapping: RacPropertyMapping;
@@ -15342,11 +15992,44 @@ export type ResolversParentTypes = ResolversObject<{
   ProvidersAllRetrieveResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersAllRetrieveResponse'];
   ProvidersAllUsedByListResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersAllUsedByListResponse'];
   ProvidersAllTypesListResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersAllTypesListResponse'];
+  ProvidersGoogleWorkspaceListResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersGoogleWorkspaceListResponse'];
+  PaginatedGoogleWorkspaceProviderList: PaginatedGoogleWorkspaceProviderList;
+  GoogleWorkspaceProvider: GoogleWorkspaceProvider;
+  ProvidersGoogleWorkspaceRetrieveResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersGoogleWorkspaceRetrieveResponse'];
+  ProvidersGoogleWorkspaceSyncStatusRetrieveResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersGoogleWorkspaceSyncStatusRetrieveResponse'];
+  SyncStatus: SyncStatus;
+  ProvidersGoogleWorkspaceUsedByListResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersGoogleWorkspaceUsedByListResponse'];
+  ProvidersGoogleWorkspaceGroupsListResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersGoogleWorkspaceGroupsListResponse'];
+  PaginatedGoogleWorkspaceProviderGroupList: PaginatedGoogleWorkspaceProviderGroupList;
+  GoogleWorkspaceProviderGroup: GoogleWorkspaceProviderGroup;
+  ProvidersGoogleWorkspaceGroupsRetrieveResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersGoogleWorkspaceGroupsRetrieveResponse'];
+  ProvidersGoogleWorkspaceGroupsUsedByListResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersGoogleWorkspaceGroupsUsedByListResponse'];
+  ProvidersGoogleWorkspaceUsersListResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersGoogleWorkspaceUsersListResponse'];
+  PaginatedGoogleWorkspaceProviderUserList: PaginatedGoogleWorkspaceProviderUserList;
+  GoogleWorkspaceProviderUser: GoogleWorkspaceProviderUser;
+  ProvidersGoogleWorkspaceUsersRetrieveResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersGoogleWorkspaceUsersRetrieveResponse'];
+  ProvidersGoogleWorkspaceUsersUsedByListResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersGoogleWorkspaceUsersUsedByListResponse'];
   ProvidersLdapListResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersLdapListResponse'];
   PaginatedLdapProviderList: PaginatedLdapProviderList;
   LdapProvider: LdapProvider;
   ProvidersLdapRetrieveResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersLdapRetrieveResponse'];
   ProvidersLdapUsedByListResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersLdapUsedByListResponse'];
+  ProvidersMicrosoftEntraListResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersMicrosoftEntraListResponse'];
+  PaginatedMicrosoftEntraProviderList: PaginatedMicrosoftEntraProviderList;
+  MicrosoftEntraProvider: MicrosoftEntraProvider;
+  ProvidersMicrosoftEntraRetrieveResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersMicrosoftEntraRetrieveResponse'];
+  ProvidersMicrosoftEntraSyncStatusRetrieveResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersMicrosoftEntraSyncStatusRetrieveResponse'];
+  ProvidersMicrosoftEntraUsedByListResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersMicrosoftEntraUsedByListResponse'];
+  ProvidersMicrosoftEntraGroupsListResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersMicrosoftEntraGroupsListResponse'];
+  PaginatedMicrosoftEntraProviderGroupList: PaginatedMicrosoftEntraProviderGroupList;
+  MicrosoftEntraProviderGroup: MicrosoftEntraProviderGroup;
+  ProvidersMicrosoftEntraGroupsRetrieveResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersMicrosoftEntraGroupsRetrieveResponse'];
+  ProvidersMicrosoftEntraGroupsUsedByListResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersMicrosoftEntraGroupsUsedByListResponse'];
+  ProvidersMicrosoftEntraUsersListResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersMicrosoftEntraUsersListResponse'];
+  PaginatedMicrosoftEntraProviderUserList: PaginatedMicrosoftEntraProviderUserList;
+  MicrosoftEntraProviderUser: MicrosoftEntraProviderUser;
+  ProvidersMicrosoftEntraUsersRetrieveResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersMicrosoftEntraUsersRetrieveResponse'];
+  ProvidersMicrosoftEntraUsersUsedByListResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersMicrosoftEntraUsersUsedByListResponse'];
   ProvidersOauth2ListResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersOauth2ListResponse'];
   PaginatedOAuth2ProviderList: PaginatedOAuth2ProviderList;
   ProvidersOauth2RetrieveResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersOauth2RetrieveResponse'];
@@ -15384,8 +16067,17 @@ export type ResolversParentTypes = ResolversObject<{
   ScimProvider: ScimProvider;
   ProvidersScimRetrieveResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersScimRetrieveResponse'];
   ProvidersScimSyncStatusRetrieveResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersScimSyncStatusRetrieveResponse'];
-  ScimSyncStatus: ScimSyncStatus;
   ProvidersScimUsedByListResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersScimUsedByListResponse'];
+  ProvidersScimGroupsListResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersScimGroupsListResponse'];
+  PaginatedScimProviderGroupList: PaginatedScimProviderGroupList;
+  ScimProviderGroup: ScimProviderGroup;
+  ProvidersScimGroupsRetrieveResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersScimGroupsRetrieveResponse'];
+  ProvidersScimGroupsUsedByListResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersScimGroupsUsedByListResponse'];
+  ProvidersScimUsersListResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersScimUsersListResponse'];
+  PaginatedScimProviderUserList: PaginatedScimProviderUserList;
+  ScimProviderUser: ScimProviderUser;
+  ProvidersScimUsersRetrieveResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersScimUsersRetrieveResponse'];
+  ProvidersScimUsersUsedByListResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersScimUsersUsedByListResponse'];
   RacConnectionTokensListResponse: ResolversUnionTypes<ResolversParentTypes>['RacConnectionTokensListResponse'];
   PaginatedConnectionTokenList: PaginatedConnectionTokenList;
   ConnectionToken: ConnectionToken;
@@ -15443,7 +16135,6 @@ export type ResolversParentTypes = ResolversObject<{
   SourcesLdapDebugRetrieveResponse: ResolversUnionTypes<ResolversParentTypes>['SourcesLdapDebugRetrieveResponse'];
   LdapDebug: LdapDebug;
   SourcesLdapSyncStatusRetrieveResponse: ResolversUnionTypes<ResolversParentTypes>['SourcesLdapSyncStatusRetrieveResponse'];
-  LdapSyncStatus: LdapSyncStatus;
   SourcesLdapUsedByListResponse: ResolversUnionTypes<ResolversParentTypes>['SourcesLdapUsedByListResponse'];
   SourcesOauthListResponse: ResolversUnionTypes<ResolversParentTypes>['SourcesOauthListResponse'];
   PaginatedOAuthSourceList: PaginatedOAuthSourceList;
@@ -15731,10 +16422,12 @@ export type ResolversParentTypes = ResolversObject<{
   TransactionApplicationResponse: TransactionApplicationResponse;
   TransactionApplicationRequestInput: TransactionApplicationRequestInput;
   ModelRequestInput: ModelRequestInput;
+  GoogleWorkspaceProviderRequestInput: GoogleWorkspaceProviderRequestInput;
   LdapProviderRequestInput: LdapProviderRequestInput;
+  MicrosoftEntraProviderRequestInput: MicrosoftEntraProviderRequestInput;
   OAuth2ProviderRequestInput: OAuth2ProviderRequestInput;
-  MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_1ClientId: Scalars['MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_1ClientId']['output'];
-  MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_1ClientSecret: Scalars['MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_1ClientSecret']['output'];
+  MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_3ClientId: Scalars['MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_3ClientId']['output'];
+  MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_3ClientSecret: Scalars['MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_3ClientSecret']['output'];
   ProxyProviderRequestInput: ProxyProviderRequestInput;
   RacProviderRequestInput: RacProviderRequestInput;
   RadiusProviderRequestInput: RadiusProviderRequestInput;
@@ -15915,6 +16608,7 @@ export type ResolversParentTypes = ResolversObject<{
   PropertymappingsAllDestroyResponse: ResolversUnionTypes<ResolversParentTypes>['PropertymappingsAllDestroyResponse'];
   PropertymappingsAllTestCreateResponse: ResolversUnionTypes<ResolversParentTypes>['PropertymappingsAllTestCreateResponse'];
   PropertyMappingTestResult: PropertyMappingTestResult;
+  PropertyMappingTestRequestInput: PropertyMappingTestRequestInput;
   PropertymappingsLdapCreateResponse: ResolversUnionTypes<ResolversParentTypes>['PropertymappingsLdapCreateResponse'];
   LdapPropertyMappingRequestInput: LdapPropertyMappingRequestInput;
   PropertymappingsLdapUpdateResponse: ResolversUnionTypes<ResolversParentTypes>['PropertymappingsLdapUpdateResponse'];
@@ -15927,6 +16621,18 @@ export type ResolversParentTypes = ResolversObject<{
   PropertymappingsNotificationPartialUpdateResponse: ResolversUnionTypes<ResolversParentTypes>['PropertymappingsNotificationPartialUpdateResponse'];
   PatchedNotificationWebhookMappingRequestInput: PatchedNotificationWebhookMappingRequestInput;
   PropertymappingsNotificationDestroyResponse: ResolversUnionTypes<ResolversParentTypes>['PropertymappingsNotificationDestroyResponse'];
+  PropertymappingsProviderGoogleWorkspaceCreateResponse: ResolversUnionTypes<ResolversParentTypes>['PropertymappingsProviderGoogleWorkspaceCreateResponse'];
+  GoogleWorkspaceProviderMappingRequestInput: GoogleWorkspaceProviderMappingRequestInput;
+  PropertymappingsProviderGoogleWorkspaceUpdateResponse: ResolversUnionTypes<ResolversParentTypes>['PropertymappingsProviderGoogleWorkspaceUpdateResponse'];
+  PropertymappingsProviderGoogleWorkspacePartialUpdateResponse: ResolversUnionTypes<ResolversParentTypes>['PropertymappingsProviderGoogleWorkspacePartialUpdateResponse'];
+  PatchedGoogleWorkspaceProviderMappingRequestInput: PatchedGoogleWorkspaceProviderMappingRequestInput;
+  PropertymappingsProviderGoogleWorkspaceDestroyResponse: ResolversUnionTypes<ResolversParentTypes>['PropertymappingsProviderGoogleWorkspaceDestroyResponse'];
+  PropertymappingsProviderMicrosoftEntraCreateResponse: ResolversUnionTypes<ResolversParentTypes>['PropertymappingsProviderMicrosoftEntraCreateResponse'];
+  MicrosoftEntraProviderMappingRequestInput: MicrosoftEntraProviderMappingRequestInput;
+  PropertymappingsProviderMicrosoftEntraUpdateResponse: ResolversUnionTypes<ResolversParentTypes>['PropertymappingsProviderMicrosoftEntraUpdateResponse'];
+  PropertymappingsProviderMicrosoftEntraPartialUpdateResponse: ResolversUnionTypes<ResolversParentTypes>['PropertymappingsProviderMicrosoftEntraPartialUpdateResponse'];
+  PatchedMicrosoftEntraProviderMappingRequestInput: PatchedMicrosoftEntraProviderMappingRequestInput;
+  PropertymappingsProviderMicrosoftEntraDestroyResponse: ResolversUnionTypes<ResolversParentTypes>['PropertymappingsProviderMicrosoftEntraDestroyResponse'];
   PropertymappingsRacCreateResponse: ResolversUnionTypes<ResolversParentTypes>['PropertymappingsRacCreateResponse'];
   RacPropertyMappingRequestInput: RacPropertyMappingRequestInput;
   PropertymappingsRacUpdateResponse: ResolversUnionTypes<ResolversParentTypes>['PropertymappingsRacUpdateResponse'];
@@ -15952,11 +16658,33 @@ export type ResolversParentTypes = ResolversObject<{
   PatchedScopeMappingRequestInput: PatchedScopeMappingRequestInput;
   PropertymappingsScopeDestroyResponse: ResolversUnionTypes<ResolversParentTypes>['PropertymappingsScopeDestroyResponse'];
   ProvidersAllDestroyResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersAllDestroyResponse'];
+  ProvidersGoogleWorkspaceCreateResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersGoogleWorkspaceCreateResponse'];
+  ProvidersGoogleWorkspaceUpdateResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersGoogleWorkspaceUpdateResponse'];
+  ProvidersGoogleWorkspacePartialUpdateResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersGoogleWorkspacePartialUpdateResponse'];
+  PatchedGoogleWorkspaceProviderRequestInput: PatchedGoogleWorkspaceProviderRequestInput;
+  ProvidersGoogleWorkspaceDestroyResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersGoogleWorkspaceDestroyResponse'];
+  ProvidersGoogleWorkspaceGroupsCreateResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersGoogleWorkspaceGroupsCreateResponse'];
+  GoogleWorkspaceProviderGroupRequestInput: GoogleWorkspaceProviderGroupRequestInput;
+  ProvidersGoogleWorkspaceGroupsDestroyResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersGoogleWorkspaceGroupsDestroyResponse'];
+  ProvidersGoogleWorkspaceUsersCreateResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersGoogleWorkspaceUsersCreateResponse'];
+  GoogleWorkspaceProviderUserRequestInput: GoogleWorkspaceProviderUserRequestInput;
+  ProvidersGoogleWorkspaceUsersDestroyResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersGoogleWorkspaceUsersDestroyResponse'];
   ProvidersLdapCreateResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersLdapCreateResponse'];
   ProvidersLdapUpdateResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersLdapUpdateResponse'];
   ProvidersLdapPartialUpdateResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersLdapPartialUpdateResponse'];
   PatchedLdapProviderRequestInput: PatchedLdapProviderRequestInput;
   ProvidersLdapDestroyResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersLdapDestroyResponse'];
+  ProvidersMicrosoftEntraCreateResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersMicrosoftEntraCreateResponse'];
+  ProvidersMicrosoftEntraUpdateResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersMicrosoftEntraUpdateResponse'];
+  ProvidersMicrosoftEntraPartialUpdateResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersMicrosoftEntraPartialUpdateResponse'];
+  PatchedMicrosoftEntraProviderRequestInput: PatchedMicrosoftEntraProviderRequestInput;
+  ProvidersMicrosoftEntraDestroyResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersMicrosoftEntraDestroyResponse'];
+  ProvidersMicrosoftEntraGroupsCreateResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersMicrosoftEntraGroupsCreateResponse'];
+  MicrosoftEntraProviderGroupRequestInput: MicrosoftEntraProviderGroupRequestInput;
+  ProvidersMicrosoftEntraGroupsDestroyResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersMicrosoftEntraGroupsDestroyResponse'];
+  ProvidersMicrosoftEntraUsersCreateResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersMicrosoftEntraUsersCreateResponse'];
+  MicrosoftEntraProviderUserRequestInput: MicrosoftEntraProviderUserRequestInput;
+  ProvidersMicrosoftEntraUsersDestroyResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersMicrosoftEntraUsersDestroyResponse'];
   ProvidersOauth2CreateResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersOauth2CreateResponse'];
   ProvidersOauth2UpdateResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersOauth2UpdateResponse'];
   ProvidersOauth2PartialUpdateResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersOauth2PartialUpdateResponse'];
@@ -15991,6 +16719,12 @@ export type ResolversParentTypes = ResolversObject<{
   ProvidersScimPartialUpdateResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersScimPartialUpdateResponse'];
   PatchedScimProviderRequestInput: PatchedScimProviderRequestInput;
   ProvidersScimDestroyResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersScimDestroyResponse'];
+  ProvidersScimGroupsCreateResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersScimGroupsCreateResponse'];
+  ScimProviderGroupRequestInput: ScimProviderGroupRequestInput;
+  ProvidersScimGroupsDestroyResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersScimGroupsDestroyResponse'];
+  ProvidersScimUsersCreateResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersScimUsersCreateResponse'];
+  ScimProviderUserRequestInput: ScimProviderUserRequestInput;
+  ProvidersScimUsersDestroyResponse: ResolversUnionTypes<ResolversParentTypes>['ProvidersScimUsersDestroyResponse'];
   RacConnectionTokensUpdateResponse: ResolversUnionTypes<ResolversParentTypes>['RacConnectionTokensUpdateResponse'];
   ConnectionTokenRequestInput: ConnectionTokenRequestInput;
   RacConnectionTokensPartialUpdateResponse: ResolversUnionTypes<ResolversParentTypes>['RacConnectionTokensPartialUpdateResponse'];
@@ -18853,11 +19587,13 @@ export type SystemInfoResolvers<ContextType = MeshContext, ParentType extends Re
 
 export type QueryAdminSystemRetrieveOneOf_0RuntimeResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['QueryAdminSystemRetrieveOneOf_0Runtime'] = ResolversParentTypes['QueryAdminSystemRetrieveOneOf_0Runtime']> = ResolversObject<{
   pythonVersion?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  gunicornVersion?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   environment?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   architecture?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   platform?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   uname?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  opensslVersion?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  opensslFipsEnabled?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  authentikVersion?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -19354,7 +20090,7 @@ export type CurrentBrandResolvers<ContextType = MeshContext, ParentType extends 
 }>;
 
 export type FooterLinkResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['FooterLink'] = ResolversParentTypes['FooterLink']> = ResolversObject<{
-  href?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  href?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -19775,6 +20511,7 @@ export type TypeCreateResolvers<ContextType = MeshContext, ParentType extends Re
   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   component?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   modelName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  iconUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   requiresEnterprise?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -19875,6 +20612,8 @@ export type SystemTaskResolvers<ContextType = MeshContext, ParentType extends Re
   duration?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   status?: Resolver<ResolversTypes['SystemTaskStatusEnum'], ParentType, ContextType>;
   messages?: Resolver<Array<Maybe<ResolversTypes['LogEvent']>>, ParentType, ContextType>;
+  expires?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  expiring?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -20582,6 +21321,10 @@ export type OutpostHealthResolvers<ContextType = MeshContext, ParentType extends
   uid?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   lastSeen?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   version?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  golangVersion?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  opensslEnabled?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  opensslVersion?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  fipsEnabled?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   versionShould?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   versionOutdated?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   buildHash?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -21224,6 +21967,66 @@ export type PropertymappingsNotificationUsedByListResponseResolvers<ContextType 
   __resolveType: TypeResolveFn<'UsedBy' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
 }>;
 
+export type PropertymappingsProviderGoogleWorkspaceListResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['PropertymappingsProviderGoogleWorkspaceListResponse'] = ResolversParentTypes['PropertymappingsProviderGoogleWorkspaceListResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'PaginatedGoogleWorkspaceProviderMappingList' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type PaginatedGoogleWorkspaceProviderMappingListResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['PaginatedGoogleWorkspaceProviderMappingList'] = ResolversParentTypes['PaginatedGoogleWorkspaceProviderMappingList']> = ResolversObject<{
+  pagination?: Resolver<ResolversTypes['Pagination'], ParentType, ContextType>;
+  results?: Resolver<Array<Maybe<ResolversTypes['GoogleWorkspaceProviderMapping']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type GoogleWorkspaceProviderMappingResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['GoogleWorkspaceProviderMapping'] = ResolversParentTypes['GoogleWorkspaceProviderMapping']> = ResolversObject<{
+  pk?: Resolver<ResolversTypes['UUID'], ParentType, ContextType>;
+  managed?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  expression?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  component?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  verboseName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  verboseNamePlural?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  metaModelName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type PropertymappingsProviderGoogleWorkspaceRetrieveResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['PropertymappingsProviderGoogleWorkspaceRetrieveResponse'] = ResolversParentTypes['PropertymappingsProviderGoogleWorkspaceRetrieveResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'GoogleWorkspaceProviderMapping' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type PropertymappingsProviderGoogleWorkspaceUsedByListResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['PropertymappingsProviderGoogleWorkspaceUsedByListResponse'] = ResolversParentTypes['PropertymappingsProviderGoogleWorkspaceUsedByListResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'UsedBy' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type PropertymappingsProviderMicrosoftEntraListResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['PropertymappingsProviderMicrosoftEntraListResponse'] = ResolversParentTypes['PropertymappingsProviderMicrosoftEntraListResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'PaginatedMicrosoftEntraProviderMappingList' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type PaginatedMicrosoftEntraProviderMappingListResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['PaginatedMicrosoftEntraProviderMappingList'] = ResolversParentTypes['PaginatedMicrosoftEntraProviderMappingList']> = ResolversObject<{
+  pagination?: Resolver<ResolversTypes['Pagination'], ParentType, ContextType>;
+  results?: Resolver<Array<Maybe<ResolversTypes['MicrosoftEntraProviderMapping']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type MicrosoftEntraProviderMappingResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['MicrosoftEntraProviderMapping'] = ResolversParentTypes['MicrosoftEntraProviderMapping']> = ResolversObject<{
+  pk?: Resolver<ResolversTypes['UUID'], ParentType, ContextType>;
+  managed?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  expression?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  component?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  verboseName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  verboseNamePlural?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  metaModelName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type PropertymappingsProviderMicrosoftEntraRetrieveResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['PropertymappingsProviderMicrosoftEntraRetrieveResponse'] = ResolversParentTypes['PropertymappingsProviderMicrosoftEntraRetrieveResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'MicrosoftEntraProviderMapping' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type PropertymappingsProviderMicrosoftEntraUsedByListResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['PropertymappingsProviderMicrosoftEntraUsedByListResponse'] = ResolversParentTypes['PropertymappingsProviderMicrosoftEntraUsedByListResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'UsedBy' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
 export type PropertymappingsRacListResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['PropertymappingsRacListResponse'] = ResolversParentTypes['PropertymappingsRacListResponse']> = ResolversObject<{
   __resolveType: TypeResolveFn<'PaginatedRacPropertyMappingList' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
 }>;
@@ -21371,6 +22174,112 @@ export type ProvidersAllTypesListResponseResolvers<ContextType = MeshContext, Pa
   __resolveType: TypeResolveFn<'TypeCreate' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
 }>;
 
+export type ProvidersGoogleWorkspaceListResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersGoogleWorkspaceListResponse'] = ResolversParentTypes['ProvidersGoogleWorkspaceListResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'PaginatedGoogleWorkspaceProviderList' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type PaginatedGoogleWorkspaceProviderListResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['PaginatedGoogleWorkspaceProviderList'] = ResolversParentTypes['PaginatedGoogleWorkspaceProviderList']> = ResolversObject<{
+  pagination?: Resolver<ResolversTypes['Pagination'], ParentType, ContextType>;
+  results?: Resolver<Array<Maybe<ResolversTypes['GoogleWorkspaceProvider']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type GoogleWorkspaceProviderResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['GoogleWorkspaceProvider'] = ResolversParentTypes['GoogleWorkspaceProvider']> = ResolversObject<{
+  pk?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  propertyMappings?: Resolver<Maybe<Array<Maybe<ResolversTypes['UUID']>>>, ParentType, ContextType>;
+  propertyMappingsGroup?: Resolver<Maybe<Array<Maybe<ResolversTypes['UUID']>>>, ParentType, ContextType>;
+  component?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  assignedBackchannelApplicationSlug?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  assignedBackchannelApplicationName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  verboseName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  verboseNamePlural?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  metaModelName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  delegatedSubject?: Resolver<ResolversTypes['EmailAddress'], ParentType, ContextType>;
+  credentials?: Resolver<ResolversTypes['JSON'], ParentType, ContextType>;
+  scopes?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  excludeUsersServiceAccount?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  filterGroup?: Resolver<Maybe<ResolversTypes['UUID']>, ParentType, ContextType>;
+  userDeleteAction?: Resolver<Maybe<ResolversTypes['OutgoingSyncDeleteAction']>, ParentType, ContextType>;
+  groupDeleteAction?: Resolver<Maybe<ResolversTypes['OutgoingSyncDeleteAction']>, ParentType, ContextType>;
+  defaultGroupEmailDomain?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type ProvidersGoogleWorkspaceRetrieveResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersGoogleWorkspaceRetrieveResponse'] = ResolversParentTypes['ProvidersGoogleWorkspaceRetrieveResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'GoogleWorkspaceProvider' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersGoogleWorkspaceSyncStatusRetrieveResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersGoogleWorkspaceSyncStatusRetrieveResponse'] = ResolversParentTypes['ProvidersGoogleWorkspaceSyncStatusRetrieveResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'SyncStatus' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type SyncStatusResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['SyncStatus'] = ResolversParentTypes['SyncStatus']> = ResolversObject<{
+  isRunning?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  tasks?: Resolver<Array<Maybe<ResolversTypes['SystemTask']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type ProvidersGoogleWorkspaceUsedByListResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersGoogleWorkspaceUsedByListResponse'] = ResolversParentTypes['ProvidersGoogleWorkspaceUsedByListResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'UsedBy' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersGoogleWorkspaceGroupsListResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersGoogleWorkspaceGroupsListResponse'] = ResolversParentTypes['ProvidersGoogleWorkspaceGroupsListResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'PaginatedGoogleWorkspaceProviderGroupList' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type PaginatedGoogleWorkspaceProviderGroupListResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['PaginatedGoogleWorkspaceProviderGroupList'] = ResolversParentTypes['PaginatedGoogleWorkspaceProviderGroupList']> = ResolversObject<{
+  pagination?: Resolver<ResolversTypes['Pagination'], ParentType, ContextType>;
+  results?: Resolver<Array<Maybe<ResolversTypes['GoogleWorkspaceProviderGroup']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type GoogleWorkspaceProviderGroupResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['GoogleWorkspaceProviderGroup'] = ResolversParentTypes['GoogleWorkspaceProviderGroup']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['UUID'], ParentType, ContextType>;
+  googleId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  group?: Resolver<ResolversTypes['UUID'], ParentType, ContextType>;
+  groupObj?: Resolver<ResolversTypes['UserGroup'], ParentType, ContextType>;
+  provider?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  attributes?: Resolver<ResolversTypes['JSON'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type ProvidersGoogleWorkspaceGroupsRetrieveResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersGoogleWorkspaceGroupsRetrieveResponse'] = ResolversParentTypes['ProvidersGoogleWorkspaceGroupsRetrieveResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'GoogleWorkspaceProviderGroup' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersGoogleWorkspaceGroupsUsedByListResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersGoogleWorkspaceGroupsUsedByListResponse'] = ResolversParentTypes['ProvidersGoogleWorkspaceGroupsUsedByListResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'UsedBy' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersGoogleWorkspaceUsersListResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersGoogleWorkspaceUsersListResponse'] = ResolversParentTypes['ProvidersGoogleWorkspaceUsersListResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'PaginatedGoogleWorkspaceProviderUserList' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type PaginatedGoogleWorkspaceProviderUserListResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['PaginatedGoogleWorkspaceProviderUserList'] = ResolversParentTypes['PaginatedGoogleWorkspaceProviderUserList']> = ResolversObject<{
+  pagination?: Resolver<ResolversTypes['Pagination'], ParentType, ContextType>;
+  results?: Resolver<Array<Maybe<ResolversTypes['GoogleWorkspaceProviderUser']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type GoogleWorkspaceProviderUserResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['GoogleWorkspaceProviderUser'] = ResolversParentTypes['GoogleWorkspaceProviderUser']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['UUID'], ParentType, ContextType>;
+  googleId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  userObj?: Resolver<ResolversTypes['GroupMember'], ParentType, ContextType>;
+  provider?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  attributes?: Resolver<ResolversTypes['JSON'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type ProvidersGoogleWorkspaceUsersRetrieveResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersGoogleWorkspaceUsersRetrieveResponse'] = ResolversParentTypes['ProvidersGoogleWorkspaceUsersRetrieveResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'GoogleWorkspaceProviderUser' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersGoogleWorkspaceUsersUsedByListResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersGoogleWorkspaceUsersUsedByListResponse'] = ResolversParentTypes['ProvidersGoogleWorkspaceUsersUsedByListResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'UsedBy' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
 export type ProvidersLdapListResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersLdapListResponse'] = ResolversParentTypes['ProvidersLdapListResponse']> = ResolversObject<{
   __resolveType: TypeResolveFn<'PaginatedLdapProviderList' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
 }>;
@@ -21413,6 +22322,105 @@ export type ProvidersLdapRetrieveResponseResolvers<ContextType = MeshContext, Pa
 }>;
 
 export type ProvidersLdapUsedByListResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersLdapUsedByListResponse'] = ResolversParentTypes['ProvidersLdapUsedByListResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'UsedBy' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersMicrosoftEntraListResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersMicrosoftEntraListResponse'] = ResolversParentTypes['ProvidersMicrosoftEntraListResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'PaginatedMicrosoftEntraProviderList' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type PaginatedMicrosoftEntraProviderListResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['PaginatedMicrosoftEntraProviderList'] = ResolversParentTypes['PaginatedMicrosoftEntraProviderList']> = ResolversObject<{
+  pagination?: Resolver<ResolversTypes['Pagination'], ParentType, ContextType>;
+  results?: Resolver<Array<Maybe<ResolversTypes['MicrosoftEntraProvider']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type MicrosoftEntraProviderResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['MicrosoftEntraProvider'] = ResolversParentTypes['MicrosoftEntraProvider']> = ResolversObject<{
+  pk?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  propertyMappings?: Resolver<Maybe<Array<Maybe<ResolversTypes['UUID']>>>, ParentType, ContextType>;
+  propertyMappingsGroup?: Resolver<Maybe<Array<Maybe<ResolversTypes['UUID']>>>, ParentType, ContextType>;
+  component?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  assignedBackchannelApplicationSlug?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  assignedBackchannelApplicationName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  verboseName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  verboseNamePlural?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  metaModelName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  clientId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  clientSecret?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  tenantId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  excludeUsersServiceAccount?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  filterGroup?: Resolver<Maybe<ResolversTypes['UUID']>, ParentType, ContextType>;
+  userDeleteAction?: Resolver<Maybe<ResolversTypes['OutgoingSyncDeleteAction']>, ParentType, ContextType>;
+  groupDeleteAction?: Resolver<Maybe<ResolversTypes['OutgoingSyncDeleteAction']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type ProvidersMicrosoftEntraRetrieveResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersMicrosoftEntraRetrieveResponse'] = ResolversParentTypes['ProvidersMicrosoftEntraRetrieveResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'MicrosoftEntraProvider' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersMicrosoftEntraSyncStatusRetrieveResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersMicrosoftEntraSyncStatusRetrieveResponse'] = ResolversParentTypes['ProvidersMicrosoftEntraSyncStatusRetrieveResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'SyncStatus' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersMicrosoftEntraUsedByListResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersMicrosoftEntraUsedByListResponse'] = ResolversParentTypes['ProvidersMicrosoftEntraUsedByListResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'UsedBy' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersMicrosoftEntraGroupsListResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersMicrosoftEntraGroupsListResponse'] = ResolversParentTypes['ProvidersMicrosoftEntraGroupsListResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'PaginatedMicrosoftEntraProviderGroupList' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type PaginatedMicrosoftEntraProviderGroupListResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['PaginatedMicrosoftEntraProviderGroupList'] = ResolversParentTypes['PaginatedMicrosoftEntraProviderGroupList']> = ResolversObject<{
+  pagination?: Resolver<ResolversTypes['Pagination'], ParentType, ContextType>;
+  results?: Resolver<Array<Maybe<ResolversTypes['MicrosoftEntraProviderGroup']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type MicrosoftEntraProviderGroupResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['MicrosoftEntraProviderGroup'] = ResolversParentTypes['MicrosoftEntraProviderGroup']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['UUID'], ParentType, ContextType>;
+  microsoftId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  group?: Resolver<ResolversTypes['UUID'], ParentType, ContextType>;
+  groupObj?: Resolver<ResolversTypes['UserGroup'], ParentType, ContextType>;
+  provider?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  attributes?: Resolver<ResolversTypes['JSON'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type ProvidersMicrosoftEntraGroupsRetrieveResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersMicrosoftEntraGroupsRetrieveResponse'] = ResolversParentTypes['ProvidersMicrosoftEntraGroupsRetrieveResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'MicrosoftEntraProviderGroup' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersMicrosoftEntraGroupsUsedByListResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersMicrosoftEntraGroupsUsedByListResponse'] = ResolversParentTypes['ProvidersMicrosoftEntraGroupsUsedByListResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'UsedBy' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersMicrosoftEntraUsersListResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersMicrosoftEntraUsersListResponse'] = ResolversParentTypes['ProvidersMicrosoftEntraUsersListResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'PaginatedMicrosoftEntraProviderUserList' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type PaginatedMicrosoftEntraProviderUserListResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['PaginatedMicrosoftEntraProviderUserList'] = ResolversParentTypes['PaginatedMicrosoftEntraProviderUserList']> = ResolversObject<{
+  pagination?: Resolver<ResolversTypes['Pagination'], ParentType, ContextType>;
+  results?: Resolver<Array<Maybe<ResolversTypes['MicrosoftEntraProviderUser']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type MicrosoftEntraProviderUserResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['MicrosoftEntraProviderUser'] = ResolversParentTypes['MicrosoftEntraProviderUser']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['UUID'], ParentType, ContextType>;
+  microsoftId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  userObj?: Resolver<ResolversTypes['GroupMember'], ParentType, ContextType>;
+  provider?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  attributes?: Resolver<ResolversTypes['JSON'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type ProvidersMicrosoftEntraUsersRetrieveResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersMicrosoftEntraUsersRetrieveResponse'] = ResolversParentTypes['ProvidersMicrosoftEntraUsersRetrieveResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'MicrosoftEntraProviderUser' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersMicrosoftEntraUsersUsedByListResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersMicrosoftEntraUsersUsedByListResponse'] = ResolversParentTypes['ProvidersMicrosoftEntraUsersUsedByListResponse']> = ResolversObject<{
   __resolveType: TypeResolveFn<'UsedBy' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
 }>;
 
@@ -21695,16 +22703,64 @@ export type ProvidersScimRetrieveResponseResolvers<ContextType = MeshContext, Pa
 }>;
 
 export type ProvidersScimSyncStatusRetrieveResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersScimSyncStatusRetrieveResponse'] = ResolversParentTypes['ProvidersScimSyncStatusRetrieveResponse']> = ResolversObject<{
-  __resolveType: TypeResolveFn<'ScimSyncStatus' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
-}>;
-
-export type ScimSyncStatusResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ScimSyncStatus'] = ResolversParentTypes['ScimSyncStatus']> = ResolversObject<{
-  isRunning?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  tasks?: Resolver<Array<Maybe<ResolversTypes['SystemTask']>>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+  __resolveType: TypeResolveFn<'SyncStatus' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
 }>;
 
 export type ProvidersScimUsedByListResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersScimUsedByListResponse'] = ResolversParentTypes['ProvidersScimUsedByListResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'UsedBy' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersScimGroupsListResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersScimGroupsListResponse'] = ResolversParentTypes['ProvidersScimGroupsListResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'PaginatedScimProviderGroupList' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type PaginatedScimProviderGroupListResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['PaginatedScimProviderGroupList'] = ResolversParentTypes['PaginatedScimProviderGroupList']> = ResolversObject<{
+  pagination?: Resolver<ResolversTypes['Pagination'], ParentType, ContextType>;
+  results?: Resolver<Array<Maybe<ResolversTypes['ScimProviderGroup']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type ScimProviderGroupResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ScimProviderGroup'] = ResolversParentTypes['ScimProviderGroup']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['UUID'], ParentType, ContextType>;
+  scimId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  group?: Resolver<ResolversTypes['UUID'], ParentType, ContextType>;
+  groupObj?: Resolver<ResolversTypes['UserGroup'], ParentType, ContextType>;
+  provider?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type ProvidersScimGroupsRetrieveResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersScimGroupsRetrieveResponse'] = ResolversParentTypes['ProvidersScimGroupsRetrieveResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'ScimProviderGroup' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersScimGroupsUsedByListResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersScimGroupsUsedByListResponse'] = ResolversParentTypes['ProvidersScimGroupsUsedByListResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'UsedBy' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersScimUsersListResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersScimUsersListResponse'] = ResolversParentTypes['ProvidersScimUsersListResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'PaginatedScimProviderUserList' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type PaginatedScimProviderUserListResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['PaginatedScimProviderUserList'] = ResolversParentTypes['PaginatedScimProviderUserList']> = ResolversObject<{
+  pagination?: Resolver<ResolversTypes['Pagination'], ParentType, ContextType>;
+  results?: Resolver<Array<Maybe<ResolversTypes['ScimProviderUser']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type ScimProviderUserResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ScimProviderUser'] = ResolversParentTypes['ScimProviderUser']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['UUID'], ParentType, ContextType>;
+  scimId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  userObj?: Resolver<ResolversTypes['GroupMember'], ParentType, ContextType>;
+  provider?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type ProvidersScimUsersRetrieveResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersScimUsersRetrieveResponse'] = ResolversParentTypes['ProvidersScimUsersRetrieveResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'ScimProviderUser' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersScimUsersUsedByListResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersScimUsersUsedByListResponse'] = ResolversParentTypes['ProvidersScimUsersUsedByListResponse']> = ResolversObject<{
   __resolveType: TypeResolveFn<'UsedBy' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
 }>;
 
@@ -22048,7 +23104,7 @@ export type LdapSourceResolvers<ContextType = MeshContext, ParentType extends Re
   userMatchingMode?: Resolver<Maybe<ResolversTypes['UserMatchingModeEnum']>, ParentType, ContextType>;
   managed?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   userPathTemplate?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  icon?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  icon?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   serverUri?: Resolver<ResolversTypes['URL'], ParentType, ContextType>;
   peerCertificate?: Resolver<Maybe<ResolversTypes['UUID']>, ParentType, ContextType>;
   clientCertificate?: Resolver<Maybe<ResolversTypes['UUID']>, ParentType, ContextType>;
@@ -22093,13 +23149,7 @@ export type LdapDebugResolvers<ContextType = MeshContext, ParentType extends Res
 }>;
 
 export type SourcesLdapSyncStatusRetrieveResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['SourcesLdapSyncStatusRetrieveResponse'] = ResolversParentTypes['SourcesLdapSyncStatusRetrieveResponse']> = ResolversObject<{
-  __resolveType: TypeResolveFn<'LdapSyncStatus' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
-}>;
-
-export type LdapSyncStatusResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['LdapSyncStatus'] = ResolversParentTypes['LdapSyncStatus']> = ResolversObject<{
-  isRunning?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  tasks?: Resolver<Array<Maybe<ResolversTypes['SystemTask']>>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+  __resolveType: TypeResolveFn<'SyncStatus' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
 }>;
 
 export type SourcesLdapUsedByListResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['SourcesLdapUsedByListResponse'] = ResolversParentTypes['SourcesLdapUsedByListResponse']> = ResolversObject<{
@@ -22218,7 +23268,7 @@ export type PlexSourceResolvers<ContextType = MeshContext, ParentType extends Re
   userMatchingMode?: Resolver<Maybe<ResolversTypes['UserMatchingModeEnum']>, ParentType, ContextType>;
   managed?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   userPathTemplate?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  icon?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  icon?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   clientId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   allowedServers?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
   allowFriends?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
@@ -22263,7 +23313,7 @@ export type SamlSourceResolvers<ContextType = MeshContext, ParentType extends Re
   userMatchingMode?: Resolver<Maybe<ResolversTypes['UserMatchingModeEnum']>, ParentType, ContextType>;
   managed?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   userPathTemplate?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  icon?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  icon?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   preAuthenticationFlow?: Resolver<ResolversTypes['UUID'], ParentType, ContextType>;
   issuer?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   ssoUrl?: Resolver<ResolversTypes['URL'], ParentType, ContextType>;
@@ -22768,6 +23818,9 @@ export type CaptchaStageResolvers<ContextType = MeshContext, ParentType extends 
   publicKey?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   jsUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   apiUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  scoreMinThreshold?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  scoreMaxThreshold?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  errorOnInvalidScore?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -23583,12 +24636,12 @@ export type TransactionApplicationResponseResolvers<ContextType = MeshContext, P
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export interface MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_1ClientIdScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_1ClientId'], any> {
-  name: 'MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_1ClientId';
+export interface MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_3ClientIdScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_3ClientId'], any> {
+  name: 'MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_3ClientId';
 }
 
-export interface MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_1ClientSecretScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_1ClientSecret'], any> {
-  name: 'MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_1ClientSecret';
+export interface MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_3ClientSecretScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_3ClientSecret'], any> {
+  name: 'MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_3ClientSecret';
 }
 
 export type CoreUserConsentDestroyResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['CoreUserConsentDestroyResponse'] = ResolversParentTypes['CoreUserConsentDestroyResponse']> = ResolversObject<{
@@ -24077,6 +25130,38 @@ export type PropertymappingsNotificationDestroyResponseResolvers<ContextType = M
   __resolveType: TypeResolveFn<'VoidContainer' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
 }>;
 
+export type PropertymappingsProviderGoogleWorkspaceCreateResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['PropertymappingsProviderGoogleWorkspaceCreateResponse'] = ResolversParentTypes['PropertymappingsProviderGoogleWorkspaceCreateResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'GoogleWorkspaceProviderMapping' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type PropertymappingsProviderGoogleWorkspaceUpdateResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['PropertymappingsProviderGoogleWorkspaceUpdateResponse'] = ResolversParentTypes['PropertymappingsProviderGoogleWorkspaceUpdateResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'GoogleWorkspaceProviderMapping' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type PropertymappingsProviderGoogleWorkspacePartialUpdateResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['PropertymappingsProviderGoogleWorkspacePartialUpdateResponse'] = ResolversParentTypes['PropertymappingsProviderGoogleWorkspacePartialUpdateResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'GoogleWorkspaceProviderMapping' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type PropertymappingsProviderGoogleWorkspaceDestroyResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['PropertymappingsProviderGoogleWorkspaceDestroyResponse'] = ResolversParentTypes['PropertymappingsProviderGoogleWorkspaceDestroyResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'VoidContainer' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type PropertymappingsProviderMicrosoftEntraCreateResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['PropertymappingsProviderMicrosoftEntraCreateResponse'] = ResolversParentTypes['PropertymappingsProviderMicrosoftEntraCreateResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'MicrosoftEntraProviderMapping' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type PropertymappingsProviderMicrosoftEntraUpdateResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['PropertymappingsProviderMicrosoftEntraUpdateResponse'] = ResolversParentTypes['PropertymappingsProviderMicrosoftEntraUpdateResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'MicrosoftEntraProviderMapping' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type PropertymappingsProviderMicrosoftEntraPartialUpdateResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['PropertymappingsProviderMicrosoftEntraPartialUpdateResponse'] = ResolversParentTypes['PropertymappingsProviderMicrosoftEntraPartialUpdateResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'MicrosoftEntraProviderMapping' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type PropertymappingsProviderMicrosoftEntraDestroyResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['PropertymappingsProviderMicrosoftEntraDestroyResponse'] = ResolversParentTypes['PropertymappingsProviderMicrosoftEntraDestroyResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'VoidContainer' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
 export type PropertymappingsRacCreateResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['PropertymappingsRacCreateResponse'] = ResolversParentTypes['PropertymappingsRacCreateResponse']> = ResolversObject<{
   __resolveType: TypeResolveFn<'RacPropertyMapping' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
 }>;
@@ -24145,6 +25230,38 @@ export type ProvidersAllDestroyResponseResolvers<ContextType = MeshContext, Pare
   __resolveType: TypeResolveFn<'VoidContainer' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
 }>;
 
+export type ProvidersGoogleWorkspaceCreateResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersGoogleWorkspaceCreateResponse'] = ResolversParentTypes['ProvidersGoogleWorkspaceCreateResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'GoogleWorkspaceProvider' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersGoogleWorkspaceUpdateResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersGoogleWorkspaceUpdateResponse'] = ResolversParentTypes['ProvidersGoogleWorkspaceUpdateResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'GoogleWorkspaceProvider' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersGoogleWorkspacePartialUpdateResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersGoogleWorkspacePartialUpdateResponse'] = ResolversParentTypes['ProvidersGoogleWorkspacePartialUpdateResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'GoogleWorkspaceProvider' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersGoogleWorkspaceDestroyResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersGoogleWorkspaceDestroyResponse'] = ResolversParentTypes['ProvidersGoogleWorkspaceDestroyResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'VoidContainer' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersGoogleWorkspaceGroupsCreateResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersGoogleWorkspaceGroupsCreateResponse'] = ResolversParentTypes['ProvidersGoogleWorkspaceGroupsCreateResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'GoogleWorkspaceProviderGroup' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersGoogleWorkspaceGroupsDestroyResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersGoogleWorkspaceGroupsDestroyResponse'] = ResolversParentTypes['ProvidersGoogleWorkspaceGroupsDestroyResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'VoidContainer' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersGoogleWorkspaceUsersCreateResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersGoogleWorkspaceUsersCreateResponse'] = ResolversParentTypes['ProvidersGoogleWorkspaceUsersCreateResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'GoogleWorkspaceProviderUser' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersGoogleWorkspaceUsersDestroyResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersGoogleWorkspaceUsersDestroyResponse'] = ResolversParentTypes['ProvidersGoogleWorkspaceUsersDestroyResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'VoidContainer' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
 export type ProvidersLdapCreateResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersLdapCreateResponse'] = ResolversParentTypes['ProvidersLdapCreateResponse']> = ResolversObject<{
   __resolveType: TypeResolveFn<'LdapProvider' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
 }>;
@@ -24158,6 +25275,38 @@ export type ProvidersLdapPartialUpdateResponseResolvers<ContextType = MeshContex
 }>;
 
 export type ProvidersLdapDestroyResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersLdapDestroyResponse'] = ResolversParentTypes['ProvidersLdapDestroyResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'VoidContainer' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersMicrosoftEntraCreateResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersMicrosoftEntraCreateResponse'] = ResolversParentTypes['ProvidersMicrosoftEntraCreateResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'MicrosoftEntraProvider' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersMicrosoftEntraUpdateResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersMicrosoftEntraUpdateResponse'] = ResolversParentTypes['ProvidersMicrosoftEntraUpdateResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'MicrosoftEntraProvider' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersMicrosoftEntraPartialUpdateResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersMicrosoftEntraPartialUpdateResponse'] = ResolversParentTypes['ProvidersMicrosoftEntraPartialUpdateResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'MicrosoftEntraProvider' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersMicrosoftEntraDestroyResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersMicrosoftEntraDestroyResponse'] = ResolversParentTypes['ProvidersMicrosoftEntraDestroyResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'VoidContainer' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersMicrosoftEntraGroupsCreateResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersMicrosoftEntraGroupsCreateResponse'] = ResolversParentTypes['ProvidersMicrosoftEntraGroupsCreateResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'MicrosoftEntraProviderGroup' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersMicrosoftEntraGroupsDestroyResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersMicrosoftEntraGroupsDestroyResponse'] = ResolversParentTypes['ProvidersMicrosoftEntraGroupsDestroyResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'VoidContainer' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersMicrosoftEntraUsersCreateResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersMicrosoftEntraUsersCreateResponse'] = ResolversParentTypes['ProvidersMicrosoftEntraUsersCreateResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'MicrosoftEntraProviderUser' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersMicrosoftEntraUsersDestroyResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersMicrosoftEntraUsersDestroyResponse'] = ResolversParentTypes['ProvidersMicrosoftEntraUsersDestroyResponse']> = ResolversObject<{
   __resolveType: TypeResolveFn<'VoidContainer' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
 }>;
 
@@ -24266,6 +25415,22 @@ export type ProvidersScimPartialUpdateResponseResolvers<ContextType = MeshContex
 }>;
 
 export type ProvidersScimDestroyResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersScimDestroyResponse'] = ResolversParentTypes['ProvidersScimDestroyResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'VoidContainer' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersScimGroupsCreateResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersScimGroupsCreateResponse'] = ResolversParentTypes['ProvidersScimGroupsCreateResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'ScimProviderGroup' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersScimGroupsDestroyResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersScimGroupsDestroyResponse'] = ResolversParentTypes['ProvidersScimGroupsDestroyResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'VoidContainer' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersScimUsersCreateResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersScimUsersCreateResponse'] = ResolversParentTypes['ProvidersScimUsersCreateResponse']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'ScimProviderUser' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
+}>;
+
+export type ProvidersScimUsersDestroyResponseResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ProvidersScimUsersDestroyResponse'] = ResolversParentTypes['ProvidersScimUsersDestroyResponse']> = ResolversObject<{
   __resolveType: TypeResolveFn<'VoidContainer' | 'ValidationError' | 'GenericError', ParentType, ContextType>;
 }>;
 
@@ -25655,6 +26820,16 @@ export type Resolvers<ContextType = MeshContext> = ResolversObject<{
   NotificationWebhookMapping?: NotificationWebhookMappingResolvers<ContextType>;
   PropertymappingsNotificationRetrieveResponse?: PropertymappingsNotificationRetrieveResponseResolvers<ContextType>;
   PropertymappingsNotificationUsedByListResponse?: PropertymappingsNotificationUsedByListResponseResolvers<ContextType>;
+  PropertymappingsProviderGoogleWorkspaceListResponse?: PropertymappingsProviderGoogleWorkspaceListResponseResolvers<ContextType>;
+  PaginatedGoogleWorkspaceProviderMappingList?: PaginatedGoogleWorkspaceProviderMappingListResolvers<ContextType>;
+  GoogleWorkspaceProviderMapping?: GoogleWorkspaceProviderMappingResolvers<ContextType>;
+  PropertymappingsProviderGoogleWorkspaceRetrieveResponse?: PropertymappingsProviderGoogleWorkspaceRetrieveResponseResolvers<ContextType>;
+  PropertymappingsProviderGoogleWorkspaceUsedByListResponse?: PropertymappingsProviderGoogleWorkspaceUsedByListResponseResolvers<ContextType>;
+  PropertymappingsProviderMicrosoftEntraListResponse?: PropertymappingsProviderMicrosoftEntraListResponseResolvers<ContextType>;
+  PaginatedMicrosoftEntraProviderMappingList?: PaginatedMicrosoftEntraProviderMappingListResolvers<ContextType>;
+  MicrosoftEntraProviderMapping?: MicrosoftEntraProviderMappingResolvers<ContextType>;
+  PropertymappingsProviderMicrosoftEntraRetrieveResponse?: PropertymappingsProviderMicrosoftEntraRetrieveResponseResolvers<ContextType>;
+  PropertymappingsProviderMicrosoftEntraUsedByListResponse?: PropertymappingsProviderMicrosoftEntraUsedByListResponseResolvers<ContextType>;
   PropertymappingsRacListResponse?: PropertymappingsRacListResponseResolvers<ContextType>;
   PaginatedRacPropertyMappingList?: PaginatedRacPropertyMappingListResolvers<ContextType>;
   RacPropertyMapping?: RacPropertyMappingResolvers<ContextType>;
@@ -25680,11 +26855,44 @@ export type Resolvers<ContextType = MeshContext> = ResolversObject<{
   ProvidersAllRetrieveResponse?: ProvidersAllRetrieveResponseResolvers<ContextType>;
   ProvidersAllUsedByListResponse?: ProvidersAllUsedByListResponseResolvers<ContextType>;
   ProvidersAllTypesListResponse?: ProvidersAllTypesListResponseResolvers<ContextType>;
+  ProvidersGoogleWorkspaceListResponse?: ProvidersGoogleWorkspaceListResponseResolvers<ContextType>;
+  PaginatedGoogleWorkspaceProviderList?: PaginatedGoogleWorkspaceProviderListResolvers<ContextType>;
+  GoogleWorkspaceProvider?: GoogleWorkspaceProviderResolvers<ContextType>;
+  ProvidersGoogleWorkspaceRetrieveResponse?: ProvidersGoogleWorkspaceRetrieveResponseResolvers<ContextType>;
+  ProvidersGoogleWorkspaceSyncStatusRetrieveResponse?: ProvidersGoogleWorkspaceSyncStatusRetrieveResponseResolvers<ContextType>;
+  SyncStatus?: SyncStatusResolvers<ContextType>;
+  ProvidersGoogleWorkspaceUsedByListResponse?: ProvidersGoogleWorkspaceUsedByListResponseResolvers<ContextType>;
+  ProvidersGoogleWorkspaceGroupsListResponse?: ProvidersGoogleWorkspaceGroupsListResponseResolvers<ContextType>;
+  PaginatedGoogleWorkspaceProviderGroupList?: PaginatedGoogleWorkspaceProviderGroupListResolvers<ContextType>;
+  GoogleWorkspaceProviderGroup?: GoogleWorkspaceProviderGroupResolvers<ContextType>;
+  ProvidersGoogleWorkspaceGroupsRetrieveResponse?: ProvidersGoogleWorkspaceGroupsRetrieveResponseResolvers<ContextType>;
+  ProvidersGoogleWorkspaceGroupsUsedByListResponse?: ProvidersGoogleWorkspaceGroupsUsedByListResponseResolvers<ContextType>;
+  ProvidersGoogleWorkspaceUsersListResponse?: ProvidersGoogleWorkspaceUsersListResponseResolvers<ContextType>;
+  PaginatedGoogleWorkspaceProviderUserList?: PaginatedGoogleWorkspaceProviderUserListResolvers<ContextType>;
+  GoogleWorkspaceProviderUser?: GoogleWorkspaceProviderUserResolvers<ContextType>;
+  ProvidersGoogleWorkspaceUsersRetrieveResponse?: ProvidersGoogleWorkspaceUsersRetrieveResponseResolvers<ContextType>;
+  ProvidersGoogleWorkspaceUsersUsedByListResponse?: ProvidersGoogleWorkspaceUsersUsedByListResponseResolvers<ContextType>;
   ProvidersLdapListResponse?: ProvidersLdapListResponseResolvers<ContextType>;
   PaginatedLdapProviderList?: PaginatedLdapProviderListResolvers<ContextType>;
   LdapProvider?: LdapProviderResolvers<ContextType>;
   ProvidersLdapRetrieveResponse?: ProvidersLdapRetrieveResponseResolvers<ContextType>;
   ProvidersLdapUsedByListResponse?: ProvidersLdapUsedByListResponseResolvers<ContextType>;
+  ProvidersMicrosoftEntraListResponse?: ProvidersMicrosoftEntraListResponseResolvers<ContextType>;
+  PaginatedMicrosoftEntraProviderList?: PaginatedMicrosoftEntraProviderListResolvers<ContextType>;
+  MicrosoftEntraProvider?: MicrosoftEntraProviderResolvers<ContextType>;
+  ProvidersMicrosoftEntraRetrieveResponse?: ProvidersMicrosoftEntraRetrieveResponseResolvers<ContextType>;
+  ProvidersMicrosoftEntraSyncStatusRetrieveResponse?: ProvidersMicrosoftEntraSyncStatusRetrieveResponseResolvers<ContextType>;
+  ProvidersMicrosoftEntraUsedByListResponse?: ProvidersMicrosoftEntraUsedByListResponseResolvers<ContextType>;
+  ProvidersMicrosoftEntraGroupsListResponse?: ProvidersMicrosoftEntraGroupsListResponseResolvers<ContextType>;
+  PaginatedMicrosoftEntraProviderGroupList?: PaginatedMicrosoftEntraProviderGroupListResolvers<ContextType>;
+  MicrosoftEntraProviderGroup?: MicrosoftEntraProviderGroupResolvers<ContextType>;
+  ProvidersMicrosoftEntraGroupsRetrieveResponse?: ProvidersMicrosoftEntraGroupsRetrieveResponseResolvers<ContextType>;
+  ProvidersMicrosoftEntraGroupsUsedByListResponse?: ProvidersMicrosoftEntraGroupsUsedByListResponseResolvers<ContextType>;
+  ProvidersMicrosoftEntraUsersListResponse?: ProvidersMicrosoftEntraUsersListResponseResolvers<ContextType>;
+  PaginatedMicrosoftEntraProviderUserList?: PaginatedMicrosoftEntraProviderUserListResolvers<ContextType>;
+  MicrosoftEntraProviderUser?: MicrosoftEntraProviderUserResolvers<ContextType>;
+  ProvidersMicrosoftEntraUsersRetrieveResponse?: ProvidersMicrosoftEntraUsersRetrieveResponseResolvers<ContextType>;
+  ProvidersMicrosoftEntraUsersUsedByListResponse?: ProvidersMicrosoftEntraUsersUsedByListResponseResolvers<ContextType>;
   ProvidersOauth2ListResponse?: ProvidersOauth2ListResponseResolvers<ContextType>;
   PaginatedOAuth2ProviderList?: PaginatedOAuth2ProviderListResolvers<ContextType>;
   ProvidersOauth2RetrieveResponse?: ProvidersOauth2RetrieveResponseResolvers<ContextType>;
@@ -25722,8 +26930,17 @@ export type Resolvers<ContextType = MeshContext> = ResolversObject<{
   ScimProvider?: ScimProviderResolvers<ContextType>;
   ProvidersScimRetrieveResponse?: ProvidersScimRetrieveResponseResolvers<ContextType>;
   ProvidersScimSyncStatusRetrieveResponse?: ProvidersScimSyncStatusRetrieveResponseResolvers<ContextType>;
-  ScimSyncStatus?: ScimSyncStatusResolvers<ContextType>;
   ProvidersScimUsedByListResponse?: ProvidersScimUsedByListResponseResolvers<ContextType>;
+  ProvidersScimGroupsListResponse?: ProvidersScimGroupsListResponseResolvers<ContextType>;
+  PaginatedScimProviderGroupList?: PaginatedScimProviderGroupListResolvers<ContextType>;
+  ScimProviderGroup?: ScimProviderGroupResolvers<ContextType>;
+  ProvidersScimGroupsRetrieveResponse?: ProvidersScimGroupsRetrieveResponseResolvers<ContextType>;
+  ProvidersScimGroupsUsedByListResponse?: ProvidersScimGroupsUsedByListResponseResolvers<ContextType>;
+  ProvidersScimUsersListResponse?: ProvidersScimUsersListResponseResolvers<ContextType>;
+  PaginatedScimProviderUserList?: PaginatedScimProviderUserListResolvers<ContextType>;
+  ScimProviderUser?: ScimProviderUserResolvers<ContextType>;
+  ProvidersScimUsersRetrieveResponse?: ProvidersScimUsersRetrieveResponseResolvers<ContextType>;
+  ProvidersScimUsersUsedByListResponse?: ProvidersScimUsersUsedByListResponseResolvers<ContextType>;
   RacConnectionTokensListResponse?: RacConnectionTokensListResponseResolvers<ContextType>;
   PaginatedConnectionTokenList?: PaginatedConnectionTokenListResolvers<ContextType>;
   ConnectionToken?: ConnectionTokenResolvers<ContextType>;
@@ -25781,7 +26998,6 @@ export type Resolvers<ContextType = MeshContext> = ResolversObject<{
   SourcesLdapDebugRetrieveResponse?: SourcesLdapDebugRetrieveResponseResolvers<ContextType>;
   LdapDebug?: LdapDebugResolvers<ContextType>;
   SourcesLdapSyncStatusRetrieveResponse?: SourcesLdapSyncStatusRetrieveResponseResolvers<ContextType>;
-  LdapSyncStatus?: LdapSyncStatusResolvers<ContextType>;
   SourcesLdapUsedByListResponse?: SourcesLdapUsedByListResponseResolvers<ContextType>;
   SourcesOauthListResponse?: SourcesOauthListResponseResolvers<ContextType>;
   PaginatedOAuthSourceList?: PaginatedOAuthSourceListResolvers<ContextType>;
@@ -26043,8 +27259,8 @@ export type Resolvers<ContextType = MeshContext> = ResolversObject<{
   CoreTokensSetKeyCreateResponse?: CoreTokensSetKeyCreateResponseResolvers<ContextType>;
   CoreTransactionalApplicationsUpdateResponse?: CoreTransactionalApplicationsUpdateResponseResolvers<ContextType>;
   TransactionApplicationResponse?: TransactionApplicationResponseResolvers<ContextType>;
-  MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_1ClientId?: GraphQLScalarType;
-  MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_1ClientSecret?: GraphQLScalarType;
+  MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_3ClientId?: GraphQLScalarType;
+  MutationInputCoreTransactionalApplicationsUpdateInputProviderOneOf_3ClientSecret?: GraphQLScalarType;
   CoreUserConsentDestroyResponse?: CoreUserConsentDestroyResponseResolvers<ContextType>;
   CoreUsersCreateResponse?: CoreUsersCreateResponseResolvers<ContextType>;
   MutationInputCoreUsersCreateInputUsername?: GraphQLScalarType;
@@ -26164,6 +27380,14 @@ export type Resolvers<ContextType = MeshContext> = ResolversObject<{
   PropertymappingsNotificationUpdateResponse?: PropertymappingsNotificationUpdateResponseResolvers<ContextType>;
   PropertymappingsNotificationPartialUpdateResponse?: PropertymappingsNotificationPartialUpdateResponseResolvers<ContextType>;
   PropertymappingsNotificationDestroyResponse?: PropertymappingsNotificationDestroyResponseResolvers<ContextType>;
+  PropertymappingsProviderGoogleWorkspaceCreateResponse?: PropertymappingsProviderGoogleWorkspaceCreateResponseResolvers<ContextType>;
+  PropertymappingsProviderGoogleWorkspaceUpdateResponse?: PropertymappingsProviderGoogleWorkspaceUpdateResponseResolvers<ContextType>;
+  PropertymappingsProviderGoogleWorkspacePartialUpdateResponse?: PropertymappingsProviderGoogleWorkspacePartialUpdateResponseResolvers<ContextType>;
+  PropertymappingsProviderGoogleWorkspaceDestroyResponse?: PropertymappingsProviderGoogleWorkspaceDestroyResponseResolvers<ContextType>;
+  PropertymappingsProviderMicrosoftEntraCreateResponse?: PropertymappingsProviderMicrosoftEntraCreateResponseResolvers<ContextType>;
+  PropertymappingsProviderMicrosoftEntraUpdateResponse?: PropertymappingsProviderMicrosoftEntraUpdateResponseResolvers<ContextType>;
+  PropertymappingsProviderMicrosoftEntraPartialUpdateResponse?: PropertymappingsProviderMicrosoftEntraPartialUpdateResponseResolvers<ContextType>;
+  PropertymappingsProviderMicrosoftEntraDestroyResponse?: PropertymappingsProviderMicrosoftEntraDestroyResponseResolvers<ContextType>;
   PropertymappingsRacCreateResponse?: PropertymappingsRacCreateResponseResolvers<ContextType>;
   PropertymappingsRacUpdateResponse?: PropertymappingsRacUpdateResponseResolvers<ContextType>;
   PropertymappingsRacPartialUpdateResponse?: PropertymappingsRacPartialUpdateResponseResolvers<ContextType>;
@@ -26181,10 +27405,26 @@ export type Resolvers<ContextType = MeshContext> = ResolversObject<{
   PropertymappingsScopePartialUpdateResponse?: PropertymappingsScopePartialUpdateResponseResolvers<ContextType>;
   PropertymappingsScopeDestroyResponse?: PropertymappingsScopeDestroyResponseResolvers<ContextType>;
   ProvidersAllDestroyResponse?: ProvidersAllDestroyResponseResolvers<ContextType>;
+  ProvidersGoogleWorkspaceCreateResponse?: ProvidersGoogleWorkspaceCreateResponseResolvers<ContextType>;
+  ProvidersGoogleWorkspaceUpdateResponse?: ProvidersGoogleWorkspaceUpdateResponseResolvers<ContextType>;
+  ProvidersGoogleWorkspacePartialUpdateResponse?: ProvidersGoogleWorkspacePartialUpdateResponseResolvers<ContextType>;
+  ProvidersGoogleWorkspaceDestroyResponse?: ProvidersGoogleWorkspaceDestroyResponseResolvers<ContextType>;
+  ProvidersGoogleWorkspaceGroupsCreateResponse?: ProvidersGoogleWorkspaceGroupsCreateResponseResolvers<ContextType>;
+  ProvidersGoogleWorkspaceGroupsDestroyResponse?: ProvidersGoogleWorkspaceGroupsDestroyResponseResolvers<ContextType>;
+  ProvidersGoogleWorkspaceUsersCreateResponse?: ProvidersGoogleWorkspaceUsersCreateResponseResolvers<ContextType>;
+  ProvidersGoogleWorkspaceUsersDestroyResponse?: ProvidersGoogleWorkspaceUsersDestroyResponseResolvers<ContextType>;
   ProvidersLdapCreateResponse?: ProvidersLdapCreateResponseResolvers<ContextType>;
   ProvidersLdapUpdateResponse?: ProvidersLdapUpdateResponseResolvers<ContextType>;
   ProvidersLdapPartialUpdateResponse?: ProvidersLdapPartialUpdateResponseResolvers<ContextType>;
   ProvidersLdapDestroyResponse?: ProvidersLdapDestroyResponseResolvers<ContextType>;
+  ProvidersMicrosoftEntraCreateResponse?: ProvidersMicrosoftEntraCreateResponseResolvers<ContextType>;
+  ProvidersMicrosoftEntraUpdateResponse?: ProvidersMicrosoftEntraUpdateResponseResolvers<ContextType>;
+  ProvidersMicrosoftEntraPartialUpdateResponse?: ProvidersMicrosoftEntraPartialUpdateResponseResolvers<ContextType>;
+  ProvidersMicrosoftEntraDestroyResponse?: ProvidersMicrosoftEntraDestroyResponseResolvers<ContextType>;
+  ProvidersMicrosoftEntraGroupsCreateResponse?: ProvidersMicrosoftEntraGroupsCreateResponseResolvers<ContextType>;
+  ProvidersMicrosoftEntraGroupsDestroyResponse?: ProvidersMicrosoftEntraGroupsDestroyResponseResolvers<ContextType>;
+  ProvidersMicrosoftEntraUsersCreateResponse?: ProvidersMicrosoftEntraUsersCreateResponseResolvers<ContextType>;
+  ProvidersMicrosoftEntraUsersDestroyResponse?: ProvidersMicrosoftEntraUsersDestroyResponseResolvers<ContextType>;
   ProvidersOauth2CreateResponse?: ProvidersOauth2CreateResponseResolvers<ContextType>;
   ProvidersOauth2UpdateResponse?: ProvidersOauth2UpdateResponseResolvers<ContextType>;
   ProvidersOauth2PartialUpdateResponse?: ProvidersOauth2PartialUpdateResponseResolvers<ContextType>;
@@ -26212,6 +27452,10 @@ export type Resolvers<ContextType = MeshContext> = ResolversObject<{
   ProvidersScimUpdateResponse?: ProvidersScimUpdateResponseResolvers<ContextType>;
   ProvidersScimPartialUpdateResponse?: ProvidersScimPartialUpdateResponseResolvers<ContextType>;
   ProvidersScimDestroyResponse?: ProvidersScimDestroyResponseResolvers<ContextType>;
+  ProvidersScimGroupsCreateResponse?: ProvidersScimGroupsCreateResponseResolvers<ContextType>;
+  ProvidersScimGroupsDestroyResponse?: ProvidersScimGroupsDestroyResponseResolvers<ContextType>;
+  ProvidersScimUsersCreateResponse?: ProvidersScimUsersCreateResponseResolvers<ContextType>;
+  ProvidersScimUsersDestroyResponse?: ProvidersScimUsersDestroyResponseResolvers<ContextType>;
   RacConnectionTokensUpdateResponse?: RacConnectionTokensUpdateResponseResolvers<ContextType>;
   RacConnectionTokensPartialUpdateResponse?: RacConnectionTokensPartialUpdateResponseResolvers<ContextType>;
   RacConnectionTokensDestroyResponse?: RacConnectionTokensDestroyResponseResolvers<ContextType>;
