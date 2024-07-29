@@ -1,0 +1,19 @@
+{
+  "name": "churros-developers",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@graphql-mesh/cli": "^0.92.4",
+    "@graphql-mesh/graphql": "^0.99.4",
+    "@graphql-mesh/openapi": "^0.102.6",
+    "@graphql-mesh/transform-filter-schema": "^0.99.5",
+    "@graphql-mesh/transform-rename": "^0.99.4",
+    "graphql": "^16.9.0"
+  }
+}

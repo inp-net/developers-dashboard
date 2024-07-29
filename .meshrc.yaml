@@ -1,0 +1,10 @@
+sources:
+  - name: Churros
+    handler:
+      graphql: 
+        endpoint: https://churros.inpt.fr/graphql
+  - name: Authentik
+    handler:
+      openapi:
+        source: https://auth.inpt.fr/api/v3/schema/
+        fallbackFormat: yaml
