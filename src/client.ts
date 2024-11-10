@@ -1,7 +1,8 @@
+import { env } from '$env/dynamic/public';
 import { HoudiniClient } from '$houdini';
 
 export default new HoudiniClient({
-	url: 'http://localhost:5000/graphql',
+	url: `${env.PUBLIC_GATEWAY_ORIGIN}/graphql`,
 	fetchParams({ session, metadata }) {
 		return {
 			headers: {

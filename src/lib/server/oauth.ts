@@ -6,5 +6,5 @@ export const authentik = new Authentik(
 	env.PUBLIC_AUTHENTIK_INSTANCE,
 	env.PUBLIC_OAUTH2_ID,
 	secrets.PRIVATE_OAUTH2_SECRET,
-	'http://localhost:5173/login/callback'
+	`${env.PUBLIC_ORIGIN}/login/callback`
 );

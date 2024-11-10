@@ -28,6 +28,9 @@
 </script>
 
 <h1>Home</h1>
+{#if apps.length === 0}
+	<a href="/login">Connexion</a>
+{/if}
 
 <form action="?/createApp" method="post">
 	<label>

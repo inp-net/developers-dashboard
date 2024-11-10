@@ -7,6 +7,7 @@
 	}
 	const { data }: Props = $props();
 	const { PageApplication } = $derived(data);
+	let editingLaunchURL = $state(false);
 
 	function enumerate<T>(a: T[]): Array<[number, T]> {
 		return Object.entries(a).map(([k, v]) => [parseInt(k), v]);
@@ -42,8 +43,7 @@
 	<dd>
 		<button
 			onclick={() => {
-				const clipboard = new Clipboard();
-				clipboard.writeText(value);
+				navigator.clipboard.writeText(value);
 			}}>copier</button
 		>
 		{#if sensitive}
@@ -60,9 +60,21 @@
 		<img src={app.metaIcon} alt="Icone" class="logo" />
 		{app.name}
 	</h1>
-	{#if app.launchUrl}
-		<a href={app.launchUrl}>https://{new URL(app.launchUrl).hostname}</a>
-	{/if}
+	<section class="launchurl">
+		{#if editingLaunchURL || !app.launchUrl}
+			<form action="?/editLaunchURL" method="post">
+				<label>URL de lancement<input type="url" name="url" value={app.launchUrl ?? ''} /></label>
+				<button type="submit">OK</button>
+			</form>
+		{:else if app.launchUrl}
+			<a href={app.launchUrl}>https://{new URL(app.launchUrl).hostname}</a>
+			<button
+				onclick={() => {
+					editingLaunchURL = true;
+				}}>modifier</button
+			>
+		{/if}
+	</section>
 	<p class="desc">{app.metaDescription}</p>
 	{#if app.oauth2Provider?.__typename === 'OAuth2Provider'}
 		{@const authorizedUris = uris(app.oauth2Provider.redirectUris)}

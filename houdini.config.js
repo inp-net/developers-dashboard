@@ -15,6 +15,9 @@ const config = {
 		},
 		NonEmptyString: {
 			type: 'string'
+		},
+		URL: {
+			type: 'string'
 		}
 	}
 };
