@@ -89,7 +89,7 @@ export const actions = {
 						invalidationFlow: $invalidate
 						clientType: $type
 						name: $name
-						redirectUris: "http://localhost*"
+						redirectUris: ".*"
 					}
 				) {
 					... on OAuth2Provider {
