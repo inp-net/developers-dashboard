@@ -39247,9 +39247,11 @@ components:
       properties:
         x_cord:
           type: integer
+          format: int64
           readOnly: true
         y_cord:
           type: integer
+          format: int64
           readOnly: true
       required:
       - x_cord

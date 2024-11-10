@@ -6,9 +6,6 @@ query PageApplication($slug: String!) {
 			metaIcon
 			metaDescription
 			launchUrl
-			churrosGroup {
-				uid
-			}
 			oauth2Provider {
 				... on OAuth2Provider {
 					pk
@@ -16,6 +13,12 @@ query PageApplication($slug: String!) {
 					clientSecret
 					clientType
 					redirectUris
+				}
+			}
+			metrics {
+				... on Coordinate {
+					xCord
+					yCord
 				}
 			}
 		}

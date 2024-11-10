@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { env } from '$env/dynamic/public';
 	import SensitiveValue from '$lib/SensitiveValue.svelte';
+	import { LinkedChart } from 'svelte-tiny-linked-charts';
 	import type { PageData } from './$houdini';
 	interface Props {
 		data: PageData;
@@ -35,7 +36,7 @@
 	<section class="errors">
 		<h1>Ooops</h1>
 		<p>{$PageApplication.data.application.detail}</p>
-		<a href="/login">Connexion</a>
+		<a class="button" href="/login">Connexion</a>
 	</section>
 {/if}
 
@@ -54,28 +55,72 @@
 	</dd>
 {/snippet}
 
+{#if $PageApplication.fetching}
+	<p>Loading...</p>
+{/if}
+
 {#if $PageApplication?.data?.application && $PageApplication.data.application.__typename === 'Application'}
 	{@const app = $PageApplication.data.application}
-	<h1>
+	<header>
 		<img src={app.metaIcon} alt="Icone" class="logo" />
-		{app.name}
-	</h1>
+		<div class="name">
+			<h1>{app.name}</h1>
+			<span class="desc">{app.metaDescription}</span>
+			<a
+				href="https://{env.PUBLIC_AUTHENTIK_INSTANCE}/if/admin/#/core/applications/{app.slug}"
+				class="to-authentik">sur {env.PUBLIC_AUTHENTIK_INSTANCE}</a
+			>
+		</div>
+		{#if app.metrics}
+			{@const usage = Object.fromEntries(
+				app.metrics
+					.filter((xy) => xy !== null)
+					.map(({ xCord, yCord }) => [new Date(xCord).toISOString(), yCord])
+			)}
+			<div class="usage">
+				<LinkedChart
+					data={usage}
+					type="line"
+					fill="white"
+					lineColor="var(--green)"
+					showValue
+					valueAppend="this day"
+				/>
+				<div class="label">Logins this week</div>
+			</div>
+		{/if}
+	</header>
 	<section class="launchurl">
 		{#if editingLaunchURL || !app.launchUrl}
 			<form action="?/editLaunchURL" method="post">
-				<label>URL de lancement<input type="url" name="url" value={app.launchUrl ?? ''} /></label>
-				<button type="submit">OK</button>
+				<dl>
+					<dt><label for="launchurl">Adresse du site</label></dt>
+					<dd>
+						<input
+							id="launchurl"
+							placeholder="https://example.com"
+							type="url"
+							name="url"
+							value={app.launchUrl ?? ''}
+						/>
+						<button type="submit">OK</button>
+					</dd>
+				</dl>
 			</form>
 		{:else if app.launchUrl}
-			<a href={app.launchUrl}>https://{new URL(app.launchUrl).hostname}</a>
-			<button
-				onclick={() => {
-					editingLaunchURL = true;
-				}}>modifier</button
-			>
+			<dl>
+				<dt>Adresse du site</dt>
+				<dd>
+					<a href={app.launchUrl}>https://{new URL(app.launchUrl).hostname}</a>
+					<button
+						onclick={() => {
+							editingLaunchURL = true;
+						}}>changer</button
+					>
+				</dd>
+			</dl>
 		{/if}
 	</section>
-	<p class="desc">{app.metaDescription}</p>
 	{#if app.oauth2Provider?.__typename === 'OAuth2Provider'}
 		{@const authorizedUris = uris(app.oauth2Provider.redirectUris)}
 		<dl>
@@ -134,25 +179,53 @@
 {/if}
 
 <style>
-	section.errors {
-		color: red;
-		background-color: lightpink;
+	section.errors * {
+		color: rgb(255, 33, 118);
+		border-color: rgb(255, 33, 118);
 	}
 
 	.logo {
-		height: 1.2em;
+		height: 2.5lh;
+		padding: 0.5rem;
+		background-color: white;
 	}
 
-	h1 {
+	header {
 		display: flex;
 		align-items: center;
 		gap: 0 1ch;
+		margin-bottom: 2rem;
+	}
+
+	header .name {
+		display: flex;
+		flex-direction: column;
+	}
+
+	header .usage {
+		margin-left: auto;
+	}
+
+	header .usage .label {
+		color: rgb(124, 124, 124);
+		text-align: center;
+	}
+
+	header a {
+		font-size: 1rem;
 	}
 
 	dd:not(.redirecturis) {
 		display: flex;
 		align-items: center;
 		gap: 0 1ch;
+	}
+
+	dd {
+		margin-bottom: 1rem;
+	}
+	dt {
+		margin-bottom: 0.5rem;
 	}
 
 	.redirecturis input {

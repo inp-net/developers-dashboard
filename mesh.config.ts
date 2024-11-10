@@ -120,7 +120,7 @@ export const composeConfig = defineComposeConfig({
 				@resolveTo(
 					sourceName: "Authentik"
 					sourceTypeName: "Query"
-					sourceFieldName: "core_application_metrics_list"
+					sourceFieldName: "core_applications_metrics_list"
 					requiredSelectionSet: "{ slug }"
 					sourceArgs: { slug: "{root.slug}" }
 				)

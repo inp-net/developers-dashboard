@@ -9,7 +9,7 @@ echo "AUTHENTIK_SECRET_KEY=$(openssl rand -base64 60 | tr -d '\n')" >> .env
 docker compose up -d
 # se faire un café
 bun i
-bun mesh dev
+bun dev
 ```
 
 ## Tester
