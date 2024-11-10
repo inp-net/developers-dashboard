@@ -11,19 +11,18 @@
 
 	const { data, form }: Props = $props();
 	const { PageHome } = $derived(data);
-	const apps = $derived.by(() => {
-		if (!$PageHome) return [];
-		if ($PageHome.data?.application?.__typename === 'Application') {
-			return [$PageHome.data.application];
-		}
-		return [];
-	});
+
+	const apps = $derived(
+		$PageHome.data?.applications?.__typename === 'PaginatedApplicationList'
+			? $PageHome.data.applications.results.filter((app) => app !== null)
+			: []
+	);
 
 	$effect(() => console.log($PageHome));
 
 	onMount(async () => {
 		if (form?.appSlug) {
-			await goto(`/app/${form.appSlug}`);
+			await goto(`/apps/${form.appSlug}`);
 		}
 	});
 </script>
@@ -45,13 +44,28 @@
 	</section>
 </form>
 
-<div>
-	{$PageHome?.errors?.map((e) => e.message).join('\n') ?? ''}
-</div>
 <ul>
 	{#each apps as app}
 		<li>
-			{JSON.stringify(app)}
+			<a href="/apps/{app.slug}">
+				<img src={app.metaIcon} alt="Icone" />
+				{app.name} by {app?.metaPublisher}
+			</a>
 		</li>
 	{/each}
 </ul>
+
+<style>
+	ul {
+		list-style: none;
+		padding-left: 0;
+	}
+	li > a {
+		display: flex;
+		align-items: center;
+		gap: 0 1ch;
+	}
+	li img {
+		height: 1.5rem;
+	}
+</style>

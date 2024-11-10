@@ -1,19 +1,17 @@
 query PageApplication($slug: String!) {
 	application(slug: $slug) {
 		... on Application {
+			name
+			slug
 			metaIcon
+			metaDescription
+			launchUrl
 			churrosGroup {
 				uid
 			}
-			# providerObj {
-			# 	application {
-			# 		... on Application {
-			# 			pk
-			# 		}
-			# 	}
-			# }
 			oauth2Provider {
 				... on OAuth2Provider {
+					pk
 					clientId
 					clientSecret
 					clientType

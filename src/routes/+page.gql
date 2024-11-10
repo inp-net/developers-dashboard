@@ -2,14 +2,13 @@ query PageHome {
 	me {
 		uid
 	}
-	application(slug: "aedopte") {
-		... on Application {
-			name
-			metaIcon
-			groupSlug
-			churrosGroup {
+	applications {
+		... on PaginatedApplicationList {
+			results {
+				metaIcon
+				metaPublisher
 				name
-				pictureURL
+				slug
 			}
 		}
 	}
