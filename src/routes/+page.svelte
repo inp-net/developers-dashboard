@@ -29,6 +29,10 @@
 	});
 </script>
 
+{#if $PageHome.fetching}
+	<p>Loading...</p>
+{/if}
+
 {#if apps.length === 0}
 	<a class="button" href="/login">Connexion</a>
 {:else}
