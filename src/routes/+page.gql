@@ -1,0 +1,16 @@
+query PageHome {
+	me {
+		uid
+	}
+	application(slug: "aedopte") {
+		... on Application {
+			name
+			metaIcon
+			groupSlug
+			churrosGroup {
+				name
+				pictureURL
+			}
+		}
+	}
+}

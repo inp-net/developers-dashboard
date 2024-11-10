@@ -1,0 +1,28 @@
+query PageApplication($slug: String!) {
+	application(slug: $slug) {
+		... on Application {
+			metaIcon
+			churrosGroup {
+				uid
+			}
+			# providerObj {
+			# 	application {
+			# 		... on Application {
+			# 			pk
+			# 		}
+			# 	}
+			# }
+			oauth2Provider {
+				... on OAuth2Provider {
+					clientId
+					clientSecret
+					clientType
+					redirectUris
+				}
+			}
+		}
+		... on GenericError {
+			detail
+		}
+	}
+}
