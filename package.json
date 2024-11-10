@@ -48,5 +48,8 @@
     "dotenv": "^16.4.5",
     "graphql": "^16.9.0",
     "slug": "^10.0.0"
+  },
+  "patchedDependencies": {
+    "@graphql-tools/utils@10.5.5": "patches/@graphql-tools%2Futils@10.5.5.patch"
   }
 }

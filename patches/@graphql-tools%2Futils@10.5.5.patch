@@ -1,0 +1,12 @@
+diff --git a/esm/visitResult.js b/esm/visitResult.js
+index c3e8464959c49c8a5830c100cca5b2bc25d7647f..fd35f0a1c37c415712ffb3fa4f3a1d1ab24ccac3 100644
+--- a/esm/visitResult.js
++++ b/esm/visitResult.js
+@@ -206,6 +206,7 @@ function visitFieldValue(value, returnType, fieldNodes, schema, fragments, varia
+         }
+         return visitObjectValue(value, nullableType, collectedFields, schema, fragments, variableValues, resultVisitorMap, pathIndex, errors, errorInfo);
+     }
++    if (!nullableType) return value;
+     const typeVisitorMap = resultVisitorMap?.[nullableType.name];
+     if (typeVisitorMap == null) {
+         return value;
