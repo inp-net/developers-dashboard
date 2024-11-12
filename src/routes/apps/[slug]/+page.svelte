@@ -167,13 +167,13 @@
 			</dd>
 			<p><em>Ne pas oublier le <code>/</code> à la fin des URLs 🙃</em></p>
 			<dt>Authorize URL</dt>
-			{@render copyable(`https://${env.PUBLIC_AUTHENTIK_INSTANCE}/o/authorize/`)}
+			{@render copyable(`https://${env.PUBLIC_AUTHENTIK_INSTANCE}/application/o/authorize/`)}
 			<dt>Token URL</dt>
-			{@render copyable(`https://${env.PUBLIC_AUTHENTIK_INSTANCE}/o/token/`)}
+			{@render copyable(`https://${env.PUBLIC_AUTHENTIK_INSTANCE}/application/o/token/`)}
 			<dt>User-info URL</dt>
-			{@render copyable(`https://${env.PUBLIC_AUTHENTIK_INSTANCE}/o/userinfo/`)}
+			{@render copyable(`https://${env.PUBLIC_AUTHENTIK_INSTANCE}/application/o/userinfo/`)}
 			<dt>Logout URL</dt>
-			{@render copyable(`https://${env.PUBLIC_AUTHENTIK_INSTANCE}/o/${app.slug}/end-session/`)}
+			{@render copyable(`https://${env.PUBLIC_AUTHENTIK_INSTANCE}/application/o/${app.slug}/end-session/`)}
 		</dl>
 	{/if}
 {/if}
