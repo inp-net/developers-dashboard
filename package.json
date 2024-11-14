@@ -11,7 +11,7 @@
 		"format": "prettier --write .",
 		"lint": "prettier --check . && eslint .",
 		"gateway:start": "hive-gateway supergraph --port 5000",
-		"app:start": "bun ./build/index.js",
+		"app:start": "node ./build/index.js",
 		"startall": "concurrently 'bun gateway:start' 'bun app:start'"
 	},
 	"devDependencies": {
@@ -33,7 +33,6 @@
 		"prettier": "^3.3.2",
 		"prettier-plugin-svelte": "^3.2.6",
 		"svelte": "^5.0.0",
-		"svelte-adapter-bun": "^0.5.2",
 		"svelte-check": "^4.0.0",
 		"typescript": "^5.0.0",
 		"typescript-eslint": "^8.0.0",
@@ -47,6 +46,7 @@
 		"@graphql-mesh/transform-prefix": "^0.102.12",
 		"@graphql-mesh/transform-rename": "^0.102.12",
 		"@graphql-mesh/transform-type-merging": "^0.102.12",
+		"@sveltejs/adapter-node": "^5.2.9",
 		"arctic": "^2.2.2",
 		"dotenv": "^16.4.5",
 		"graphql": "^16.9.0",
