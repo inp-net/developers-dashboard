@@ -70,6 +70,14 @@
 			{@const usage = Object.fromEntries(
 				app.metrics
 					.filter((xy) => xy !== null)
+					.filter(({ xCord }) => {
+						try {
+							new Date(xCord);
+							return true;
+						} catch (e) {
+							return false;
+						}
+					})
 					.map(({ xCord, yCord }) => [new Date(xCord).toISOString(), yCord])
 			)}
 			<div class="usage">
