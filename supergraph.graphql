@@ -4014,7 +4014,7 @@ type Query @extraSchemaDefinitionDirective(directives: {transport: [{subgraph: "
     """Inclures les groupes non répertoriés"""
     unlisted: Boolean! = false
   ): [ChurrosGroup!]! @source(name: "groups", type: "[Group!]!", subgraph: "Churros") @join__field(graph: CHURROS)
-  healthcheck: ChurrosHealthCheck! @source(name: "healthcheck", type: "HealthCheck!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
+  healthcheck: ChurrosHealthCheck! @source(name: "healthcheck", type: "HealthCheck!", subgraph: "Churros") @join__field(graph: CHURROS)
   """Gets the homepage articles, customized if the user is logged in."""
   homepage(after: String, before: String, first: Int, last: Int): ChurrosQueryHomepageConnection! @source(name: "homepage", type: "QueryHomepageConnection!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
   issue(number: Int!): ChurrosIssue! @source(name: "issue", type: "Issue!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)

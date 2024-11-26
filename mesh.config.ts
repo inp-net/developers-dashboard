@@ -20,7 +20,7 @@ export const composeConfig = defineComposeConfig({
 			}),
 			transforms: [
 				createFilterTransform({
-					filters: ['Query.{me,user,group,groups}', 'Mutation.!*']
+					filters: ['Query.{me,user,group,groups,healthcheck}', 'Mutation.!*']
 				}),
 				createPrefixTransform({ value: 'Churros' })
 			]
