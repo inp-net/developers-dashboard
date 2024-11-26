@@ -9,13 +9,9 @@ export async function GET(event) {
 	};
 
 	const ok = await graphql(`
-		query Healthcheck {
+		query Healthcheck @cache(policy: NetworkOnly) {
 			authentik: applications {
-				... on PaginatedApplicationList {
-					pagination {
-						totalPages
-					}
-				}
+				__typename
 			}
 			churros: healthcheck {
 				database {
