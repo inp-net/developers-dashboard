@@ -4178,8 +4178,8 @@ type LoginMetrics @join__type(graph: AUTHENTIK) {
 
 """Coordinates for diagrams"""
 type Coordinate @join__type(graph: AUTHENTIK) {
-  xCord: Int! @source(name: "x_cord", type: "Int!", subgraph: "Authentik")
-  yCord: Int! @source(name: "y_cord", type: "Int!", subgraph: "Authentik")
+  xCord: BigInt! @source(name: "x_cord", type: "BigInt!", subgraph: "Authentik")
+  yCord: BigInt! @source(name: "y_cord", type: "BigInt!", subgraph: "Authentik")
 }
 
 """Settings Serializer"""
@@ -5518,7 +5518,7 @@ type OAuth2Provider @join__type(graph: AUTHENTIK) {
 
 """A single allowed redirect URI entry"""
 type RedirectUri @source(name: "RedirectURI", subgraph: "Authentik") @join__type(graph: AUTHENTIK) {
-  matchingMode: MatchingModeEnum! @source(name: "matching_mode", type: "MatchingModeEnum!", subgraph: "Authentik")
+  matchingMode: MatchingModeEnum @source(name: "matching_mode", type: "MatchingModeEnum", subgraph: "Authentik")
   url: String!
 }
 
