@@ -26,7 +26,7 @@ export async function GET(event) {
 	`)
 		.fetch(fetchAsAdmin)
 		.then(({ data, errors }) => {
-			if (errors) console.error({ errors, data });
+			console.info({ errors, data });
 			return (
 				data?.churros?.database.prisma && data.authentik?.__typename === 'PaginatedApplicationList'
 			);
