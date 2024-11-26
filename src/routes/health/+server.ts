@@ -31,7 +31,10 @@ export async function GET(event) {
 				data?.churros?.database.prisma && data.authentik?.__typename === 'PaginatedApplicationList'
 			);
 		})
-		.catch(() => false);
+		.catch((error) => {
+			console.info(error?.toString() ?? '<unknown error>');
+			return false;
+		});
 
 	return text(ok ? 'OK' : 'FAIL', {
 		status: ok ? 200 : 500
