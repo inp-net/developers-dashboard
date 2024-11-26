@@ -18,6 +18,12 @@ const config = {
 		},
 		URL: {
 			type: 'string'
+		},
+		ChurrosURL: {
+			type: 'string'
+		},
+		MutationRbacRolesCreateInputName: {
+			type: 'string'
 		}
 	}
 };

@@ -20,7 +20,7 @@ export const composeConfig = defineComposeConfig({
 			}),
 			transforms: [
 				createFilterTransform({
-					filters: ['Query.{me,user,group}', 'Mutation.!*']
+					filters: ['Query.{me,user,group,groups}', 'Mutation.!*']
 				}),
 				createPrefixTransform({ value: 'Churros' })
 			]
@@ -39,8 +39,8 @@ export const composeConfig = defineComposeConfig({
 			transforms: [
 				createFilterTransform({
 					filters: [
-						'Query.{providers_all,providers_oauth2,flows,core_applications}*',
-						'Mutation.{providers_all,providers_oauth2,flows,core_applications}*'
+						'Query.{providers_all,providers_oauth2,flows,core_applications,core_groups,rbac,core_users}*',
+						'Mutation.{providers_all,providers_oauth2,flows,core_applications,core_groups,rbac}*'
 					]
 				}),
 				createRenameTransform({
@@ -72,6 +72,10 @@ export const composeConfig = defineComposeConfig({
 						{
 							from: { type: 'Application', field: 'group' },
 							to: { type: 'Application', field: 'groupSlug' }
+						},
+						{
+							from: { type: 'Query', field: 'core_groups_list' },
+							to: { type: 'Query', field: 'authentikGroups' }
 						}
 					]
 				}),

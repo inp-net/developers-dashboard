@@ -749,7 +749,7 @@ type Query @extraSchemaDefinitionDirective(directives: {transport: [{subgraph: "
   """Get current brand"""
   coreBrandsCurrentRetrieve: CoreBrandsCurrentRetrieveResponse @httpOperation(subgraph: "Authentik", path: "/core/brands/current/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET) @source(name: "core_brands_current_retrieve", type: "core_brands_current_retrieve_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
   """Group Viewset"""
-  coreGroupsList(
+  authentikGroups(
     """Attributes"""
     attributes: String
     includeUsers: Boolean = true @source(name: "include_users", type: "Boolean", subgraph: "Authentik")
@@ -766,18 +766,18 @@ type Query @extraSchemaDefinitionDirective(directives: {transport: [{subgraph: "
     pageSize: Int @source(name: "page_size", type: "Int", subgraph: "Authentik")
     """A search term."""
     search: String
-  ): CoreGroupsListResponse @httpOperation(subgraph: "Authentik", path: "/core/groups/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET, queryParamArgMap: "{\"attributes\":\"attributes\",\"include_users\":\"include_users\",\"is_superuser\":\"is_superuser\",\"members_by_pk\":\"members_by_pk\",\"members_by_username\":\"members_by_username\",\"name\":\"name\",\"ordering\":\"ordering\",\"page\":\"page\",\"page_size\":\"page_size\",\"search\":\"search\"}", queryStringOptionsByParam: "{\"members_by_pk\":{\"arrayFormat\":\"repeat\",\"destructObject\":true},\"members_by_username\":{\"arrayFormat\":\"repeat\",\"destructObject\":true}}") @source(name: "core_groups_list", type: "core_groups_list_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): CoreGroupsListResponse @httpOperation(subgraph: "Authentik", path: "/core/groups/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET, queryParamArgMap: "{\"attributes\":\"attributes\",\"include_users\":\"include_users\",\"is_superuser\":\"is_superuser\",\"members_by_pk\":\"members_by_pk\",\"members_by_username\":\"members_by_username\",\"name\":\"name\",\"ordering\":\"ordering\",\"page\":\"page\",\"page_size\":\"page_size\",\"search\":\"search\"}", queryStringOptionsByParam: "{\"members_by_pk\":{\"arrayFormat\":\"repeat\",\"destructObject\":true},\"members_by_username\":{\"arrayFormat\":\"repeat\",\"destructObject\":true}}") @source(name: "core_groups_list", type: "core_groups_list_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Group Viewset"""
   coreGroupsRetrieve(
     """A UUID string identifying this Group."""
     groupUuid: UUID! @source(name: "group_uuid", type: "UUID!", subgraph: "Authentik")
     includeUsers: Boolean = true @source(name: "include_users", type: "Boolean", subgraph: "Authentik")
-  ): CoreGroupsRetrieveResponse @httpOperation(subgraph: "Authentik", path: "/core/groups/{args.group_uuid}/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET, queryParamArgMap: "{\"include_users\":\"include_users\"}") @source(name: "core_groups_retrieve", type: "core_groups_retrieve_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): CoreGroupsRetrieveResponse @httpOperation(subgraph: "Authentik", path: "/core/groups/{args.group_uuid}/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET, queryParamArgMap: "{\"include_users\":\"include_users\"}") @source(name: "core_groups_retrieve", type: "core_groups_retrieve_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Get a list of all objects that use this object"""
   coreGroupsUsedByList(
     """A UUID string identifying this Group."""
     groupUuid: UUID! @source(name: "group_uuid", type: "UUID!", subgraph: "Authentik")
-  ): [CoreGroupsUsedByListResponse] @httpOperation(subgraph: "Authentik", path: "/core/groups/{args.group_uuid}/used_by/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET) @source(name: "core_groups_used_by_list", type: "[core_groups_used_by_list_response]", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): [CoreGroupsUsedByListResponse] @httpOperation(subgraph: "Authentik", path: "/core/groups/{args.group_uuid}/used_by/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET) @source(name: "core_groups_used_by_list", type: "[core_groups_used_by_list_response]", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Token Viewset"""
   coreTokensList(
     description: String
@@ -849,28 +849,28 @@ type Query @extraSchemaDefinitionDirective(directives: {transport: [{subgraph: "
     type: [QueryInputCoreUsersListTypeItems] @source(name: "type", type: "[queryInput_core_users_list_type_items]", subgraph: "Authentik")
     username: String
     uuid: UUID
-  ): CoreUsersListResponse @httpOperation(subgraph: "Authentik", path: "/core/users/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET, queryParamArgMap: "{\"attributes\":\"attributes\",\"email\":\"email\",\"groups_by_name\":\"groups_by_name\",\"groups_by_pk\":\"groups_by_pk\",\"include_groups\":\"include_groups\",\"is_active\":\"is_active\",\"is_superuser\":\"is_superuser\",\"name\":\"name\",\"ordering\":\"ordering\",\"page\":\"page\",\"page_size\":\"page_size\",\"path\":\"path\",\"path_startswith\":\"path_startswith\",\"search\":\"search\",\"type\":\"type\",\"username\":\"username\",\"uuid\":\"uuid\"}", queryStringOptionsByParam: "{\"groups_by_name\":{\"arrayFormat\":\"repeat\",\"destructObject\":true},\"groups_by_pk\":{\"arrayFormat\":\"repeat\",\"destructObject\":true},\"type\":{\"arrayFormat\":\"repeat\",\"destructObject\":true}}") @source(name: "core_users_list", type: "core_users_list_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): CoreUsersListResponse @httpOperation(subgraph: "Authentik", path: "/core/users/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET, queryParamArgMap: "{\"attributes\":\"attributes\",\"email\":\"email\",\"groups_by_name\":\"groups_by_name\",\"groups_by_pk\":\"groups_by_pk\",\"include_groups\":\"include_groups\",\"is_active\":\"is_active\",\"is_superuser\":\"is_superuser\",\"name\":\"name\",\"ordering\":\"ordering\",\"page\":\"page\",\"page_size\":\"page_size\",\"path\":\"path\",\"path_startswith\":\"path_startswith\",\"search\":\"search\",\"type\":\"type\",\"username\":\"username\",\"uuid\":\"uuid\"}", queryStringOptionsByParam: "{\"groups_by_name\":{\"arrayFormat\":\"repeat\",\"destructObject\":true},\"groups_by_pk\":{\"arrayFormat\":\"repeat\",\"destructObject\":true},\"type\":{\"arrayFormat\":\"repeat\",\"destructObject\":true}}") @source(name: "core_users_list", type: "core_users_list_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """User Viewset"""
   coreUsersRetrieve(
     """A unique integer value identifying this User."""
     id: Int!
-  ): CoreUsersRetrieveResponse @httpOperation(subgraph: "Authentik", path: "/core/users/{args.id}/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET) @source(name: "core_users_retrieve", type: "core_users_retrieve_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): CoreUsersRetrieveResponse @httpOperation(subgraph: "Authentik", path: "/core/users/{args.id}/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET) @source(name: "core_users_retrieve", type: "core_users_retrieve_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """User metrics per 1h"""
   coreUsersMetricsRetrieve(
     """A unique integer value identifying this User."""
     id: Int!
-  ): CoreUsersMetricsRetrieveResponse @httpOperation(subgraph: "Authentik", path: "/core/users/{args.id}/metrics/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET) @source(name: "core_users_metrics_retrieve", type: "core_users_metrics_retrieve_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): CoreUsersMetricsRetrieveResponse @httpOperation(subgraph: "Authentik", path: "/core/users/{args.id}/metrics/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET) @source(name: "core_users_metrics_retrieve", type: "core_users_metrics_retrieve_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Get a list of all objects that use this object"""
   coreUsersUsedByList(
     """A unique integer value identifying this User."""
     id: Int!
-  ): [CoreUsersUsedByListResponse] @httpOperation(subgraph: "Authentik", path: "/core/users/{args.id}/used_by/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET) @source(name: "core_users_used_by_list", type: "[core_users_used_by_list_response]", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): [CoreUsersUsedByListResponse] @httpOperation(subgraph: "Authentik", path: "/core/users/{args.id}/used_by/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET) @source(name: "core_users_used_by_list", type: "[core_users_used_by_list_response]", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """End Impersonation a user"""
-  coreUsersImpersonateEndRetrieve: CoreUsersImpersonateEndRetrieveResponse @httpOperation(subgraph: "Authentik", path: "/core/users/impersonate_end/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET) @source(name: "core_users_impersonate_end_retrieve", type: "core_users_impersonate_end_retrieve_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  coreUsersImpersonateEndRetrieve: CoreUsersImpersonateEndRetrieveResponse @httpOperation(subgraph: "Authentik", path: "/core/users/impersonate_end/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET) @source(name: "core_users_impersonate_end_retrieve", type: "core_users_impersonate_end_retrieve_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Get information about current user"""
-  coreUsersMeRetrieve: CoreUsersMeRetrieveResponse @httpOperation(subgraph: "Authentik", path: "/core/users/me/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET) @source(name: "core_users_me_retrieve", type: "core_users_me_retrieve_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  coreUsersMeRetrieve: CoreUsersMeRetrieveResponse @httpOperation(subgraph: "Authentik", path: "/core/users/me/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET) @source(name: "core_users_me_retrieve", type: "core_users_me_retrieve_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Get all user paths"""
-  coreUsersPathsRetrieve(search: String): CoreUsersPathsRetrieveResponse @httpOperation(subgraph: "Authentik", path: "/core/users/paths/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET, queryParamArgMap: "{\"search\":\"search\"}") @source(name: "core_users_paths_retrieve", type: "core_users_paths_retrieve_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  coreUsersPathsRetrieve(search: String): CoreUsersPathsRetrieveResponse @httpOperation(subgraph: "Authentik", path: "/core/users/paths/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET, queryParamArgMap: "{\"search\":\"search\"}") @source(name: "core_users_paths_retrieve", type: "core_users_paths_retrieve_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """CertificateKeyPair Viewset"""
   cryptoCertificatekeypairsList(
     """Only return certificate-key pairs with keys"""
@@ -2631,12 +2631,12 @@ type Query @extraSchemaDefinitionDirective(directives: {transport: [{subgraph: "
     """A search term."""
     search: String
     user: Int
-  ): RbacPermissionsListResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET, queryParamArgMap: "{\"codename\":\"codename\",\"content_type__app_label\":\"content_type__app_label\",\"content_type__model\":\"content_type__model\",\"ordering\":\"ordering\",\"page\":\"page\",\"page_size\":\"page_size\",\"role\":\"role\",\"search\":\"search\",\"user\":\"user\"}") @source(name: "rbac_permissions_list", type: "rbac_permissions_list_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): RbacPermissionsListResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET, queryParamArgMap: "{\"codename\":\"codename\",\"content_type__app_label\":\"content_type__app_label\",\"content_type__model\":\"content_type__model\",\"ordering\":\"ordering\",\"page\":\"page\",\"page_size\":\"page_size\",\"role\":\"role\",\"search\":\"search\",\"user\":\"user\"}") @source(name: "rbac_permissions_list", type: "rbac_permissions_list_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Read-only list of all permissions, filterable by model and app"""
   rbacPermissionsRetrieve(
     """A unique integer value identifying this permission."""
     id: Int!
-  ): RbacPermissionsRetrieveResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/{args.id}/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET) @source(name: "rbac_permissions_retrieve", type: "rbac_permissions_retrieve_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): RbacPermissionsRetrieveResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/{args.id}/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET) @source(name: "rbac_permissions_retrieve", type: "rbac_permissions_retrieve_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Get assigned object permissions for a single object"""
   rbacPermissionsAssignedByRolesList(
     model: QueryInputRbacPermissionsAssignedByRolesListModel! @source(name: "model", type: "queryInput_rbac_permissions_assigned_by_roles_list_model!", subgraph: "Authentik")
@@ -2649,7 +2649,7 @@ type Query @extraSchemaDefinitionDirective(directives: {transport: [{subgraph: "
     pageSize: Int @source(name: "page_size", type: "Int", subgraph: "Authentik")
     """A search term."""
     search: String
-  ): RbacPermissionsAssignedByRolesListResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/assigned_by_roles/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET, queryParamArgMap: "{\"model\":\"model\",\"object_pk\":\"object_pk\",\"ordering\":\"ordering\",\"page\":\"page\",\"page_size\":\"page_size\",\"search\":\"search\"}") @source(name: "rbac_permissions_assigned_by_roles_list", type: "rbac_permissions_assigned_by_roles_list_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): RbacPermissionsAssignedByRolesListResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/assigned_by_roles/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET, queryParamArgMap: "{\"model\":\"model\",\"object_pk\":\"object_pk\",\"ordering\":\"ordering\",\"page\":\"page\",\"page_size\":\"page_size\",\"search\":\"search\"}") @source(name: "rbac_permissions_assigned_by_roles_list", type: "rbac_permissions_assigned_by_roles_list_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Get assigned object permissions for a single object"""
   rbacPermissionsAssignedByUsersList(
     model: QueryInputRbacPermissionsAssignedByUsersListModel! @source(name: "model", type: "queryInput_rbac_permissions_assigned_by_users_list_model!", subgraph: "Authentik")
@@ -2662,7 +2662,7 @@ type Query @extraSchemaDefinitionDirective(directives: {transport: [{subgraph: "
     pageSize: Int @source(name: "page_size", type: "Int", subgraph: "Authentik")
     """A search term."""
     search: String
-  ): RbacPermissionsAssignedByUsersListResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/assigned_by_users/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET, queryParamArgMap: "{\"model\":\"model\",\"object_pk\":\"object_pk\",\"ordering\":\"ordering\",\"page\":\"page\",\"page_size\":\"page_size\",\"search\":\"search\"}") @source(name: "rbac_permissions_assigned_by_users_list", type: "rbac_permissions_assigned_by_users_list_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): RbacPermissionsAssignedByUsersListResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/assigned_by_users/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET, queryParamArgMap: "{\"model\":\"model\",\"object_pk\":\"object_pk\",\"ordering\":\"ordering\",\"page\":\"page\",\"page_size\":\"page_size\",\"search\":\"search\"}") @source(name: "rbac_permissions_assigned_by_users_list", type: "rbac_permissions_assigned_by_users_list_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Get a role's assigned object permissions"""
   rbacPermissionsRolesList(
     """Which field to use when ordering the results."""
@@ -2674,12 +2674,12 @@ type Query @extraSchemaDefinitionDirective(directives: {transport: [{subgraph: "
     """A search term."""
     search: String
     uuid: UUID
-  ): RbacPermissionsRolesListResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/roles/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET, queryParamArgMap: "{\"ordering\":\"ordering\",\"page\":\"page\",\"page_size\":\"page_size\",\"search\":\"search\",\"uuid\":\"uuid\"}") @source(name: "rbac_permissions_roles_list", type: "rbac_permissions_roles_list_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): RbacPermissionsRolesListResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/roles/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET, queryParamArgMap: "{\"ordering\":\"ordering\",\"page\":\"page\",\"page_size\":\"page_size\",\"search\":\"search\",\"uuid\":\"uuid\"}") @source(name: "rbac_permissions_roles_list", type: "rbac_permissions_roles_list_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Get a role's assigned object permissions"""
   rbacPermissionsRolesRetrieve(
     """A unique integer value identifying this group object permission."""
     id: Int!
-  ): RbacPermissionsRolesRetrieveResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/roles/{args.id}/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET) @source(name: "rbac_permissions_roles_retrieve", type: "rbac_permissions_roles_retrieve_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): RbacPermissionsRolesRetrieveResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/roles/{args.id}/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET) @source(name: "rbac_permissions_roles_retrieve", type: "rbac_permissions_roles_retrieve_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Get a users's assigned object permissions"""
   rbacPermissionsUsersList(
     """Which field to use when ordering the results."""
@@ -2691,12 +2691,12 @@ type Query @extraSchemaDefinitionDirective(directives: {transport: [{subgraph: "
     """A search term."""
     search: String
     userId: Int @source(name: "user_id", type: "Int", subgraph: "Authentik")
-  ): RbacPermissionsUsersListResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/users/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET, queryParamArgMap: "{\"ordering\":\"ordering\",\"page\":\"page\",\"page_size\":\"page_size\",\"search\":\"search\",\"user_id\":\"user_id\"}") @source(name: "rbac_permissions_users_list", type: "rbac_permissions_users_list_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): RbacPermissionsUsersListResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/users/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET, queryParamArgMap: "{\"ordering\":\"ordering\",\"page\":\"page\",\"page_size\":\"page_size\",\"search\":\"search\",\"user_id\":\"user_id\"}") @source(name: "rbac_permissions_users_list", type: "rbac_permissions_users_list_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Get a users's assigned object permissions"""
   rbacPermissionsUsersRetrieve(
     """A unique integer value identifying this user object permission."""
     id: Int!
-  ): RbacPermissionsUsersRetrieveResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/users/{args.id}/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET) @source(name: "rbac_permissions_users_retrieve", type: "rbac_permissions_users_retrieve_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): RbacPermissionsUsersRetrieveResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/users/{args.id}/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET) @source(name: "rbac_permissions_users_retrieve", type: "rbac_permissions_users_retrieve_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Role viewset"""
   rbacRolesList(
     groupName: String @source(name: "group__name", type: "String", subgraph: "Authentik")
@@ -2708,17 +2708,17 @@ type Query @extraSchemaDefinitionDirective(directives: {transport: [{subgraph: "
     pageSize: Int @source(name: "page_size", type: "Int", subgraph: "Authentik")
     """A search term."""
     search: String
-  ): RbacRolesListResponse @httpOperation(subgraph: "Authentik", path: "/rbac/roles/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET, queryParamArgMap: "{\"group__name\":\"group__name\",\"ordering\":\"ordering\",\"page\":\"page\",\"page_size\":\"page_size\",\"search\":\"search\"}") @source(name: "rbac_roles_list", type: "rbac_roles_list_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): RbacRolesListResponse @httpOperation(subgraph: "Authentik", path: "/rbac/roles/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET, queryParamArgMap: "{\"group__name\":\"group__name\",\"ordering\":\"ordering\",\"page\":\"page\",\"page_size\":\"page_size\",\"search\":\"search\"}") @source(name: "rbac_roles_list", type: "rbac_roles_list_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Role viewset"""
   rbacRolesRetrieve(
     """A UUID string identifying this Role."""
     uuid: UUID!
-  ): RbacRolesRetrieveResponse @httpOperation(subgraph: "Authentik", path: "/rbac/roles/{args.uuid}/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET) @source(name: "rbac_roles_retrieve", type: "rbac_roles_retrieve_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): RbacRolesRetrieveResponse @httpOperation(subgraph: "Authentik", path: "/rbac/roles/{args.uuid}/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET) @source(name: "rbac_roles_retrieve", type: "rbac_roles_retrieve_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Get a list of all objects that use this object"""
   rbacRolesUsedByList(
     """A UUID string identifying this Role."""
     uuid: UUID!
-  ): [RbacRolesUsedByListResponse] @httpOperation(subgraph: "Authentik", path: "/rbac/roles/{args.uuid}/used_by/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET) @source(name: "rbac_roles_used_by_list", type: "[rbac_roles_used_by_list_response]", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): [RbacRolesUsedByListResponse] @httpOperation(subgraph: "Authentik", path: "/rbac/roles/{args.uuid}/used_by/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET) @source(name: "rbac_roles_used_by_list", type: "[rbac_roles_used_by_list_response]", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Retrieve public configuration options"""
   rootConfigRetrieve: RootConfigRetrieveResponse @httpOperation(subgraph: "Authentik", path: "/root/config/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET) @source(name: "root_config_retrieve", type: "root_config_retrieve_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
   """
@@ -4013,7 +4013,7 @@ type Query @extraSchemaDefinitionDirective(directives: {transport: [{subgraph: "
     types: [ChurrosGroupType!] @source(name: "types", type: "[GroupType!]", subgraph: "Churros")
     """Inclures les groupes non répertoriés"""
     unlisted: Boolean! = false
-  ): [ChurrosGroup!]! @source(name: "groups", type: "[Group!]!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
+  ): [ChurrosGroup!]! @source(name: "groups", type: "[Group!]!", subgraph: "Churros") @join__field(graph: CHURROS)
   healthcheck: ChurrosHealthCheck! @source(name: "healthcheck", type: "HealthCheck!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
   """Gets the homepage articles, customized if the user is logged in."""
   homepage(after: String, before: String, first: Int, last: Int): ChurrosQueryHomepageConnection! @source(name: "homepage", type: "QueryHomepageConnection!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
@@ -8686,36 +8686,36 @@ type Mutation @source(name: "Mutation", subgraph: "Churros") @join__type(graph: 
     brandUuid: UUID! @source(name: "brand_uuid", type: "UUID!", subgraph: "Authentik")
   ): CoreBrandsDestroyResponse @httpOperation(subgraph: "Authentik", path: "/core/brands/{args.brand_uuid}/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: DELETE) @source(name: "core_brands_destroy", type: "core_brands_destroy_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
   """Group Viewset"""
-  coreGroupsCreate(input: GroupRequestInput @source(name: "input", type: "GroupRequest_Input", subgraph: "Authentik")): CoreGroupsCreateResponse @httpOperation(subgraph: "Authentik", path: "/core/groups/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: POST) @source(name: "core_groups_create", type: "core_groups_create_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  coreGroupsCreate(input: GroupRequestInput @source(name: "input", type: "GroupRequest_Input", subgraph: "Authentik")): CoreGroupsCreateResponse @httpOperation(subgraph: "Authentik", path: "/core/groups/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: POST) @source(name: "core_groups_create", type: "core_groups_create_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Group Viewset"""
   coreGroupsUpdate(
     """A UUID string identifying this Group."""
     groupUuid: UUID! @source(name: "group_uuid", type: "UUID!", subgraph: "Authentik")
     input: GroupRequestInput @source(name: "input", type: "GroupRequest_Input", subgraph: "Authentik")
-  ): CoreGroupsUpdateResponse @httpOperation(subgraph: "Authentik", path: "/core/groups/{args.group_uuid}/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: PUT) @source(name: "core_groups_update", type: "core_groups_update_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): CoreGroupsUpdateResponse @httpOperation(subgraph: "Authentik", path: "/core/groups/{args.group_uuid}/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: PUT) @source(name: "core_groups_update", type: "core_groups_update_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Group Viewset"""
   coreGroupsPartialUpdate(
     """A UUID string identifying this Group."""
     groupUuid: UUID! @source(name: "group_uuid", type: "UUID!", subgraph: "Authentik")
     input: PatchedGroupRequestInput @source(name: "input", type: "PatchedGroupRequest_Input", subgraph: "Authentik")
-  ): CoreGroupsPartialUpdateResponse @httpOperation(subgraph: "Authentik", path: "/core/groups/{args.group_uuid}/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: PATCH) @source(name: "core_groups_partial_update", type: "core_groups_partial_update_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): CoreGroupsPartialUpdateResponse @httpOperation(subgraph: "Authentik", path: "/core/groups/{args.group_uuid}/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: PATCH) @source(name: "core_groups_partial_update", type: "core_groups_partial_update_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Group Viewset"""
   coreGroupsDestroy(
     """A UUID string identifying this Group."""
     groupUuid: UUID! @source(name: "group_uuid", type: "UUID!", subgraph: "Authentik")
-  ): CoreGroupsDestroyResponse @httpOperation(subgraph: "Authentik", path: "/core/groups/{args.group_uuid}/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: DELETE) @source(name: "core_groups_destroy", type: "core_groups_destroy_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): CoreGroupsDestroyResponse @httpOperation(subgraph: "Authentik", path: "/core/groups/{args.group_uuid}/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: DELETE) @source(name: "core_groups_destroy", type: "core_groups_destroy_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Add user to group"""
   coreGroupsAddUserCreate(
     """A UUID string identifying this Group."""
     groupUuid: UUID! @source(name: "group_uuid", type: "UUID!", subgraph: "Authentik")
     input: UserAccountRequestInput @source(name: "input", type: "UserAccountRequest_Input", subgraph: "Authentik")
-  ): CoreGroupsAddUserCreateResponse @httpOperation(subgraph: "Authentik", path: "/core/groups/{args.group_uuid}/add_user/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: POST) @source(name: "core_groups_add_user_create", type: "core_groups_add_user_create_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): CoreGroupsAddUserCreateResponse @httpOperation(subgraph: "Authentik", path: "/core/groups/{args.group_uuid}/add_user/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: POST) @source(name: "core_groups_add_user_create", type: "core_groups_add_user_create_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Add user to group"""
   coreGroupsRemoveUserCreate(
     """A UUID string identifying this Group."""
     groupUuid: UUID! @source(name: "group_uuid", type: "UUID!", subgraph: "Authentik")
     input: UserAccountRequestInput @source(name: "input", type: "UserAccountRequest_Input", subgraph: "Authentik")
-  ): CoreGroupsRemoveUserCreateResponse @httpOperation(subgraph: "Authentik", path: "/core/groups/{args.group_uuid}/remove_user/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: POST) @source(name: "core_groups_remove_user_create", type: "core_groups_remove_user_create_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): CoreGroupsRemoveUserCreateResponse @httpOperation(subgraph: "Authentik", path: "/core/groups/{args.group_uuid}/remove_user/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: POST) @source(name: "core_groups_remove_user_create", type: "core_groups_remove_user_create_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Token Viewset"""
   coreTokensCreate(input: TokenRequestInput @source(name: "input", type: "TokenRequest_Input", subgraph: "Authentik")): CoreTokensCreateResponse @httpOperation(subgraph: "Authentik", path: "/core/tokens/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: POST) @source(name: "core_tokens_create", type: "core_tokens_create_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
   """Token Viewset"""
@@ -9802,7 +9802,7 @@ type Mutation @source(name: "Mutation", subgraph: "Churros") @join__type(graph: 
     """A UUID string identifying this Role."""
     uuid: UUID!
     input: PermissionAssignRequestInput @source(name: "input", type: "PermissionAssignRequest_Input", subgraph: "Authentik")
-  ): [RbacPermissionsAssignedByRolesAssignResponse] @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/assigned_by_roles/{args.uuid}/assign/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: POST) @source(name: "rbac_permissions_assigned_by_roles_assign", type: "[rbac_permissions_assigned_by_roles_assign_response]", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): [RbacPermissionsAssignedByRolesAssignResponse] @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/assigned_by_roles/{args.uuid}/assign/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: POST) @source(name: "rbac_permissions_assigned_by_roles_assign", type: "[rbac_permissions_assigned_by_roles_assign_response]", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """
   Unassign permission(s) to role. When `object_pk` is set, the permissions
   are only assigned to the specific object, otherwise they are assigned globally.
@@ -9811,13 +9811,13 @@ type Mutation @source(name: "Mutation", subgraph: "Churros") @join__type(graph: 
     """A UUID string identifying this Role."""
     uuid: UUID!
     input: PatchedPermissionAssignRequestInput @source(name: "input", type: "PatchedPermissionAssignRequest_Input", subgraph: "Authentik")
-  ): RbacPermissionsAssignedByRolesUnassignPartialUpdateResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/assigned_by_roles/{args.uuid}/unassign/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: PATCH) @source(name: "rbac_permissions_assigned_by_roles_unassign_partial_update", type: "rbac_permissions_assigned_by_roles_unassign_partial_update_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): RbacPermissionsAssignedByRolesUnassignPartialUpdateResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/assigned_by_roles/{args.uuid}/unassign/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: PATCH) @source(name: "rbac_permissions_assigned_by_roles_unassign_partial_update", type: "rbac_permissions_assigned_by_roles_unassign_partial_update_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Assign permission(s) to user"""
   rbacPermissionsAssignedByUsersAssign(
     """A unique integer value identifying this User."""
     id: Int!
     input: PermissionAssignRequestInput @source(name: "input", type: "PermissionAssignRequest_Input", subgraph: "Authentik")
-  ): [RbacPermissionsAssignedByUsersAssignResponse] @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/assigned_by_users/{args.id}/assign/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: POST) @source(name: "rbac_permissions_assigned_by_users_assign", type: "[rbac_permissions_assigned_by_users_assign_response]", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): [RbacPermissionsAssignedByUsersAssignResponse] @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/assigned_by_users/{args.id}/assign/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: POST) @source(name: "rbac_permissions_assigned_by_users_assign", type: "[rbac_permissions_assigned_by_users_assign_response]", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """
   Unassign permission(s) to user. When `object_pk` is set, the permissions
   are only assigned to the specific object, otherwise they are assigned globally.
@@ -9826,60 +9826,60 @@ type Mutation @source(name: "Mutation", subgraph: "Churros") @join__type(graph: 
     """A unique integer value identifying this User."""
     id: Int!
     input: PatchedPermissionAssignRequestInput @source(name: "input", type: "PatchedPermissionAssignRequest_Input", subgraph: "Authentik")
-  ): RbacPermissionsAssignedByUsersUnassignPartialUpdateResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/assigned_by_users/{args.id}/unassign/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: PATCH) @source(name: "rbac_permissions_assigned_by_users_unassign_partial_update", type: "rbac_permissions_assigned_by_users_unassign_partial_update_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): RbacPermissionsAssignedByUsersUnassignPartialUpdateResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/assigned_by_users/{args.id}/unassign/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: PATCH) @source(name: "rbac_permissions_assigned_by_users_unassign_partial_update", type: "rbac_permissions_assigned_by_users_unassign_partial_update_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Get a role's assigned object permissions"""
   rbacPermissionsRolesUpdate(
     """A unique integer value identifying this group object permission."""
     id: Int!
     input: ExtraRoleObjectPermissionRequestInput @source(name: "input", type: "ExtraRoleObjectPermissionRequest_Input", subgraph: "Authentik")
-  ): RbacPermissionsRolesUpdateResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/roles/{args.id}/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: PUT) @source(name: "rbac_permissions_roles_update", type: "rbac_permissions_roles_update_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): RbacPermissionsRolesUpdateResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/roles/{args.id}/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: PUT) @source(name: "rbac_permissions_roles_update", type: "rbac_permissions_roles_update_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Get a role's assigned object permissions"""
   rbacPermissionsRolesPartialUpdate(
     """A unique integer value identifying this group object permission."""
     id: Int!
     input: PatchedExtraRoleObjectPermissionRequestInput @source(name: "input", type: "PatchedExtraRoleObjectPermissionRequest_Input", subgraph: "Authentik")
-  ): RbacPermissionsRolesPartialUpdateResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/roles/{args.id}/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: PATCH) @source(name: "rbac_permissions_roles_partial_update", type: "rbac_permissions_roles_partial_update_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): RbacPermissionsRolesPartialUpdateResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/roles/{args.id}/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: PATCH) @source(name: "rbac_permissions_roles_partial_update", type: "rbac_permissions_roles_partial_update_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Get a role's assigned object permissions"""
   rbacPermissionsRolesDestroy(
     """A unique integer value identifying this group object permission."""
     id: Int!
-  ): RbacPermissionsRolesDestroyResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/roles/{args.id}/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: DELETE) @source(name: "rbac_permissions_roles_destroy", type: "rbac_permissions_roles_destroy_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): RbacPermissionsRolesDestroyResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/roles/{args.id}/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: DELETE) @source(name: "rbac_permissions_roles_destroy", type: "rbac_permissions_roles_destroy_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Get a users's assigned object permissions"""
   rbacPermissionsUsersUpdate(
     """A unique integer value identifying this user object permission."""
     id: Int!
     input: ExtraUserObjectPermissionRequestInput @source(name: "input", type: "ExtraUserObjectPermissionRequest_Input", subgraph: "Authentik")
-  ): RbacPermissionsUsersUpdateResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/users/{args.id}/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: PUT) @source(name: "rbac_permissions_users_update", type: "rbac_permissions_users_update_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): RbacPermissionsUsersUpdateResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/users/{args.id}/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: PUT) @source(name: "rbac_permissions_users_update", type: "rbac_permissions_users_update_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Get a users's assigned object permissions"""
   rbacPermissionsUsersPartialUpdate(
     """A unique integer value identifying this user object permission."""
     id: Int!
     input: PatchedExtraUserObjectPermissionRequestInput @source(name: "input", type: "PatchedExtraUserObjectPermissionRequest_Input", subgraph: "Authentik")
-  ): RbacPermissionsUsersPartialUpdateResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/users/{args.id}/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: PATCH) @source(name: "rbac_permissions_users_partial_update", type: "rbac_permissions_users_partial_update_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): RbacPermissionsUsersPartialUpdateResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/users/{args.id}/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: PATCH) @source(name: "rbac_permissions_users_partial_update", type: "rbac_permissions_users_partial_update_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Get a users's assigned object permissions"""
   rbacPermissionsUsersDestroy(
     """A unique integer value identifying this user object permission."""
     id: Int!
-  ): RbacPermissionsUsersDestroyResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/users/{args.id}/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: DELETE) @source(name: "rbac_permissions_users_destroy", type: "rbac_permissions_users_destroy_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): RbacPermissionsUsersDestroyResponse @httpOperation(subgraph: "Authentik", path: "/rbac/permissions/users/{args.id}/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: DELETE) @source(name: "rbac_permissions_users_destroy", type: "rbac_permissions_users_destroy_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Role viewset"""
-  rbacRolesCreate(input: RoleRequestInput @source(name: "input", type: "RoleRequest_Input", subgraph: "Authentik")): RbacRolesCreateResponse @httpOperation(subgraph: "Authentik", path: "/rbac/roles/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: POST) @source(name: "rbac_roles_create", type: "rbac_roles_create_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  rbacRolesCreate(input: RoleRequestInput @source(name: "input", type: "RoleRequest_Input", subgraph: "Authentik")): RbacRolesCreateResponse @httpOperation(subgraph: "Authentik", path: "/rbac/roles/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: POST) @source(name: "rbac_roles_create", type: "rbac_roles_create_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Role viewset"""
   rbacRolesUpdate(
     """A UUID string identifying this Role."""
     uuid: UUID!
     input: RoleRequestInput @source(name: "input", type: "RoleRequest_Input", subgraph: "Authentik")
-  ): RbacRolesUpdateResponse @httpOperation(subgraph: "Authentik", path: "/rbac/roles/{args.uuid}/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: PUT) @source(name: "rbac_roles_update", type: "rbac_roles_update_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): RbacRolesUpdateResponse @httpOperation(subgraph: "Authentik", path: "/rbac/roles/{args.uuid}/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: PUT) @source(name: "rbac_roles_update", type: "rbac_roles_update_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Role viewset"""
   rbacRolesPartialUpdate(
     """A UUID string identifying this Role."""
     uuid: UUID!
     input: PatchedRoleRequestInput @source(name: "input", type: "PatchedRoleRequest_Input", subgraph: "Authentik")
-  ): RbacRolesPartialUpdateResponse @httpOperation(subgraph: "Authentik", path: "/rbac/roles/{args.uuid}/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: PATCH) @source(name: "rbac_roles_partial_update", type: "rbac_roles_partial_update_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): RbacRolesPartialUpdateResponse @httpOperation(subgraph: "Authentik", path: "/rbac/roles/{args.uuid}/", operationSpecificHeaders: [["Content-Type", "application/json"], ["accept", "application/json"]], httpMethod: PATCH) @source(name: "rbac_roles_partial_update", type: "rbac_roles_partial_update_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Role viewset"""
   rbacRolesDestroy(
     """A UUID string identifying this Role."""
     uuid: UUID!
-  ): RbacRolesDestroyResponse @httpOperation(subgraph: "Authentik", path: "/rbac/roles/{args.uuid}/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: DELETE) @source(name: "rbac_roles_destroy", type: "rbac_roles_destroy_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): RbacRolesDestroyResponse @httpOperation(subgraph: "Authentik", path: "/rbac/roles/{args.uuid}/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: DELETE) @source(name: "rbac_roles_destroy", type: "rbac_roles_destroy_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """Source Viewset"""
   sourcesAllDestroy(
     """Internal source name, used in URLs."""
