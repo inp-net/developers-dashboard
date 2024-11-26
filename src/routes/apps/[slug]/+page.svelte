@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { env } from '$env/dynamic/public';
 	import SensitiveValue from '$lib/SensitiveValue.svelte';
-	import { LinkedChart } from 'svelte-tiny-linked-charts';
 	import type { PageData } from './$houdini';
 	interface Props {
 		data: PageData;
@@ -66,32 +65,6 @@
 				class="to-authentik">sur {env.PUBLIC_AUTHENTIK_INSTANCE}</a
 			>
 		</div>
-		{#if app.metrics}
-			{@const usage = Object.fromEntries(
-				app.metrics
-					.filter((xy) => xy !== null)
-					.filter(({ xCord }) => {
-						try {
-							new Date(xCord);
-							return true;
-						} catch (e) {
-							return false;
-						}
-					})
-					.map(({ xCord, yCord }) => [new Date(xCord).toISOString(), yCord])
-			)}
-			<div class="usage">
-				<LinkedChart
-					data={usage}
-					type="line"
-					fill="white"
-					lineColor="var(--green)"
-					showValue
-					valueAppend="this day"
-				/>
-				<div class="label">Logins this week</div>
-			</div>
-		{/if}
 	</header>
 	<section class="launchurl">
 		{#if editingLaunchURL || !app.launchUrl}

@@ -18,12 +18,6 @@ query PageApplication($slug: String!) {
 					}
 				}
 			}
-			metrics {
-				... on Coordinate {
-					xCord
-					yCord
-				}
-			}
 		}
 		... on GenericError {
 			detail
