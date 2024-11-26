@@ -14,7 +14,7 @@ export const actions = {
 		`).mutate(
 			{
 				slug: event.params.slug,
-				url
+				url: url.toString()
 			},
 			{ event }
 		);
@@ -26,11 +26,10 @@ export const actions = {
 		const formdata = [...(await event.request.formData()).entries()];
 		const uris = formdata
 			.filter(([k]) => k.startsWith('uri:'))
-			.sort(([a], [b]) => b - a)
+			.sort(([a], [b]) => Number.parseInt(b) - Number.parseInt(a))
 			.map(([_, v]) => v)
-			.filter(Boolean)
-			.join('\n');
-		const providerId = parseInt(Object.fromEntries(formdata).providerid);
+			.filter(Boolean);
+		const providerId = parseInt(Object.fromEntries(formdata).providerid.toString());
 
 		const { data, errors } = await graphql(`
 			mutation EditAllowedURIs($providerId: Int!, $uris: [RedirectUriRequestInput!]) {

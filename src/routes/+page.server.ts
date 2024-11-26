@@ -107,6 +107,7 @@ export const actions = {
 			}
 		`)
 			.mutate(
+				// @ts-expect-error flows.(...) is not nullable thanks to checks above
 				{
 					...flows,
 					name,
