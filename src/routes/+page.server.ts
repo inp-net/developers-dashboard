@@ -67,8 +67,10 @@ export const actions = {
 			query ChurrosGroup($uid: String!) {
 				group(uid: $uid) {
 					name
-					membership {
-						onBoard
+					boardMembers {
+						user {
+							uid
+						}
 					}
 				}
 			}
@@ -77,7 +79,7 @@ export const actions = {
 			.then(({ data }) => data?.group ?? null);
 
 		// If the group references a Churros group, we can use additional security: only board membres can create apps. This effectively prevents random people from creating apps under a group's name: either they are a board member, or the group they are creating apps on is a dedicated group they could not be part of without being explicitly added by admins (as non-churros groups are managed on the Authentik admin interface)
-		if (churrosGroup && !churrosGroup.membership?.onBoard) {
+		if (churrosGroup && !churrosGroup.boardMembers.some((m) => m.user.uid === me.username)) {
 			error(403, {
 				message: 'Tu dois être membre du bureau pour créer une application lié à un groupe Churros.'
 			});
