@@ -20,6 +20,12 @@
 			: []
 	);
 
+	const authentikGroups = $derived(
+		$PageHome.data?.authentikMe?.__typename === 'SessionUser'
+			? $PageHome.data.authentikMe.user.groups.filter((x) => x !== null)
+			: []
+	);
+
 	$effect(() => console.log($PageHome));
 
 	onMount(async () => {
@@ -39,13 +45,25 @@
 	{#if creating}
 		<form class="new" action="?/createApp" method="post">
 			<label for="new-group">
-				<span>Groupe Churros</span>
+				<span>Groupe responsable</span>
 			</label>
-			<input id="new-group" type="text" name="group" />
+			<input
+				id="new-group"
+				type="text"
+				name="group"
+				autocomplete="off"
+				list="churros-group-names"
+			/>
 			<label for="new-name">
 				<span>Nom de l'app</span>
 			</label>
 			<input id="new-name" type="text" name="name" />
+
+			<datalist id="churros-group-names">
+				{#each authentikGroups as { name }}
+					<option>{name}</option>
+				{/each}
+			</datalist>
 
 			<section class="submit">
 				<button type="submit">Créer</button>

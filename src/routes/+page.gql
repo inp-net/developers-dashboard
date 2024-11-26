@@ -2,6 +2,16 @@ query PageHome {
 	me {
 		uid
 	}
+	# for autocompletion on the app creation form
+	authentikMe: coreUsersMeRetrieve {
+		... on SessionUser {
+			user {
+				groups {
+					name
+				}
+			}
+		}
+	}
 	applications {
 		... on PaginatedApplicationList {
 			results {
