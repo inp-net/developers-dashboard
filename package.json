@@ -11,6 +11,9 @@
 		"format": "prettier --write .",
 		"lint": "prettier --check . && eslint .",
 		"gateway:start": "hive-gateway supergraph --port 5000",
+		"supergraph:update": "sh update-supergraph.sh",
+		"authentik:update-manifest": "curl -fsSL https://auth.inpt.fr/api/v3/schema/ -o authentik.yaml && patch < authentik.patch authentik.yaml",
+		"authentik:update": "bun run authentik:update-manifest && bun run supergraph:update",
 		"app:start": "node ./build/index.js",
 		"startall": "concurrently 'bun gateway:start' 'bun app:start'"
 	},
