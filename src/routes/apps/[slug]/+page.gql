@@ -12,7 +12,10 @@ query PageApplication($slug: String!) {
 					clientId
 					clientSecret
 					clientType
-					redirectUris
+					redirectUris {
+						matchingMode
+						url
+					}
 				}
 			}
 			metrics {

@@ -33,7 +33,7 @@ export const actions = {
 		const providerId = parseInt(Object.fromEntries(formdata).providerid);
 
 		const { data, errors } = await graphql(`
-			mutation EditAllowedURIs($providerId: Int!, $uris: String!) {
+			mutation EditAllowedURIs($providerId: Int!, $uris: [RedirectUriRequestInput!]) {
 				providersOauth2PartialUpdate(id: $providerId, input: { redirectUris: $uris }) {
 					__typename
 				}
@@ -41,7 +41,10 @@ export const actions = {
 		`).mutate(
 			{
 				providerId,
-				uris
+				uris: uris.map((uri) => ({
+					matchingMode: 'REGEX',
+					url: uri.toString()
+				}))
 			},
 			{ event }
 		);

@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: authentik
-  version: 2024.10.1
+  version: 2024.10.4
   description: Making authentication simple.
   contact:
     email: hello@goauthentik.io
@@ -20219,10 +20219,6 @@ paths:
         explode: true
         style: form
       - in: query
-        name: redirect_uris
-        schema:
-          type: string
-      - in: query
         name: refresh_token_validity
         schema:
           type: string
@@ -20637,10 +20633,6 @@ paths:
             format: uuid
         explode: true
         style: form
-      - in: query
-        name: redirect_uris__iexact
-        schema:
-          type: string
       - name: search
         required: false
         in: query
@@ -29981,7 +29973,7 @@ paths:
         schema:
           type: string
           format: uuid
-        description: A UUID string identifying this stage.
+        description: A UUID string identifying this authentik.providers.oauth2.views.authorize.OAuthFulfillmentStage.
         required: true
       tags:
       - stages
@@ -30015,7 +30007,7 @@ paths:
         schema:
           type: string
           format: uuid
-        description: A UUID string identifying this stage.
+        description: A UUID string identifying this authentik.providers.oauth2.views.authorize.OAuthFulfillmentStage.
         required: true
       tags:
       - stages
@@ -30046,7 +30038,7 @@ paths:
         schema:
           type: string
           format: uuid
-        description: A UUID string identifying this stage.
+        description: A UUID string identifying this authentik.providers.oauth2.views.authorize.OAuthFulfillmentStage.
         required: true
       tags:
       - stages
@@ -38722,7 +38714,10 @@ components:
           type: string
         js_url:
           type: string
+        interactive:
+          type: boolean
       required:
+      - interactive
       - js_url
       - pending_user
       - pending_user_avatar
@@ -38778,6 +38773,8 @@ components:
           type: string
         api_url:
           type: string
+        interactive:
+          type: boolean
         score_min_threshold:
           type: number
           format: double
@@ -38824,6 +38821,8 @@ components:
         api_url:
           type: string
           minLength: 1
+        interactive:
+          type: boolean
         score_min_threshold:
           type: number
           format: double
@@ -39247,11 +39246,9 @@ components:
       properties:
         x_cord:
           type: integer
-          format: int64
           readOnly: true
         y_cord:
           type: integer
-          format: int64
           readOnly: true
       required:
       - x_cord
@@ -43491,6 +43488,11 @@ components:
       required:
       - challenge
       - name
+    MatchingModeEnum:
+      enum:
+      - strict
+      - regex
+      type: string
     Metadata:
       type: object
       description: Serializer for blueprint metadata
@@ -44193,8 +44195,9 @@ components:
           description: Key used to encrypt the tokens. When set, tokens will be encrypted
             and returned as JWEs.
         redirect_uris:
-          type: string
-          description: Enter each URI on a new line.
+          type: array
+          items:
+            $ref: '#/components/schemas/RedirectURI'
         sub_mode:
           allOf:
           - $ref: '#/components/schemas/SubModeEnum'
@@ -44223,6 +44226,7 @@ components:
       - meta_model_name
       - name
       - pk
+      - redirect_uris
       - verbose_name
       - verbose_name_plural
     OAuth2ProviderRequest:
@@ -44294,8 +44298,9 @@ components:
           description: Key used to encrypt the tokens. When set, tokens will be encrypted
             and returned as JWEs.
         redirect_uris:
-          type: string
-          description: Enter each URI on a new line.
+          type: array
+          items:
+            $ref: '#/components/schemas/RedirectURIRequest'
         sub_mode:
           allOf:
           - $ref: '#/components/schemas/SubModeEnum'
@@ -44317,6 +44322,7 @@ components:
       - authorization_flow
       - invalidation_flow
       - name
+      - redirect_uris
     OAuth2ProviderSetupURLs:
       type: object
       description: OAuth2 Provider Metadata serializer
@@ -44374,7 +44380,8 @@ components:
           minLength: 1
           default: ak-provider-oauth2-device-code
         code:
-          type: integer
+          type: string
+          minLength: 1
       required:
       - code
     OAuthDeviceCodeFinishChallenge:
@@ -47146,6 +47153,8 @@ components:
         api_url:
           type: string
           minLength: 1
+        interactive:
+          type: boolean
         score_min_threshold:
           type: number
           format: double
@@ -48275,8 +48284,9 @@ components:
           description: Key used to encrypt the tokens. When set, tokens will be encrypted
             and returned as JWEs.
         redirect_uris:
-          type: string
-          description: Enter each URI on a new line.
+          type: array
+          items:
+            $ref: '#/components/schemas/RedirectURIRequest'
         sub_mode:
           allOf:
           - $ref: '#/components/schemas/SubModeEnum'
@@ -50856,7 +50866,9 @@ components:
           description: When enabled, this provider will intercept the authorization
             header and authenticate requests based on its value.
         redirect_uris:
-          type: string
+          type: array
+          items:
+            $ref: '#/components/schemas/RedirectURI'
           readOnly: true
         cookie_domain:
           type: string
@@ -51452,6 +51464,29 @@ components:
           type: string
       required:
       - to
+    RedirectURI:
+      type: object
+      description: A single allowed redirect URI entry
+      properties:
+        matching_mode:
+          $ref: '#/components/schemas/MatchingModeEnum'
+        url:
+          type: string
+      required:
+      - matching_mode
+      - url
+    RedirectURIRequest:
+      type: object
+      description: A single allowed redirect URI entry
+      properties:
+        matching_mode:
+          $ref: '#/components/schemas/MatchingModeEnum'
+        url:
+          type: string
+          minLength: 1
+      required:
+      - matching_mode
+      - url
     Reputation:
       type: object
       description: Reputation Serializer

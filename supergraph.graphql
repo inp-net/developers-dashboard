@@ -2323,13 +2323,12 @@ type Query @extraSchemaDefinitionDirective(directives: {transport: [{subgraph: "
     """Number of results to return per page."""
     pageSize: Int @source(name: "page_size", type: "Int", subgraph: "Authentik")
     propertyMappings: [UUID] @source(name: "property_mappings", type: "[UUID]", subgraph: "Authentik")
-    redirectUris: String @source(name: "redirect_uris", type: "String", subgraph: "Authentik")
     refreshTokenValidity: String @source(name: "refresh_token_validity", type: "String", subgraph: "Authentik")
     """A search term."""
     search: String
     signingKey: UUID @source(name: "signing_key", type: "UUID", subgraph: "Authentik")
     subMode: QueryInputProvidersOauth2ListSubMode @source(name: "sub_mode", type: "queryInput_providers_oauth2_list_sub_mode", subgraph: "Authentik")
-  ): ProvidersOauth2ListResponse @httpOperation(subgraph: "Authentik", path: "/providers/oauth2/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET, queryParamArgMap: "{\"access_code_validity\":\"access_code_validity\",\"access_token_validity\":\"access_token_validity\",\"application\":\"application\",\"authorization_flow\":\"authorization_flow\",\"client_id\":\"client_id\",\"client_type\":\"client_type\",\"include_claims_in_id_token\":\"include_claims_in_id_token\",\"issuer_mode\":\"issuer_mode\",\"name\":\"name\",\"ordering\":\"ordering\",\"page\":\"page\",\"page_size\":\"page_size\",\"property_mappings\":\"property_mappings\",\"redirect_uris\":\"redirect_uris\",\"refresh_token_validity\":\"refresh_token_validity\",\"search\":\"search\",\"signing_key\":\"signing_key\",\"sub_mode\":\"sub_mode\"}", queryStringOptionsByParam: "{\"property_mappings\":{\"arrayFormat\":\"repeat\",\"destructObject\":true}}") @source(name: "providers_oauth2_list", type: "providers_oauth2_list_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
+  ): ProvidersOauth2ListResponse @httpOperation(subgraph: "Authentik", path: "/providers/oauth2/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET, queryParamArgMap: "{\"access_code_validity\":\"access_code_validity\",\"access_token_validity\":\"access_token_validity\",\"application\":\"application\",\"authorization_flow\":\"authorization_flow\",\"client_id\":\"client_id\",\"client_type\":\"client_type\",\"include_claims_in_id_token\":\"include_claims_in_id_token\",\"issuer_mode\":\"issuer_mode\",\"name\":\"name\",\"ordering\":\"ordering\",\"page\":\"page\",\"page_size\":\"page_size\",\"property_mappings\":\"property_mappings\",\"refresh_token_validity\":\"refresh_token_validity\",\"search\":\"search\",\"signing_key\":\"signing_key\",\"sub_mode\":\"sub_mode\"}", queryStringOptionsByParam: "{\"property_mappings\":{\"arrayFormat\":\"repeat\",\"destructObject\":true}}") @source(name: "providers_oauth2_list", type: "providers_oauth2_list_response", subgraph: "Authentik") @join__field(graph: AUTHENTIK)
   """OAuth2Provider Viewset"""
   oauth2Provider(
     """A unique integer value identifying this OAuth2/OpenID Provider."""
@@ -2373,11 +2372,10 @@ type Query @extraSchemaDefinitionDirective(directives: {transport: [{subgraph: "
     """Number of results to return per page."""
     pageSize: Int @source(name: "page_size", type: "Int", subgraph: "Authentik")
     propertyMappingsIexact: [UUID] @source(name: "property_mappings__iexact", type: "[UUID]", subgraph: "Authentik")
-    redirectUrisIexact: String @source(name: "redirect_uris__iexact", type: "String", subgraph: "Authentik")
     """A search term."""
     search: String
     skipPathRegexIexact: String @source(name: "skip_path_regex__iexact", type: "String", subgraph: "Authentik")
-  ): ProvidersProxyListResponse @httpOperation(subgraph: "Authentik", path: "/providers/proxy/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET, queryParamArgMap: "{\"application__isnull\":\"application__isnull\",\"authorization_flow__slug__iexact\":\"authorization_flow__slug__iexact\",\"basic_auth_enabled__iexact\":\"basic_auth_enabled__iexact\",\"basic_auth_password_attribute__iexact\":\"basic_auth_password_attribute__iexact\",\"basic_auth_user_attribute__iexact\":\"basic_auth_user_attribute__iexact\",\"certificate__kp_uuid__iexact\":\"certificate__kp_uuid__iexact\",\"certificate__name__iexact\":\"certificate__name__iexact\",\"cookie_domain__iexact\":\"cookie_domain__iexact\",\"external_host__iexact\":\"external_host__iexact\",\"internal_host__iexact\":\"internal_host__iexact\",\"internal_host_ssl_validation__iexact\":\"internal_host_ssl_validation__iexact\",\"mode__iexact\":\"mode__iexact\",\"name__iexact\":\"name__iexact\",\"ordering\":\"ordering\",\"page\":\"page\",\"page_size\":\"page_size\",\"property_mappings__iexact\":\"property_mappings__iexact\",\"redirect_uris__iexact\":\"redirect_uris__iexact\",\"search\":\"search\",\"skip_path_regex__iexact\":\"skip_path_regex__iexact\"}", queryStringOptionsByParam: "{\"property_mappings__iexact\":{\"arrayFormat\":\"repeat\",\"destructObject\":true}}") @source(name: "providers_proxy_list", type: "providers_proxy_list_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
+  ): ProvidersProxyListResponse @httpOperation(subgraph: "Authentik", path: "/providers/proxy/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET, queryParamArgMap: "{\"application__isnull\":\"application__isnull\",\"authorization_flow__slug__iexact\":\"authorization_flow__slug__iexact\",\"basic_auth_enabled__iexact\":\"basic_auth_enabled__iexact\",\"basic_auth_password_attribute__iexact\":\"basic_auth_password_attribute__iexact\",\"basic_auth_user_attribute__iexact\":\"basic_auth_user_attribute__iexact\",\"certificate__kp_uuid__iexact\":\"certificate__kp_uuid__iexact\",\"certificate__name__iexact\":\"certificate__name__iexact\",\"cookie_domain__iexact\":\"cookie_domain__iexact\",\"external_host__iexact\":\"external_host__iexact\",\"internal_host__iexact\":\"internal_host__iexact\",\"internal_host_ssl_validation__iexact\":\"internal_host_ssl_validation__iexact\",\"mode__iexact\":\"mode__iexact\",\"name__iexact\":\"name__iexact\",\"ordering\":\"ordering\",\"page\":\"page\",\"page_size\":\"page_size\",\"property_mappings__iexact\":\"property_mappings__iexact\",\"search\":\"search\",\"skip_path_regex__iexact\":\"skip_path_regex__iexact\"}", queryStringOptionsByParam: "{\"property_mappings__iexact\":{\"arrayFormat\":\"repeat\",\"destructObject\":true}}") @source(name: "providers_proxy_list", type: "providers_proxy_list_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
   """ProxyProvider Viewset"""
   providersProxyRetrieve(
     """A unique integer value identifying this Proxy Provider."""
@@ -3266,12 +3264,16 @@ type Query @extraSchemaDefinitionDirective(directives: {transport: [{subgraph: "
   ): StagesAllListResponse @httpOperation(subgraph: "Authentik", path: "/stages/all/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET, queryParamArgMap: "{\"name\":\"name\",\"ordering\":\"ordering\",\"page\":\"page\",\"page_size\":\"page_size\",\"search\":\"search\"}") @source(name: "stages_all_list", type: "stages_all_list_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
   """Stage Viewset"""
   stagesAllRetrieve(
-    """A UUID string identifying this stage."""
+    """
+    A UUID string identifying this authentik.providers.oauth2.views.authorize.OAuthFulfillmentStage.
+    """
     stageUuid: UUID! @source(name: "stage_uuid", type: "UUID!", subgraph: "Authentik")
   ): StagesAllRetrieveResponse @httpOperation(subgraph: "Authentik", path: "/stages/all/{args.stage_uuid}/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET) @source(name: "stages_all_retrieve", type: "stages_all_retrieve_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
   """Get a list of all objects that use this object"""
   stagesAllUsedByList(
-    """A UUID string identifying this stage."""
+    """
+    A UUID string identifying this authentik.providers.oauth2.views.authorize.OAuthFulfillmentStage.
+    """
     stageUuid: UUID! @source(name: "stage_uuid", type: "UUID!", subgraph: "Authentik")
   ): [StagesAllUsedByListResponse] @httpOperation(subgraph: "Authentik", path: "/stages/all/{args.stage_uuid}/used_by/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: GET) @source(name: "stages_all_used_by_list", type: "[stages_all_used_by_list_response]", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
   """Get all creatable types"""
@@ -4114,8 +4116,6 @@ type Query @extraSchemaDefinitionDirective(directives: {transport: [{subgraph: "
     """
     mine: Boolean!
   ): [ChurrosService!]! @source(name: "services", type: "[Service!]!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
-  shopItem(slug: String!): ChurrosShopItem! @source(name: "shopItem", type: "ShopItem!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
-  shopPayments(item: ID!): [ChurrosShopPayment!]! @source(name: "shopPayments", type: "[ShopPayment!]!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
   """Identifiants des différentes promotions existantes"""
   specialOffers: [String!]! @hidden @join__field(graph: CHURROS)
   studentAssociation(uid: String!): ChurrosStudentAssociation! @source(name: "studentAssociation", type: "StudentAssociation!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
@@ -4178,8 +4178,8 @@ type LoginMetrics @join__type(graph: AUTHENTIK) {
 
 """Coordinates for diagrams"""
 type Coordinate @join__type(graph: AUTHENTIK) {
-  xCord: BigInt! @source(name: "x_cord", type: "BigInt!", subgraph: "Authentik")
-  yCord: BigInt! @source(name: "y_cord", type: "BigInt!", subgraph: "Authentik")
+  xCord: Int! @source(name: "x_cord", type: "Int!", subgraph: "Authentik")
+  yCord: Int! @source(name: "y_cord", type: "Int!", subgraph: "Authentik")
 }
 
 """Settings Serializer"""
@@ -5160,6 +5160,7 @@ type CaptchaChallenge @join__type(graph: AUTHENTIK) {
   pendingUserAvatar: String! @source(name: "pending_user_avatar", type: "String!", subgraph: "Authentik")
   siteKey: String! @source(name: "site_key", type: "String!", subgraph: "Authentik")
   jsUrl: String! @source(name: "js_url", type: "String!", subgraph: "Authentik")
+  interactive: Boolean!
 }
 
 """Challenge info for consent screens"""
@@ -5509,11 +5510,16 @@ type OAuth2Provider @join__type(graph: AUTHENTIK) {
   Key used to encrypt the tokens. When set, tokens will be encrypted and returned as JWEs.
   """
   encryptionKey: UUID @source(name: "encryption_key", type: "UUID", subgraph: "Authentik")
-  """Enter each URI on a new line."""
-  redirectUris: String @source(name: "redirect_uris", type: "String", subgraph: "Authentik")
+  redirectUris: [RedirectUri]! @source(name: "redirect_uris", type: "[RedirectURI]!", subgraph: "Authentik")
   subMode: SubModeEnum @source(name: "sub_mode", type: "SubModeEnum", subgraph: "Authentik")
   issuerMode: IssuerModeEnum @source(name: "issuer_mode", type: "IssuerModeEnum", subgraph: "Authentik")
   jwksSources: [UUID] @source(name: "jwks_sources", type: "[UUID]", subgraph: "Authentik")
+}
+
+"""A single allowed redirect URI entry"""
+type RedirectUri @source(name: "RedirectURI", subgraph: "Authentik") @join__type(graph: AUTHENTIK) {
+  matchingMode: MatchingModeEnum! @source(name: "matching_mode", type: "MatchingModeEnum!", subgraph: "Authentik")
+  url: String!
 }
 
 type PaginatedExpiringBaseGrantModelList @join__type(graph: AUTHENTIK) {
@@ -6734,7 +6740,7 @@ type ProxyProvider @join__type(graph: AUTHENTIK) {
   When enabled, this provider will intercept the authorization header and authenticate requests based on its value.
   """
   interceptHeaderAuth: Boolean @source(name: "intercept_header_auth", type: "Boolean", subgraph: "Authentik")
-  redirectUris: String! @source(name: "redirect_uris", type: "String!", subgraph: "Authentik")
+  redirectUris: [RedirectUri]! @source(name: "redirect_uris", type: "[RedirectURI]!", subgraph: "Authentik")
   cookieDomain: String @source(name: "cookie_domain", type: "String", subgraph: "Authentik")
   jwksSources: [UUID] @source(name: "jwks_sources", type: "[UUID]", subgraph: "Authentik")
   """
@@ -8002,6 +8008,7 @@ type CaptchaStage @join__type(graph: AUTHENTIK) {
   publicKey: String! @source(name: "public_key", type: "String!", subgraph: "Authentik")
   jsUrl: String @source(name: "js_url", type: "String", subgraph: "Authentik")
   apiUrl: String @source(name: "api_url", type: "String", subgraph: "Authentik")
+  interactive: Boolean
   scoreMinThreshold: Float @source(name: "score_min_threshold", type: "Float", subgraph: "Authentik")
   scoreMaxThreshold: Float @source(name: "score_max_threshold", type: "Float", subgraph: "Authentik")
   """
@@ -10218,7 +10225,9 @@ type Mutation @source(name: "Mutation", subgraph: "Churros") @join__type(graph: 
   ): SourcesUserConnectionsSamlDestroyResponse @httpOperation(subgraph: "Authentik", path: "/sources/user_connections/saml/{args.id}/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: DELETE) @source(name: "sources_user_connections_saml_destroy", type: "sources_user_connections_saml_destroy_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
   """Stage Viewset"""
   stagesAllDestroy(
-    """A UUID string identifying this stage."""
+    """
+    A UUID string identifying this authentik.providers.oauth2.views.authorize.OAuthFulfillmentStage.
+    """
     stageUuid: UUID! @source(name: "stage_uuid", type: "UUID!", subgraph: "Authentik")
   ): StagesAllDestroyResponse @httpOperation(subgraph: "Authentik", path: "/stages/all/{args.stage_uuid}/", operationSpecificHeaders: [["accept", "application/json"]], httpMethod: DELETE) @source(name: "stages_all_destroy", type: "stages_all_destroy_response", subgraph: "Authentik") @hidden @join__field(graph: AUTHENTIK)
   """AuthenticatorDuoStage Viewset"""
@@ -10847,7 +10856,8 @@ type Mutation @source(name: "Mutation", subgraph: "Churros") @join__type(graph: 
   """Dédoublonne les réservations. Renvoie les réservations supprimées."""
   deduplicateBookings(event: ChurrosLocalID! @source(name: "event", type: "LocalID!", subgraph: "Churros")): ChurrosMutationDeduplicateBookingsResult! @source(name: "deduplicateBookings", type: "MutationDeduplicateBookingsResult!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
   deleteAnnouncement(id: ID!): Boolean! @hidden @join__field(graph: CHURROS)
-  deleteArticle(id: ID!): Boolean! @hidden @join__field(graph: CHURROS)
+  """Supprimer un post"""
+  deleteArticle(id: ChurrosLocalID! @source(name: "id", type: "LocalID!", subgraph: "Churros")): ChurrosMutationDeleteArticleResult! @source(name: "deleteArticle", type: "MutationDeleteArticleResult!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
   deleteArticlePicture(id: ID!): Boolean! @hidden @join__field(graph: CHURROS)
   deleteComment(id: ID!): ChurrosComment! @source(name: "deleteComment", type: "Comment!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
   """Supprimer une cotisation"""
@@ -10865,9 +10875,12 @@ type Mutation @source(name: "Mutation", subgraph: "Churros") @join__type(graph: 
   deleteGroup(uid: String!): Boolean! @hidden @join__field(graph: CHURROS)
   deleteGroupMember(group: ChurrosUID! @source(name: "group", type: "UID!", subgraph: "Churros"), user: ChurrosUID! @source(name: "user", type: "UID!", subgraph: "Churros")): ChurrosMutationDeleteGroupMemberResult! @source(name: "deleteGroupMember", type: "MutationDeleteGroupMemberResult!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
   deleteGroupPicture(dark: Boolean!, uid: String!): Boolean! @hidden @join__field(graph: CHURROS) @deprecated(reason: "Use setPicture instead")
-  deleteItemPicture(groupUid: String!, itemId: String!, pictureId: String!): Boolean! @hidden @join__field(graph: CHURROS)
   """Supprimer un lien existant"""
   deleteLink(id: ChurrosLocalID! @source(name: "id", type: "LocalID!", subgraph: "Churros")): ChurrosMutationDeleteLinkResult! @source(name: "deleteLink", type: "MutationDeleteLinkResult!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
+  """
+  Supprimer l'enregistrement d'uncompte Lydia sur un groupe (ne supprime pas le compte Lydia Pro sur Lydia)
+  """
+  deleteLydiaAccount(id: ChurrosLocalID! @source(name: "id", type: "LocalID!", subgraph: "Churros")): ChurrosMutationDeleteLydiaAccountResult! @source(name: "deleteLydiaAccount", type: "MutationDeleteLydiaAccountResult!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
   """
   Supprime une page existante. On peut renseigner l'identifiant de la page ou son chemin ainsi que son groupe ou AE d'appartenance.
   """
@@ -10886,8 +10899,6 @@ type Mutation @source(name: "Mutation", subgraph: "Churros") @join__type(graph: 
   deleteSchoolPicture(id: String!): String! @hidden @join__field(graph: CHURROS)
   """Supprime un service"""
   deleteService(id: ChurrosLocalID! @source(name: "id", type: "LocalID!", subgraph: "Churros")): ChurrosMutationDeleteServiceResult! @source(name: "deleteService", type: "MutationDeleteServiceResult!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
-  deleteShopItem(groupUid: String!, itemId: ID!): ChurrosMutationDeleteShopItemResult! @source(name: "deleteShopItem", type: "MutationDeleteShopItemResult!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
-  deleteShopOption(optionIds: [String!]!): Boolean! @hidden @join__field(graph: CHURROS)
   deleteTicket(
     """Supprimer le billet même s'il existe des réservations"""
     force: Boolean! = false
@@ -10932,7 +10943,6 @@ type Mutation @source(name: "Mutation", subgraph: "Churros") @join__type(graph: 
   ): ChurrosMutationMarkContributionAsPaidResult! @source(name: "markContributionAsPaid", type: "MutationMarkContributionAsPaidResult!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
   mergeDocuments(from: [ID!]!, into: ID!): ChurrosDocument! @source(name: "mergeDocuments", type: "Document!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
   opposeRegistration(id: ID!): ChurrosMutationOpposeRegistrationResult! @source(name: "opposeRegistration", type: "MutationOpposeRegistrationResult!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
-  paidShopPayment(paymentMethod: ChurrosPaymentMethod @source(name: "paymentMethod", type: "PaymentMethod", subgraph: "Churros"), phone: String, shopPaymentId: ID!): ChurrosMutationPaidShopPaymentResult! @source(name: "paidShopPayment", type: "MutationPaidShopPaymentResult!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
   payBooking(
     """
     Montant que l'on souhaite payer. Par défaut, le prix du billet. Peut être supérieur si l'on souhaite payer plus
@@ -10968,7 +10978,10 @@ type Mutation @source(name: "Mutation", subgraph: "Churros") @join__type(graph: 
     URL vers laquelle faire pointer le lien de validation de la nouvelle adresse email. [token] sera remplacé par le token d'activation.
     """
     callbackURL: ChurrosURL! @source(name: "callbackURL", type: "URL!", subgraph: "Churros")
-    email: ChurrosEmail! @source(name: "email", type: "Email!", subgraph: "Churros")
+    """Nouvelle addresse e-mail"""
+    newEmail: ChurrosEmail! @source(name: "newEmail", type: "Email!", subgraph: "Churros")
+    """Personne à qui changer l'adresse email"""
+    user: ChurrosUID! @source(name: "user", type: "UID!", subgraph: "Churros")
   ): ChurrosMutationRequestEmailChangeResult! @source(name: "requestEmailChange", type: "MutationRequestEmailChangeResult!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
   resetPassword(disconnectAll: Boolean!, newPassword: String!, oldPassword: String!, uid: String!): ChurrosMutationResetPasswordResult! @source(name: "resetPassword", type: "MutationResetPasswordResult!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
   """
@@ -11147,6 +11160,8 @@ type Mutation @source(name: "Mutation", subgraph: "Churros") @join__type(graph: 
     includeInKiosk: Boolean
     """Lieu de l'évènement"""
     location: String
+    """Afficher la capacité sur les billets"""
+    showCapacity: Boolean = true
     """Afficher le nombre de places restantes sur les billets"""
     showPlacesLeft: Boolean = true
     """Titre de l'évènement"""
@@ -11169,7 +11184,6 @@ type Mutation @source(name: "Mutation", subgraph: "Churros") @join__type(graph: 
   updateGroupPicture(dark: Boolean!, file: ChurrosFile! @source(name: "file", type: "File!", subgraph: "Churros"), uid: String!): String! @hidden @join__field(graph: CHURROS) @deprecated(reason: "Use setPicture instead")
   """Mettre à jour le profil d'un groupe"""
   updateGroupProfile(profile: ChurrosGroupProfileInput! @source(name: "profile", type: "GroupProfileInput!", subgraph: "Churros"), uid: ChurrosUID! @source(name: "uid", type: "UID!", subgraph: "Churros")): ChurrosMutationUpdateGroupProfileResult! @source(name: "updateGroupProfile", type: "MutationUpdateGroupProfileResult!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
-  updateItemPicture(file: ChurrosFile! @source(name: "file", type: "File!", subgraph: "Churros"), groupUid: String!, itemId: String!): ChurrosPicture! @source(name: "updateItemPicture", type: "Picture!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
   """Mettre à jour un lien existant"""
   updateLink(
     id: ChurrosLocalID! @source(name: "id", type: "LocalID!", subgraph: "Churros")
@@ -11279,7 +11293,7 @@ type Mutation @source(name: "Mutation", subgraph: "Churros") @join__type(graph: 
   upsertGodparentRequest(godchildUid: String!, godparentUid: String!, id: ID): ChurrosMutationUpsertGodparentRequestResult! @source(name: "upsertGodparentRequest", type: "MutationUpsertGodparentRequestResult!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
   upsertGroup(input: ChurrosUpsertGroupInput! @source(name: "input", type: "UpsertGroupInput!", subgraph: "Churros"), uid: ChurrosUID @source(name: "uid", type: "UID", subgraph: "Churros")): ChurrosMutationUpsertGroupResult! @source(name: "upsertGroup", type: "MutationUpsertGroupResult!", subgraph: "Churros") @hidden @join__field(graph: CHURROS) @deprecated(reason: "Mutation séparée en plusieurs mutations plus spécifiques. Voir la documentation du module groups")
   upsertGroupMember(canEditArticles: Boolean!, canEditMembers: Boolean!, canScanEvents: Boolean!, groupId: ID!, isDeveloper: Boolean!, memberId: ID!, president: Boolean!, secretary: Boolean!, title: String!, treasurer: Boolean!, vicePresident: Boolean!): ChurrosGroupMember! @source(name: "upsertGroupMember", type: "GroupMember!", subgraph: "Churros") @hidden @join__field(graph: CHURROS) @deprecated(reason: "Utiliser `updateGroupMember` et `addGroupMemberV2` à la place")
-  upsertLydiaAccount(groupUid: String!, id: ID, name: String!, privateToken: String!, vendorToken: String!): ChurrosLydiaAccount! @source(name: "upsertLydiaAccount", type: "LydiaAccount!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
+  upsertLydiaAccount(groupUid: String!, id: ID, name: String!, privateToken: String!, vendorToken: String!): ChurrosMutationUpsertLydiaAccountResult! @source(name: "upsertLydiaAccount", type: "MutationUpsertLydiaAccountResult!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
   upsertManagersOfEvent(eventId: ID!, managers: [ChurrosManagerOfEventInput!]! @source(name: "managers", type: "[ManagerOfEventInput!]!", subgraph: "Churros")): [ChurrosEventManager!]! @source(name: "upsertManagersOfEvent", type: "[EventManager!]!", subgraph: "Churros") @hidden @join__field(graph: CHURROS) @deprecated(reason: "Use 'upsertEventManager' and 'removeEventManager' instead")
   """Crée ou met à jour une page."""
   upsertPage(
@@ -11303,9 +11317,6 @@ type Mutation @source(name: "Mutation", subgraph: "Churros") @join__type(graph: 
   upsertService(description: String!, groupUid: String, id: ChurrosLocalID @source(name: "id", type: "LocalID", subgraph: "Churros"), importance: Int = 0, logo: String!, logoSourceType: ChurrosLogoSourceType! @source(name: "logoSourceType", type: "LogoSourceType!", subgraph: "Churros"), name: String!, schoolUid: String, studentAssociationUid: String, url: String!): ChurrosMutationUpsertServiceResult! @source(name: "upsertService", type: "MutationUpsertServiceResult!", subgraph: "Churros") @hidden @join__field(graph: CHURROS) @deprecated(reason: "Use 'upsertServiceV2' instead")
   """Create or update a service"""
   upsertServiceV2(id: ChurrosLocalID @source(name: "id", type: "LocalID", subgraph: "Churros"), input: ChurrosServiceInput! @source(name: "input", type: "ServiceInput!", subgraph: "Churros")): ChurrosMutationUpsertServiceV2Result! @source(name: "upsertServiceV2", type: "MutationUpsertServiceV2Result!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
-  upsertShopItem(description: String!, endsAt: ChurrosDateTime @source(name: "endsAt", type: "DateTime", subgraph: "Churros"), groupUid: String!, id: ID, lydiaAccounId: String, max: Int!, name: String!, paymentMethods: [ChurrosPaymentMethod!]! @source(name: "paymentMethods", type: "[PaymentMethod!]!", subgraph: "Churros"), price: Float!, startsAt: ChurrosDateTime @source(name: "startsAt", type: "DateTime", subgraph: "Churros"), stock: Int!, visibility: ChurrosVisibility! @source(name: "visibility", type: "Visibility!", subgraph: "Churros")): ChurrosMutationUpsertShopItemResult! @source(name: "upsertShopItem", type: "MutationUpsertShopItemResult!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
-  upsertShopOptions(itemOptions: [ChurrosShopItemOptionInput!]! @source(name: "itemOptions", type: "[ShopItemOptionInput!]!", subgraph: "Churros"), shopItemId: String!): Boolean! @hidden @join__field(graph: CHURROS)
-  upsertShopPayment(answers: [String!]!, id: ID, paymentMethod: String, phone: String, quantity: Int!, shopItemId: String!, userUid: String!): ChurrosMutationUpsertShopPaymentResult! @source(name: "upsertShopPayment", type: "MutationUpsertShopPaymentResult!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
   """Créer ou modifier un thème"""
   upsertTheme(autodeploy: Boolean!, endsAt: ChurrosDateTime! @source(name: "endsAt", type: "DateTime!", subgraph: "Churros"), group: ChurrosUID! @source(name: "group", type: "UID!", subgraph: "Churros"), id: ChurrosLocalID @source(name: "id", type: "LocalID", subgraph: "Churros"), name: String!, startsAt: ChurrosDateTime! @source(name: "startsAt", type: "DateTime!", subgraph: "Churros")): ChurrosMutationUpsertThemeResult! @source(name: "upsertTheme", type: "MutationUpsertThemeResult!", subgraph: "Churros") @hidden @join__field(graph: CHURROS)
   upsertTicketGroup(
@@ -11720,8 +11731,14 @@ type ChurrosBookmark implements ChurrosNode @source(name: "Bookmark", subgraph: 
   id: ID!
   """L'identifiant local de la ressource (sans préfixe)"""
   localID: ChurrosLocalID! @source(name: "localID", type: "LocalID!", subgraph: "Churros")
-  """Chemin de la page"""
+  """
+  Chemin de la page, ou identifiant global pour les services épinglés. Voir aussi Bookmark.url
+  """
   path: String!
+  """
+  URL vers la page. Pratique notamment pour les services épinglés, qui n'ont pas de valeur utile pour Bookmark.path.
+  """
+  url: ChurrosURL! @source(name: "url", type: "URL!", subgraph: "Churros")
   user: ChurrosUser! @source(name: "user", type: "User!", subgraph: "Churros")
 }
 
@@ -11957,6 +11974,10 @@ type ChurrosEvent implements ChurrosNode & ChurrosPictured & ChurrosReactable & 
   id: ID!
   """Vrai si l'évènement doit apparaître dans le mode kiosque"""
   includeInKiosk: Boolean!
+  """
+  Managers de l'évènement qui le sont par leur permissions sur le groupe organisateur de l'évènement.
+  """
+  inheritedManagers: [ChurrosInheritedEventManager!]! @source(name: "inheritedManagers", type: "[InheritedEventManager!]!", subgraph: "Churros")
   links: [ChurrosLink!]! @source(name: "links", type: "[Link!]!", subgraph: "Churros")
   """L'identifiant local de la ressource (sans préfixe)"""
   localID: ChurrosLocalID! @source(name: "localID", type: "LocalID!", subgraph: "Churros")
@@ -11991,7 +12012,7 @@ type ChurrosEvent implements ChurrosNode & ChurrosPictured & ChurrosReactable & 
     """
     timestamp: Boolean! = true
   ): String!
-  placesLeft: Int
+  placesLeft: ChurrosCapacity @source(name: "placesLeft", type: "Capacity", subgraph: "Churros")
   profitsBreakdown: ChurrosProfitsBreakdown! @source(name: "profitsBreakdown", type: "ProfitsBreakdown!", subgraph: "Churros")
   """Vrai si l’utilisateur·ice connecté·e a réagi avec cet emoji"""
   reacted(emoji: String!): Boolean!
@@ -12001,6 +12022,8 @@ type ChurrosEvent implements ChurrosNode & ChurrosPictured & ChurrosReactable & 
   recurringUntil: ChurrosDateTime @source(name: "recurringUntil", type: "DateTime", subgraph: "Churros")
   searchBookings(q: String!): [ChurrosRegistrationSearchResult!]! @source(name: "searchBookings", type: "[RegistrationSearchResult!]!", subgraph: "Churros")
   shares: Int!
+  """Vrai si les capacités des billets doivent être affichées"""
+  showCapacity: Boolean!
   """Vrai si le nombre de places restantes doit être affiché"""
   showPlacesLeft: Boolean!
   """Un nom lisible sans espaces, adaptés pour des URLs."""
@@ -12077,6 +12100,23 @@ type ChurrosEventsByDay @source(name: "EventsByDay", subgraph: "Churros") @join_
 type ChurrosFamilyTree @source(name: "FamilyTree", subgraph: "Churros") @join__type(graph: CHURROS) {
   nesting: String!
   users: [ChurrosUser!]! @source(name: "users", type: "[User!]!", subgraph: "Churros")
+}
+
+type ChurrosFeaturesHealthCheck @source(name: "FeaturesHealthCheck", subgraph: "Churros") @join__type(graph: CHURROS) {
+  """Whether Apple Wallet integration is configured"""
+  appleWallet: Boolean!
+  """Whether the GitLab API is configured"""
+  gitlab: Boolean!
+  """Whether Google APIs are configured"""
+  googleAPIs: Boolean!
+  """Whether Google Wallet integration is configured"""
+  googleWallet: Boolean!
+  """Whether Mailman automation is configured"""
+  mailman: Boolean!
+  """Whether OAuth login is configured"""
+  oauth: Boolean!
+  """Whether the Prometheus pushgateway is configured"""
+  prometheus: Boolean!
 }
 
 """Un formulaire"""
@@ -12437,10 +12477,6 @@ type ChurrosGroup implements ChurrosNode & ChurrosPictured @source(name: "Group"
   secretaries: [ChurrosGroupMember!]! @source(name: "secretaries", type: "[GroupMember!]!", subgraph: "Churros")
   selfJoinable: Boolean!
   services: [ChurrosService!]! @source(name: "services", type: "[Service!]!", subgraph: "Churros")
-  """Article de la boutique du groupe"""
-  shopItem(id: ChurrosLocalID! @source(name: "id", type: "LocalID!", subgraph: "Churros")): ChurrosShopItem @source(name: "shopItem", type: "ShopItem", subgraph: "Churros")
-  shopItems(after: String, before: String, first: Int, last: Int): ChurrosGroupShopItemsConnection! @source(name: "shopItems", type: "GroupShopItemsConnection!", subgraph: "Churros")
-  shopOrders: [ChurrosShopPayment!]! @source(name: "shopOrders", type: "[ShopPayment!]!", subgraph: "Churros")
   shortDescription: String!
   studentAssociation: ChurrosStudentAssociation! @source(name: "studentAssociation", type: "StudentAssociation!", subgraph: "Churros")
   treasurers: [ChurrosGroupMember!]! @source(name: "treasurers", type: "[GroupMember!]!", subgraph: "Churros")
@@ -12514,23 +12550,26 @@ type ChurrosGroupSearchResult @source(name: "GroupSearchResult", subgraph: "Chur
   similarity: Float!
 }
 
-type ChurrosGroupShopItemsConnection @source(name: "GroupShopItemsConnection", subgraph: "Churros") @join__type(graph: CHURROS) {
-  edges: [ChurrosGroupShopItemsConnectionEdge!]! @source(name: "edges", type: "[GroupShopItemsConnectionEdge!]!", subgraph: "Churros")
-  nodes: [ChurrosShopItem!]! @source(name: "nodes", type: "[ShopItem!]!", subgraph: "Churros")
-  pageInfo: ChurrosPageInfo! @source(name: "pageInfo", type: "PageInfo!", subgraph: "Churros")
-}
-
-type ChurrosGroupShopItemsConnectionEdge @source(name: "GroupShopItemsConnectionEdge", subgraph: "Churros") @join__type(graph: CHURROS) {
-  cursor: String!
-  node: ChurrosShopItem! @source(name: "node", type: "ShopItem!", subgraph: "Churros")
-}
-
 """Results of a health self-check"""
 type ChurrosHealthCheck @source(name: "HealthCheck", subgraph: "Churros") @join__type(graph: CHURROS) {
   database: ChurrosDatabaseHealthCheck! @source(name: "database", type: "DatabaseHealthCheck!", subgraph: "Churros")
+  features: ChurrosFeaturesHealthCheck! @source(name: "features", type: "FeaturesHealthCheck!", subgraph: "Churros")
   ldap: ChurrosLdapHealthCheck! @source(name: "ldap", type: "LdapHealthCheck!", subgraph: "Churros")
   mail: ChurrosMailHealthCheck! @source(name: "mail", type: "MailHealthCheck!", subgraph: "Churros")
   redis: ChurrosRedisHealthCheck! @source(name: "redis", type: "RedisHealthCheck!", subgraph: "Churros")
+}
+
+"""
+Un manager d'évènement hérité par ses permissions en tant que membre d'un groupe
+"""
+type ChurrosInheritedEventManager @source(name: "InheritedEventManager", subgraph: "Churros") @join__type(graph: CHURROS) {
+  canEdit: Boolean!
+  canEditPermissions: Boolean!
+  canVerifyRegistrations: Boolean!
+  event: ChurrosEvent! @source(name: "event", type: "Event!", subgraph: "Churros")
+  groupMember: ChurrosGroupMember! @source(name: "groupMember", type: "GroupMember!", subgraph: "Churros")
+  power: ChurrosEventManagerPowerLevel! @source(name: "power", type: "EventManagerPowerLevel!", subgraph: "Churros")
+  user: ChurrosUser! @source(name: "user", type: "User!", subgraph: "Churros")
 }
 
 """A Gitlab issue"""
@@ -12566,8 +12605,10 @@ type ChurrosIssueComment @source(name: "IssueComment", subgraph: "Churros") @joi
 type ChurrosLdapHealthCheck @source(name: "LdapHealthCheck", subgraph: "Churros") @join__type(graph: CHURROS) {
   """Whether the LDAP internal client is ready"""
   internal: Boolean!
-  """Whether the LDAP school client is ready"""
-  school: Boolean!
+  """
+  Whether the LDAP school client is ready. Null when no LDAP_SCHOOL has been configured.
+  """
+  school: Boolean
 }
 
 """
@@ -12602,6 +12643,7 @@ type ChurrosLogEntry implements ChurrosNode @source(name: "LogEntry", subgraph: 
 """A Lydia account"""
 type ChurrosLydiaAccount implements ChurrosNode @source(name: "LydiaAccount", subgraph: "Churros") @join__type(graph: CHURROS) @join__implements(graph: CHURROS, interface: "ChurrosNode") {
   events: [ChurrosEvent!]! @source(name: "events", type: "[Event!]!", subgraph: "Churros")
+  eventsCount: Int!
   group: ChurrosGroup @source(name: "group", type: "Group", subgraph: "Churros")
   groupId: ID
   id: ID!
@@ -12613,8 +12655,8 @@ type ChurrosLydiaAccount implements ChurrosNode @source(name: "LydiaAccount", su
 }
 
 type ChurrosMailHealthCheck @source(name: "MailHealthCheck", subgraph: "Churros") @join__type(graph: CHURROS) {
-  """Whether the SMTP client is ready"""
-  smtp: Boolean!
+  """Whether the SMTP client is ready. Null if no SMTP_URL is configured."""
+  smtp: Boolean
 }
 
 """
@@ -12768,6 +12810,10 @@ type ChurrosMutationDeduplicateBookingsSuccess @source(name: "MutationDeduplicat
   data: Int!
 }
 
+type ChurrosMutationDeleteArticleSuccess @source(name: "MutationDeleteArticleSuccess", subgraph: "Churros") @join__type(graph: CHURROS) {
+  data: ChurrosArticle! @source(name: "data", type: "Article!", subgraph: "Churros")
+}
+
 type ChurrosMutationDeleteContributionSuccess @source(name: "MutationDeleteContributionSuccess", subgraph: "Churros") @join__type(graph: CHURROS) {
   data: ChurrosContributionOption! @source(name: "data", type: "ContributionOption!", subgraph: "Churros")
 }
@@ -12796,16 +12842,16 @@ type ChurrosMutationDeleteLinkSuccess @source(name: "MutationDeleteLinkSuccess",
   data: ChurrosLink! @source(name: "data", type: "Link!", subgraph: "Churros")
 }
 
+type ChurrosMutationDeleteLydiaAccountSuccess @source(name: "MutationDeleteLydiaAccountSuccess", subgraph: "Churros") @join__type(graph: CHURROS) {
+  data: ChurrosLydiaAccount! @source(name: "data", type: "LydiaAccount!", subgraph: "Churros")
+}
+
 type ChurrosMutationDeletePageSuccess @source(name: "MutationDeletePageSuccess", subgraph: "Churros") @join__type(graph: CHURROS) {
   data: ChurrosPage! @source(name: "data", type: "Page!", subgraph: "Churros")
 }
 
 type ChurrosMutationDeleteServiceSuccess @source(name: "MutationDeleteServiceSuccess", subgraph: "Churros") @join__type(graph: CHURROS) {
   data: ChurrosService! @source(name: "data", type: "Service!", subgraph: "Churros")
-}
-
-type ChurrosMutationDeleteShopItemSuccess @source(name: "MutationDeleteShopItemSuccess", subgraph: "Churros") @join__type(graph: CHURROS) {
-  data: Boolean!
 }
 
 type ChurrosMutationDeleteTicketGroupSuccess @source(name: "MutationDeleteTicketGroupSuccess", subgraph: "Churros") @join__type(graph: CHURROS) {
@@ -12842,10 +12888,6 @@ type ChurrosMutationMarkContributionAsPaidSuccess @source(name: "MutationMarkCon
 
 type ChurrosMutationOpposeRegistrationSuccess @source(name: "MutationOpposeRegistrationSuccess", subgraph: "Churros") @join__type(graph: CHURROS) {
   data: Boolean!
-}
-
-type ChurrosMutationPaidShopPaymentSuccess @source(name: "MutationPaidShopPaymentSuccess", subgraph: "Churros") @join__type(graph: CHURROS) {
-  data: ChurrosShopPayment! @source(name: "data", type: "ShopPayment!", subgraph: "Churros")
 }
 
 type ChurrosMutationPayBookingSuccess @source(name: "MutationPayBookingSuccess", subgraph: "Churros") @join__type(graph: CHURROS) {
@@ -13032,6 +13074,10 @@ type ChurrosMutationUpsertGroupSuccess @source(name: "MutationUpsertGroupSuccess
   data: ChurrosGroup! @source(name: "data", type: "Group!", subgraph: "Churros")
 }
 
+type ChurrosMutationUpsertLydiaAccountSuccess @source(name: "MutationUpsertLydiaAccountSuccess", subgraph: "Churros") @join__type(graph: CHURROS) {
+  data: ChurrosLydiaAccount! @source(name: "data", type: "LydiaAccount!", subgraph: "Churros")
+}
+
 type ChurrosMutationUpsertPageSuccess @source(name: "MutationUpsertPageSuccess", subgraph: "Churros") @join__type(graph: CHURROS) {
   data: ChurrosPage! @source(name: "data", type: "Page!", subgraph: "Churros")
 }
@@ -13046,14 +13092,6 @@ type ChurrosMutationUpsertServiceSuccess @source(name: "MutationUpsertServiceSuc
 
 type ChurrosMutationUpsertServiceV2Success @source(name: "MutationUpsertServiceV2Success", subgraph: "Churros") @join__type(graph: CHURROS) {
   data: ChurrosService! @source(name: "data", type: "Service!", subgraph: "Churros")
-}
-
-type ChurrosMutationUpsertShopItemSuccess @source(name: "MutationUpsertShopItemSuccess", subgraph: "Churros") @join__type(graph: CHURROS) {
-  data: ChurrosShopItem! @source(name: "data", type: "ShopItem!", subgraph: "Churros")
-}
-
-type ChurrosMutationUpsertShopPaymentSuccess @source(name: "MutationUpsertShopPaymentSuccess", subgraph: "Churros") @join__type(graph: CHURROS) {
-  data: ChurrosShopPayment! @source(name: "data", type: "ShopPayment!", subgraph: "Churros")
 }
 
 type ChurrosMutationUpsertThemeSuccess @source(name: "MutationUpsertThemeSuccess", subgraph: "Churros") @join__type(graph: CHURROS) {
@@ -13171,12 +13209,6 @@ type ChurrosPagesConnection @source(name: "PagesConnection", subgraph: "Churros"
 type ChurrosPagesEdge @source(name: "PagesEdge", subgraph: "Churros") @join__type(graph: CHURROS) {
   cursor: String!
   node: ChurrosPage! @source(name: "node", type: "Page!", subgraph: "Churros")
-}
-
-type ChurrosPicture @source(name: "Picture", subgraph: "Churros") @join__type(graph: CHURROS) {
-  id: ID!
-  path: String!
-  position: Int!
 }
 
 type ChurrosProfitsBreakdown @source(name: "ProfitsBreakdown", subgraph: "Churros") @join__type(graph: CHURROS) {
@@ -13865,62 +13897,6 @@ type ChurrosService implements ChurrosNode @source(name: "Service", subgraph: "C
   url: String!
 }
 
-type ChurrosShopItem implements ChurrosNode @source(name: "ShopItem", subgraph: "Churros") @join__type(graph: CHURROS) @join__implements(graph: CHURROS, interface: "ChurrosNode") {
-  createdAt: ChurrosDateTime! @source(name: "createdAt", type: "DateTime!", subgraph: "Churros")
-  description: String!
-  descriptionHtml: String!
-  endsAt: ChurrosDateTime @source(name: "endsAt", type: "DateTime", subgraph: "Churros")
-  group: ChurrosGroup! @source(name: "group", type: "Group!", subgraph: "Churros")
-  id: ID!
-  itemOptions: [ChurrosShopItemOption!]! @source(name: "itemOptions", type: "[ShopItemOption!]!", subgraph: "Churros")
-  """L'identifiant local de la ressource (sans préfixe)"""
-  localID: ChurrosLocalID! @source(name: "localID", type: "LocalID!", subgraph: "Churros")
-  lydiaAccount: ChurrosLydiaAccount @source(name: "lydiaAccount", type: "LydiaAccount", subgraph: "Churros")
-  max: Int!
-  name: String!
-  paymentMethods: [ChurrosPaymentMethod!]! @source(name: "paymentMethods", type: "[PaymentMethod!]!", subgraph: "Churros")
-  pictures: [ChurrosPicture!]! @source(name: "pictures", type: "[Picture!]!", subgraph: "Churros")
-  price: Float!
-  shopPayments: [ChurrosShopPayment!]! @source(name: "shopPayments", type: "[ShopPayment!]!", subgraph: "Churros")
-  """Un nom lisible sans espaces, adaptés pour des URLs."""
-  slug: String!
-  startsAt: ChurrosDateTime @source(name: "startsAt", type: "DateTime", subgraph: "Churros")
-  stock: Int!
-  stockLeft: Int!
-  uid: String! @deprecated(reason: "Use `slug` instead. This field was never universally unique.")
-  updatedAt: ChurrosDateTime! @source(name: "updatedAt", type: "DateTime!", subgraph: "Churros")
-  visibility: ChurrosVisibility! @source(name: "visibility", type: "Visibility!", subgraph: "Churros")
-}
-
-type ChurrosShopItemAnswer @source(name: "ShopItemAnswer", subgraph: "Churros") @join__type(graph: CHURROS) {
-  id: ID!
-  options: [String!]!
-  shopPayment: ChurrosShopPayment! @source(name: "shopPayment", type: "ShopPayment!", subgraph: "Churros")
-  shopPaymentId: String!
-}
-
-type ChurrosShopItemOption @source(name: "ShopItemOption", subgraph: "Churros") @join__type(graph: CHURROS) {
-  id: ID!
-  name: String!
-  options: [String!]!
-  otherToggle: Boolean!
-  required: Boolean!
-  shopItem: ChurrosShopItem! @source(name: "shopItem", type: "ShopItem!", subgraph: "Churros")
-}
-
-type ChurrosShopPayment @source(name: "ShopPayment", subgraph: "Churros") @join__type(graph: CHURROS) {
-  createdAt: ChurrosDateTime! @source(name: "createdAt", type: "DateTime!", subgraph: "Churros")
-  id: ID!
-  paid: Boolean!
-  paymentMethod: ChurrosPaymentMethod! @source(name: "paymentMethod", type: "PaymentMethod!", subgraph: "Churros")
-  quantity: Int!
-  shopItem: ChurrosShopItem! @source(name: "shopItem", type: "ShopItem!", subgraph: "Churros")
-  shopItemAnswer: ChurrosShopItemAnswer @source(name: "shopItemAnswer", type: "ShopItemAnswer", subgraph: "Churros")
-  totalPrice: Float!
-  updatedAt: ChurrosDateTime! @source(name: "updatedAt", type: "DateTime!", subgraph: "Churros")
-  user: ChurrosUser! @source(name: "user", type: "User!", subgraph: "Churros")
-}
-
 """Résultat d'une finalisation d'inscription"""
 type ChurrosSignupCompletionResult @source(name: "SignupCompletionResult", subgraph: "Churros") @join__type(graph: CHURROS) {
   """
@@ -14190,7 +14166,10 @@ type ChurrosTicket implements ChurrosNode @source(name: "Ticket", subgraph: "Chu
     """On souhaite réserver pour soi-même"""
     themself: Boolean!
   ): String
-  capacity: Int
+  """
+  Nombre de places totales du billet. Null si l'information n'est pas disponible.
+  """
+  capacity: ChurrosCapacity @source(name: "capacity", type: "Capacity", subgraph: "Churros")
   closesAt: ChurrosDateTime @source(name: "closesAt", type: "DateTime", subgraph: "Churros")
   countingPolicy: ChurrosTicketCountingPolicy! @source(name: "countingPolicy", type: "TicketCountingPolicy!", subgraph: "Churros")
   description: String!
@@ -14241,7 +14220,7 @@ type ChurrosTicket implements ChurrosNode @source(name: "Ticket", subgraph: "Chu
   """
   Nombre de places restantes. Null si l'information n'est pas disponible. N'est jamais null quand il n'y a plus de places disponibles (0)
   """
-  placesLeft: Int
+  placesLeft: ChurrosCapacity @source(name: "placesLeft", type: "Capacity", subgraph: "Churros")
   price: Float! @deprecated(reason: "Use minimumPrice(applyPromotions: true) instead")
   """
   Le billet permet de payer un prix choisi par l'utilisateur.ice, entre minimumPrice et maximumPrice
@@ -16448,6 +16427,11 @@ union StagesUserWriteDestroyResponse @statusCodeTypeName(subgraph: "Authentik", 
 
 union ChurrosEventBookingsCsvResult @source(name: "EventBookingsCsvResult", subgraph: "Churros") @join__type(graph: CHURROS) @join__unionMember(graph: CHURROS, member: "ChurrosError") @join__unionMember(graph: CHURROS, member: "ChurrosEventBookingsCsvSuccess") @join__unionMember(graph: CHURROS, member: "ChurrosZodError") = ChurrosError | ChurrosEventBookingsCsvSuccess | ChurrosZodError
 
+"""
+Manager d'évènemet, qu'il soit sur l'évènement directement ou hérité d'une appartenance à un groupe
+"""
+union ChurrosEventManagerMaybeInherited @source(name: "EventManagerMaybeInherited", subgraph: "Churros") @join__type(graph: CHURROS) @join__unionMember(graph: CHURROS, member: "ChurrosEventManager") @join__unionMember(graph: CHURROS, member: "ChurrosInheritedEventManager") = ChurrosEventManager | ChurrosInheritedEventManager
+
 union ChurrosHasLinks @source(name: "HasLinks", subgraph: "Churros") @join__type(graph: CHURROS) @join__unionMember(graph: CHURROS, member: "ChurrosArticle") @join__unionMember(graph: CHURROS, member: "ChurrosEvent") @join__unionMember(graph: CHURROS, member: "ChurrosGroup") @join__unionMember(graph: CHURROS, member: "ChurrosTicket") @join__unionMember(graph: CHURROS, member: "ChurrosUser") = ChurrosArticle | ChurrosEvent | ChurrosGroup | ChurrosTicket | ChurrosUser
 
 union ChurrosMutationAcceptRegistrationResult @source(name: "MutationAcceptRegistrationResult", subgraph: "Churros") @join__type(graph: CHURROS) @join__unionMember(graph: CHURROS, member: "ChurrosError") @join__unionMember(graph: CHURROS, member: "ChurrosMutationAcceptRegistrationSuccess") @join__unionMember(graph: CHURROS, member: "ChurrosZodError") = ChurrosError | ChurrosMutationAcceptRegistrationSuccess | ChurrosZodError
@@ -16500,6 +16484,8 @@ union ChurrosMutationCreateTicketResult @source(name: "MutationCreateTicketResul
 
 union ChurrosMutationDeduplicateBookingsResult @source(name: "MutationDeduplicateBookingsResult", subgraph: "Churros") @join__type(graph: CHURROS) @join__unionMember(graph: CHURROS, member: "ChurrosError") @join__unionMember(graph: CHURROS, member: "ChurrosMutationDeduplicateBookingsSuccess") @join__unionMember(graph: CHURROS, member: "ChurrosZodError") = ChurrosError | ChurrosMutationDeduplicateBookingsSuccess | ChurrosZodError
 
+union ChurrosMutationDeleteArticleResult @source(name: "MutationDeleteArticleResult", subgraph: "Churros") @join__type(graph: CHURROS) @join__unionMember(graph: CHURROS, member: "ChurrosError") @join__unionMember(graph: CHURROS, member: "ChurrosMutationDeleteArticleSuccess") @join__unionMember(graph: CHURROS, member: "ChurrosZodError") = ChurrosError | ChurrosMutationDeleteArticleSuccess | ChurrosZodError
+
 union ChurrosMutationDeleteContributionResult @source(name: "MutationDeleteContributionResult", subgraph: "Churros") @join__type(graph: CHURROS) @join__unionMember(graph: CHURROS, member: "ChurrosError") @join__unionMember(graph: CHURROS, member: "ChurrosMutationDeleteContributionSuccess") @join__unionMember(graph: CHURROS, member: "ChurrosZodError") = ChurrosError | ChurrosMutationDeleteContributionSuccess | ChurrosZodError
 
 union ChurrosMutationDeleteEventResult @source(name: "MutationDeleteEventResult", subgraph: "Churros") @join__type(graph: CHURROS) @join__unionMember(graph: CHURROS, member: "ChurrosError") @join__unionMember(graph: CHURROS, member: "ChurrosMutationDeleteEventSuccess") @join__unionMember(graph: CHURROS, member: "ChurrosZodError") = ChurrosError | ChurrosMutationDeleteEventSuccess | ChurrosZodError
@@ -16512,11 +16498,11 @@ union ChurrosMutationDeleteGroupMemberResult @source(name: "MutationDeleteGroupM
 
 union ChurrosMutationDeleteLinkResult @source(name: "MutationDeleteLinkResult", subgraph: "Churros") @join__type(graph: CHURROS) @join__unionMember(graph: CHURROS, member: "ChurrosError") @join__unionMember(graph: CHURROS, member: "ChurrosMutationDeleteLinkSuccess") @join__unionMember(graph: CHURROS, member: "ChurrosZodError") = ChurrosError | ChurrosMutationDeleteLinkSuccess | ChurrosZodError
 
+union ChurrosMutationDeleteLydiaAccountResult @source(name: "MutationDeleteLydiaAccountResult", subgraph: "Churros") @join__type(graph: CHURROS) @join__unionMember(graph: CHURROS, member: "ChurrosError") @join__unionMember(graph: CHURROS, member: "ChurrosMutationDeleteLydiaAccountSuccess") @join__unionMember(graph: CHURROS, member: "ChurrosZodError") = ChurrosError | ChurrosMutationDeleteLydiaAccountSuccess | ChurrosZodError
+
 union ChurrosMutationDeletePageResult @source(name: "MutationDeletePageResult", subgraph: "Churros") @join__type(graph: CHURROS) @join__unionMember(graph: CHURROS, member: "ChurrosError") @join__unionMember(graph: CHURROS, member: "ChurrosMutationDeletePageSuccess") @join__unionMember(graph: CHURROS, member: "ChurrosZodError") = ChurrosError | ChurrosMutationDeletePageSuccess | ChurrosZodError
 
 union ChurrosMutationDeleteServiceResult @source(name: "MutationDeleteServiceResult", subgraph: "Churros") @join__type(graph: CHURROS) @join__unionMember(graph: CHURROS, member: "ChurrosError") @join__unionMember(graph: CHURROS, member: "ChurrosMutationDeleteServiceSuccess") @join__unionMember(graph: CHURROS, member: "ChurrosZodError") = ChurrosError | ChurrosMutationDeleteServiceSuccess | ChurrosZodError
-
-union ChurrosMutationDeleteShopItemResult @source(name: "MutationDeleteShopItemResult", subgraph: "Churros") @join__type(graph: CHURROS) @join__unionMember(graph: CHURROS, member: "ChurrosError") @join__unionMember(graph: CHURROS, member: "ChurrosMutationDeleteShopItemSuccess") @join__unionMember(graph: CHURROS, member: "ChurrosZodError") = ChurrosError | ChurrosMutationDeleteShopItemSuccess | ChurrosZodError
 
 union ChurrosMutationDeleteTicketGroupResult @source(name: "MutationDeleteTicketGroupResult", subgraph: "Churros") @join__type(graph: CHURROS) @join__unionMember(graph: CHURROS, member: "ChurrosError") @join__unionMember(graph: CHURROS, member: "ChurrosMutationDeleteTicketGroupSuccess") @join__unionMember(graph: CHURROS, member: "ChurrosZodError") = ChurrosError | ChurrosMutationDeleteTicketGroupSuccess | ChurrosZodError
 
@@ -16533,8 +16519,6 @@ union ChurrosMutationMarkBookingAsPaidResult @source(name: "MutationMarkBookingA
 union ChurrosMutationMarkContributionAsPaidResult @source(name: "MutationMarkContributionAsPaidResult", subgraph: "Churros") @join__type(graph: CHURROS) @join__unionMember(graph: CHURROS, member: "ChurrosError") @join__unionMember(graph: CHURROS, member: "ChurrosMutationMarkContributionAsPaidSuccess") @join__unionMember(graph: CHURROS, member: "ChurrosZodError") = ChurrosError | ChurrosMutationMarkContributionAsPaidSuccess | ChurrosZodError
 
 union ChurrosMutationOpposeRegistrationResult @source(name: "MutationOpposeRegistrationResult", subgraph: "Churros") @join__type(graph: CHURROS) @join__unionMember(graph: CHURROS, member: "ChurrosError") @join__unionMember(graph: CHURROS, member: "ChurrosMutationOpposeRegistrationSuccess") @join__unionMember(graph: CHURROS, member: "ChurrosZodError") = ChurrosError | ChurrosMutationOpposeRegistrationSuccess | ChurrosZodError
-
-union ChurrosMutationPaidShopPaymentResult @source(name: "MutationPaidShopPaymentResult", subgraph: "Churros") @join__type(graph: CHURROS) @join__unionMember(graph: CHURROS, member: "ChurrosError") @join__unionMember(graph: CHURROS, member: "ChurrosMutationPaidShopPaymentSuccess") @join__unionMember(graph: CHURROS, member: "ChurrosZodError") = ChurrosError | ChurrosMutationPaidShopPaymentSuccess | ChurrosZodError
 
 union ChurrosMutationPayBookingResult @source(name: "MutationPayBookingResult", subgraph: "Churros") @join__type(graph: CHURROS) @join__unionMember(graph: CHURROS, member: "ChurrosError") @join__unionMember(graph: CHURROS, member: "ChurrosMutationPayBookingSuccess") @join__unionMember(graph: CHURROS, member: "ChurrosZodError") = ChurrosError | ChurrosMutationPayBookingSuccess | ChurrosZodError
 
@@ -16622,6 +16606,8 @@ union ChurrosMutationUpsertGodparentRequestResult @source(name: "MutationUpsertG
 
 union ChurrosMutationUpsertGroupResult @source(name: "MutationUpsertGroupResult", subgraph: "Churros") @join__type(graph: CHURROS) @join__unionMember(graph: CHURROS, member: "ChurrosError") @join__unionMember(graph: CHURROS, member: "ChurrosMutationUpsertGroupSuccess") @join__unionMember(graph: CHURROS, member: "ChurrosZodError") = ChurrosError | ChurrosMutationUpsertGroupSuccess | ChurrosZodError
 
+union ChurrosMutationUpsertLydiaAccountResult @source(name: "MutationUpsertLydiaAccountResult", subgraph: "Churros") @join__type(graph: CHURROS) @join__unionMember(graph: CHURROS, member: "ChurrosError") @join__unionMember(graph: CHURROS, member: "ChurrosMutationUpsertLydiaAccountSuccess") @join__unionMember(graph: CHURROS, member: "ChurrosZodError") = ChurrosError | ChurrosMutationUpsertLydiaAccountSuccess | ChurrosZodError
+
 union ChurrosMutationUpsertPageResult @source(name: "MutationUpsertPageResult", subgraph: "Churros") @join__type(graph: CHURROS) @join__unionMember(graph: CHURROS, member: "ChurrosError") @join__unionMember(graph: CHURROS, member: "ChurrosMutationUpsertPageSuccess") @join__unionMember(graph: CHURROS, member: "ChurrosZodError") = ChurrosError | ChurrosMutationUpsertPageSuccess | ChurrosZodError
 
 union ChurrosMutationUpsertRegistrationResult @source(name: "MutationUpsertRegistrationResult", subgraph: "Churros") @join__type(graph: CHURROS) @join__unionMember(graph: CHURROS, member: "ChurrosError") @join__unionMember(graph: CHURROS, member: "ChurrosMutationUpsertRegistrationSuccess") @join__unionMember(graph: CHURROS, member: "ChurrosZodError") = ChurrosError | ChurrosMutationUpsertRegistrationSuccess | ChurrosZodError
@@ -16629,10 +16615,6 @@ union ChurrosMutationUpsertRegistrationResult @source(name: "MutationUpsertRegis
 union ChurrosMutationUpsertServiceResult @source(name: "MutationUpsertServiceResult", subgraph: "Churros") @join__type(graph: CHURROS) @join__unionMember(graph: CHURROS, member: "ChurrosError") @join__unionMember(graph: CHURROS, member: "ChurrosMutationUpsertServiceSuccess") @join__unionMember(graph: CHURROS, member: "ChurrosZodError") = ChurrosError | ChurrosMutationUpsertServiceSuccess | ChurrosZodError
 
 union ChurrosMutationUpsertServiceV2Result @source(name: "MutationUpsertServiceV2Result", subgraph: "Churros") @join__type(graph: CHURROS) @join__unionMember(graph: CHURROS, member: "ChurrosError") @join__unionMember(graph: CHURROS, member: "ChurrosMutationUpsertServiceV2Success") @join__unionMember(graph: CHURROS, member: "ChurrosZodError") = ChurrosError | ChurrosMutationUpsertServiceV2Success | ChurrosZodError
-
-union ChurrosMutationUpsertShopItemResult @source(name: "MutationUpsertShopItemResult", subgraph: "Churros") @join__type(graph: CHURROS) @join__unionMember(graph: CHURROS, member: "ChurrosError") @join__unionMember(graph: CHURROS, member: "ChurrosMutationUpsertShopItemSuccess") @join__unionMember(graph: CHURROS, member: "ChurrosZodError") = ChurrosError | ChurrosMutationUpsertShopItemSuccess | ChurrosZodError
-
-union ChurrosMutationUpsertShopPaymentResult @source(name: "MutationUpsertShopPaymentResult", subgraph: "Churros") @join__type(graph: CHURROS) @join__unionMember(graph: CHURROS, member: "ChurrosError") @join__unionMember(graph: CHURROS, member: "ChurrosMutationUpsertShopPaymentSuccess") @join__unionMember(graph: CHURROS, member: "ChurrosZodError") = ChurrosError | ChurrosMutationUpsertShopPaymentSuccess | ChurrosZodError
 
 union ChurrosMutationUpsertThemeResult @source(name: "MutationUpsertThemeResult", subgraph: "Churros") @join__type(graph: CHURROS) @join__unionMember(graph: CHURROS, member: "ChurrosError") @join__unionMember(graph: CHURROS, member: "ChurrosMutationUpsertThemeSuccess") @join__unionMember(graph: CHURROS, member: "ChurrosZodError") = ChurrosError | ChurrosMutationUpsertThemeSuccess | ChurrosZodError
 
@@ -17530,6 +17512,11 @@ enum SubModeEnum @join__type(graph: AUTHENTIK) {
 enum IssuerModeEnum @join__type(graph: AUTHENTIK) {
   GLOBAL @source(name: "global", subgraph: "Authentik") @join__enumValue(graph: AUTHENTIK)
   PER_PROVIDER @source(name: "per_provider", subgraph: "Authentik") @join__enumValue(graph: AUTHENTIK)
+}
+
+enum MatchingModeEnum @join__type(graph: AUTHENTIK) {
+  STRICT @source(name: "strict", subgraph: "Authentik") @join__enumValue(graph: AUTHENTIK)
+  REGEX @source(name: "regex", subgraph: "Authentik") @join__enumValue(graph: AUTHENTIK)
 }
 
 enum OutpostTypeEnum @join__type(graph: AUTHENTIK) {
@@ -18859,11 +18846,16 @@ input OAuth2ProviderRequestInput @source(name: "OAuth2ProviderRequest_Input", su
   Key used to encrypt the tokens. When set, tokens will be encrypted and returned as JWEs.
   """
   encryptionKey: UUID @source(name: "encryption_key", type: "UUID", subgraph: "Authentik")
-  """Enter each URI on a new line."""
-  redirectUris: String @source(name: "redirect_uris", type: "String", subgraph: "Authentik")
+  redirectUris: [RedirectUriRequestInput]! @source(name: "redirect_uris", type: "[RedirectURIRequest_Input]!", subgraph: "Authentik")
   subMode: SubModeEnum @source(name: "sub_mode", type: "SubModeEnum", subgraph: "Authentik")
   issuerMode: IssuerModeEnum @source(name: "issuer_mode", type: "IssuerModeEnum", subgraph: "Authentik")
   jwksSources: [UUID] @source(name: "jwks_sources", type: "[UUID]", subgraph: "Authentik")
+}
+
+"""A single allowed redirect URI entry"""
+input RedirectUriRequestInput @source(name: "RedirectURIRequest_Input", subgraph: "Authentik") @join__type(graph: AUTHENTIK) {
+  matchingMode: MatchingModeEnum! @source(name: "matching_mode", type: "MatchingModeEnum!", subgraph: "Authentik")
+  url: NonEmptyString!
 }
 
 """ProxyProvider Serializer"""
@@ -19344,7 +19336,7 @@ input IdentificationChallengeResponseRequestInput @source(name: "IdentificationC
 """Response that includes the user-entered device code"""
 input OAuthDeviceCodeChallengeResponseRequestInput @source(name: "OAuthDeviceCodeChallengeResponseRequest_Input", subgraph: "Authentik") @join__type(graph: AUTHENTIK) {
   component: NonEmptyString = "ak-provider-oauth2-device-code"
-  code: Int!
+  code: NonEmptyString!
 }
 
 """Response that device has been authenticated and tab can be closed"""
@@ -20200,8 +20192,7 @@ input PatchedOAuth2ProviderRequestInput @source(name: "PatchedOAuth2ProviderRequ
   Key used to encrypt the tokens. When set, tokens will be encrypted and returned as JWEs.
   """
   encryptionKey: UUID @source(name: "encryption_key", type: "UUID", subgraph: "Authentik")
-  """Enter each URI on a new line."""
-  redirectUris: String @source(name: "redirect_uris", type: "String", subgraph: "Authentik")
+  redirectUris: [RedirectUriRequestInput] @source(name: "redirect_uris", type: "[RedirectURIRequest_Input]", subgraph: "Authentik")
   subMode: SubModeEnum @source(name: "sub_mode", type: "SubModeEnum", subgraph: "Authentik")
   issuerMode: IssuerModeEnum @source(name: "issuer_mode", type: "IssuerModeEnum", subgraph: "Authentik")
   jwksSources: [UUID] @source(name: "jwks_sources", type: "[UUID]", subgraph: "Authentik")
@@ -21262,6 +21253,7 @@ input CaptchaStageRequestInput @source(name: "CaptchaStageRequest_Input", subgra
   privateKey: NonEmptyString! @source(name: "private_key", type: "NonEmptyString!", subgraph: "Authentik")
   jsUrl: NonEmptyString @source(name: "js_url", type: "NonEmptyString", subgraph: "Authentik")
   apiUrl: NonEmptyString @source(name: "api_url", type: "NonEmptyString", subgraph: "Authentik")
+  interactive: Boolean
   scoreMinThreshold: Float @source(name: "score_min_threshold", type: "Float", subgraph: "Authentik")
   scoreMaxThreshold: Float @source(name: "score_max_threshold", type: "Float", subgraph: "Authentik")
   """
@@ -21280,6 +21272,7 @@ input PatchedCaptchaStageRequestInput @source(name: "PatchedCaptchaStageRequest_
   privateKey: NonEmptyString @source(name: "private_key", type: "NonEmptyString", subgraph: "Authentik")
   jsUrl: NonEmptyString @source(name: "js_url", type: "NonEmptyString", subgraph: "Authentik")
   apiUrl: NonEmptyString @source(name: "api_url", type: "NonEmptyString", subgraph: "Authentik")
+  interactive: Boolean
   scoreMinThreshold: Float @source(name: "score_min_threshold", type: "Float", subgraph: "Authentik")
   scoreMaxThreshold: Float @source(name: "score_max_threshold", type: "Float", subgraph: "Authentik")
   """
@@ -21907,14 +21900,6 @@ input ChurrosServiceInput @source(name: "ServiceInput", subgraph: "Churros") @jo
   unlinkSchool: Boolean
   unlinkStudentAssociation: Boolean
   url: ChurrosLooseURL @source(name: "url", type: "LooseURL", subgraph: "Churros")
-}
-
-input ChurrosShopItemOptionInput @source(name: "ShopItemOptionInput", subgraph: "Churros") @join__type(graph: CHURROS) {
-  id: String!
-  name: String!
-  options: [String!]!
-  otherToggle: Boolean!
-  required: Boolean!
 }
 
 """Contraintes d'un billet"""
