@@ -13,11 +13,6 @@
 	function enumerate<T>(a: T[]): Array<[number, T]> {
 		return Object.entries(a).map(([k, v]) => [parseInt(k), v]);
 	}
-
-	function uris(allUris?: string | null): string[] {
-		if (!allUris) return [];
-		return allUris.split('\n');
-	}
 </script>
 
 {#if $PageApplication?.errors}
@@ -122,7 +117,9 @@
 		{/if}
 	</section>
 	{#if app.oauth2Provider?.__typename === 'OAuth2Provider'}
-		{@const authorizedUris = uris(app.oauth2Provider.redirectUris)}
+		{@const authorizedUris = app.oauth2Provider.redirectUris
+			.filter((x) => x !== null)
+			.map(({ url }) => url)}
 		<dl>
 			<dt>Client ID</dt>
 			{@render copyable(app.oauth2Provider.clientId)}
@@ -157,7 +154,7 @@
 							<input
 								placeholder="Ajouter une URI"
 								type="text"
-								name="uri:{uris(app.oauth2Provider.redirectUris).length}"
+								name="uri:{app.oauth2Provider.redirectUris.length}"
 							/>
 						</li>
 					</ul>
@@ -173,7 +170,9 @@
 			<dt>User-info URL</dt>
 			{@render copyable(`https://${env.PUBLIC_AUTHENTIK_INSTANCE}/application/o/userinfo/`)}
 			<dt>Logout URL</dt>
-			{@render copyable(`https://${env.PUBLIC_AUTHENTIK_INSTANCE}/application/o/${app.slug}/end-session/`)}
+			{@render copyable(
+				`https://${env.PUBLIC_AUTHENTIK_INSTANCE}/application/o/${app.slug}/end-session/`
+			)}
 		</dl>
 	{/if}
 {/if}
