@@ -116,7 +116,7 @@
 								href="https://blog.postman.com/pkce-oauth-how-to/#:~:text=and%20browser%2Dbased%20apps.-,What%20is%20PKCE?,-%E2%80%9CPKCE%20(Proof%20Key"
 								target="_blank"
 							>
-								flow OAuth2 “PKCE” ↗
+								flow OAuth2 “PKCE”
 							</a>
 						</p>
 					</label>
@@ -230,4 +230,6 @@
 	label:has(input[type='radio']:not(:checked)) p {
 		opacity: 0.5;
 	}
+
+	
 </style>

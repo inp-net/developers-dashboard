@@ -34,8 +34,8 @@
 	</section>
 {/if}
 
-{#snippet copyable(value: string, sensitive = false)}
-	<dd>
+{#snippet copyable(value: string, { sensitive = false, long = false } = {})}
+	<dd class:vertical={long}>
 		<button
 			onclick={() => {
 				navigator.clipboard.writeText(value);
@@ -43,6 +43,8 @@
 		>
 		{#if sensitive}
 			<SensitiveValue>{value}</SensitiveValue>
+		{:else if long}
+			<pre>{value}</pre>
 		{:else}
 			{value}
 		{/if}
@@ -105,14 +107,14 @@
 			<dt>Client ID</dt>
 			{@render copyable(app.oauth2Provider.clientId)}
 			<dt>
-				{#if app.oauth2Provider.clientType === 'CONFIDENTIAL'}
+				{#if app.oauth2Provider.clientType !== 'PUBLIC'}
 					Client secret
 				{:else}
 					<s>Client secret</s>
 				{/if}
 			</dt>
-			{#if app.oauth2Provider.clientType === 'CONFIDENTIAL'}
-				{@render copyable(app.oauth2Provider.clientSecret)}
+			{#if app.oauth2Provider.clientType !== 'PUBLIC'}
+				{@render copyable(app.oauth2Provider.clientSecret, { sensitive: true })}
 			{:else}
 				<dd>
 					Client public, il n'y a pas de <code><strong>client_secret</strong></code> nécéssaire
@@ -123,12 +125,12 @@
 						href="https://blog.postman.com/pkce-oauth-how-to/#:~:text=and%20browser%2Dbased%20apps.-,What%20is%20PKCE?,-%E2%80%9CPKCE%20(Proof%20Key"
 						target="_blank"
 					>
-						flow OAuth2 “PKCE” ↗
+						flow OAuth2 “PKCE”
 					</a>
 				</dd>
 			{/if}
 			<dt>Allowed redirect URIs</dt>
-			<dd class="redirecturis">
+			<dd class="vertical redirecturis">
 				<small>Peut être un motif Regex d'URIs</small>
 				{#if authorizedUris.includes('.*') && app.launchUrl}
 					<p class="warn">
@@ -176,6 +178,115 @@
 				`https://${env.PUBLIC_AUTHENTIK_INSTANCE}/application/o/${app.slug}/end-session/`
 			)}
 		</dl>
+
+		<h2>Programming ideas</h2>
+
+		<dl>
+			<dt>Your .env file (don't commit this!!)</dt>
+			{@render copyable(
+				`PUBLIC_CLIENT_ID=${app.oauth2Provider.clientId}\nCLIENT_SECRET=${app.oauth2Provider.clientSecret}`,
+				{ long: true }
+			)}
+			<dt>JavaScript / TypeScript</dt>
+			<dd>Use <a href="https://arcticjs.dev/providers/authentik" target="_blank">Arctic </a></dd>
+			{@render copyable(
+				`
+// npm install arctic
+import { Authentik } from "arctic";
+import { generateState, generateCodeVerifier } from "arctic";
+
+const domain = "auth.inpt.fr";
+const authentik = new Authentik(domain, process.env.CLIENT_ID, process.env.CLIENT_SECRET, "Ton URI de redirection");
+
+// redirection vers l'autorisation
+const state = generateState();
+const codeVerifier = generateCodeVerifier();
+const authorizationUrl = authentik.getAuthorizationUrl(state, codeVerifier);
+console.log("Please go here and authorize:", authorizationUrl);
+
+// récupération du token
+const code = new URLSearchParams(window.location.search).get("code");
+const token = await authentik.getToken(code, codeVerifier);`,
+				{ long: true }
+			)}
+
+			<dt>Python</dt>
+			<dd>
+				Use <a href="https://requests-oauthlib.readthedocs.io/en/latest/" target="_blank"
+					>requests-oauthlib</a
+				>
+			</dd>
+			{@render copyable(
+				`
+# pip install requests requests-oauthlib
+from requests_oauthlib import OAuth2Session
+import os
+
+client_id = os.getenv("PUBLIC_CLIENT_ID")
+client_secret = os.getenv("CLIENT_SECRET")
+redirect_uri = "Ton URI de redirection"
+
+auth = OAuth2Session(client_id, redirect_uri=redirect_uri)
+
+# redirection vers l'autorisation
+authorization_url, state = auth.authorization_url("https://${env.PUBLIC_AUTHENTIK_INSTANCE}/application/o/authorize/")
+print('Please go here and authorize,', authorization_url)
+
+# récupération du token
+token_url = "https://${env.PUBLIC_AUTHENTIK_INSTANCE}/application/o/token/"
+auth.fetch_token(token_url, client_secret=client_secret, authorization_response=input('Enter the full callback URL'))`,
+				{ long: true }
+			)}
+
+			<dt>PHP</dt>
+			<dd>
+				Using <a href="https://github.com/ivan-novakov/php-openid-connect-client" target="_blank">
+					php-openid-connect-client
+				</a>
+			</dd>
+			{@render copyable(
+				`
+// add to composer.json: { "require" { "ivan-novakov/php-openid-connect-client": "dev-master" } }
+use InoOicClient\Flow\Basic;
+
+$config = array(
+    'client_info' => array(
+        'client_id' => getenv("PUBLIC_CLIENT_ID"),
+        'redirect_uri' => 'Your redirect URI',
+        
+        'authorization_endpoint' => 'https://${env.PUBLIC_AUTHENTIK_INSTANCE}/application/o/authorize',
+        'token_endpoint' => 'https://${env.PUBLIC_AUTHENTIK_INSTANCE}/application/o/token',
+        'user_info_endpoint' => 'https://${env.PUBLIC_AUTHENTIK_INSTANCE}/application/o/userinfo',
+        
+        'authentication_info' => array(
+            'method' => 'client_secret_post',
+            'params' => array(
+                'client_secret' => getenv("CLIENT_SECRET"),
+            )
+        )
+    )
+);
+
+$flow = new Basic($config);
+
+if (! isset($_GET['redirect'])) {
+    try {
+        $uri = $flow->getAuthorizationRequestUri('openid email profile');
+        printf("<a href=\"%s\">Login</a>", $uri);
+    } catch (\Exception $e) {
+        printf("Exception during authorization URI creation: [%s] %s", get_class($e), $e->getMessage());
+    }
+} else {
+    try {
+        $userInfo = $flow->process();
+    } catch (\Exception $e) {
+        printf("Exception during user authentication: [%s] %s", get_class($e), $e->getMessage());
+    }
+}
+				`,
+				{ long: true }
+			)}
+		</dl>
 	{/if}
 {/if}
 
@@ -216,7 +327,7 @@
 		font-size: 1rem;
 	}
 
-	dd:not(.redirecturis) {
+	dd:not(.vertical) {
 		display: flex;
 		align-items: center;
 		gap: 0 1ch;
@@ -227,6 +338,11 @@
 	}
 	dt {
 		margin-bottom: 0.5rem;
+	}
+
+	pre {
+		font-family: 'Fira Code', monospace;
+		overflow-x: scroll;
 	}
 
 	.redirecturis input {

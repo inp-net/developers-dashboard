@@ -60,4 +60,8 @@
 		margin-top: 5rem;
 		opacity: 0.5;
 	}
+
+	:global(a[target='_blank'])::after {
+		content: ' ↗';
+	}
 </style>
