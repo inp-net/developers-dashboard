@@ -104,8 +104,29 @@
 		<dl>
 			<dt>Client ID</dt>
 			{@render copyable(app.oauth2Provider.clientId)}
-			<dt>Client secret</dt>
-			{@render copyable(app.oauth2Provider.clientSecret, true)}
+			<dt>
+				{#if app.oauth2Provider.clientType === 'CONFIDENTIAL'}
+					Client secret
+				{:else}
+					<s>Client secret</s>
+				{/if}
+			</dt>
+			{#if app.oauth2Provider.clientType === 'CONFIDENTIAL'}
+				{@render copyable(app.oauth2Provider.clientSecret)}
+			{:else}
+				<dd>
+					Client public, il n'y a pas de <code><strong>client_secret</strong></code> nécéssaire
+				</dd>
+				<dd>
+					Il faut utiliser le
+					<a
+						href="https://blog.postman.com/pkce-oauth-how-to/#:~:text=and%20browser%2Dbased%20apps.-,What%20is%20PKCE?,-%E2%80%9CPKCE%20(Proof%20Key"
+						target="_blank"
+					>
+						flow OAuth2 “PKCE” ↗
+					</a>
+				</dd>
+			{/if}
 			<dt>Allowed redirect URIs</dt>
 			<dd class="redirecturis">
 				<small>Peut être un motif Regex d'URIs</small>

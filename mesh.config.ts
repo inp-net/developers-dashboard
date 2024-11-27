@@ -84,6 +84,14 @@ export const composeConfig = defineComposeConfig({
 					enumValues: 'upperCase',
 					fieldNames: 'camelCase',
 					fieldArgumentNames: 'camelCase'
+				}),
+				createRenameTransform({
+					renames: [
+						{
+							from: { type: 'MutationInputCoreApplicationsCreateInputSlug' },
+							to: { type: 'String' }
+						}
+					]
 				})
 			]
 		}

@@ -1,12 +1,12 @@
 import { env as secrets } from '$env/dynamic/private';
 import { graphql } from '$houdini';
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import slug from 'slug';
 
 export const actions = {
 	async createApp(event) {
 		// Get the two values the user submitted
-		const { name, group } = Object.fromEntries(
+		const { name, group, type } = Object.fromEntries(
 			[...(await event.request.formData()).entries()].map(([key, value]) => [key, value.toString()])
 		);
 
@@ -157,7 +157,7 @@ export const actions = {
 				{
 					...flows,
 					name,
-					type: 'CONFIDENTIAL'
+					type: type === 'PUBLIC' ? 'PUBLIC' : 'CONFIDENTIAL'
 				},
 				fetchAsAdmin
 			)
@@ -177,9 +177,11 @@ export const actions = {
 		const app = await graphql(`
 			mutation CreateApp(
 				$name: NonEmptyString!
-				$slug: MutationInputCoreApplicationsCreateInputSlug!
+				$slug: String!
 				$groupName: String!
 				$provider: Int!
+				$logoUrl: NonEmptyString!
+				$isChurrosGroup: Boolean!
 			) {
 				coreApplicationsCreate(
 					input: {
@@ -203,6 +205,11 @@ export const actions = {
 						detail
 					}
 				}
+				# we don't care about the result for this one, if the logo is not set no one will die
+				coreApplicationsSetIconUrlCreate(input: { url: $logoUrl }, slug: $slug)
+					@include(if: $isChurrosGroup) {
+					__typename
+				}
 			}
 		`)
 			.mutate(
@@ -210,7 +217,9 @@ export const actions = {
 					provider: provider.pk,
 					name,
 					groupName: churrosGroup?.name ?? authentikGroup.name,
-					slug: slug(name)
+					slug: slug(name),
+					isChurrosGroup: Boolean(churrosGroup),
+					logoUrl: `https://churros.inpt.fr/${churrosGroup?.name}.png`
 				},
 				fetchAsAdmin
 			)
@@ -360,6 +369,6 @@ export const actions = {
 			fetchAsAdmin
 		);
 
-		return { appSlug: app.slug };
+		redirect(303, `/apps/${app.slug}`);
 	}
 };

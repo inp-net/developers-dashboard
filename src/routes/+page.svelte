@@ -1,9 +1,7 @@
 <script lang="ts">
-	import type { ActionData } from './$types';
-	import type { PageData } from './$houdini';
-	import { onMount } from 'svelte';
-	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import type { PageData } from './$houdini';
+	import type { ActionData } from './$types';
 
 	interface Props {
 		data: PageData;
@@ -28,11 +26,8 @@
 
 	$effect(() => console.log($PageHome));
 
-	onMount(async () => {
-		if (form?.appSlug) {
-			await goto(`/apps/${form.appSlug}`);
-		}
-	});
+	let selectedClientType: 'CONFIDENTIAL' | 'PUBLIC' = $state('CONFIDENTIAL');
+	let selectedGroup: string | null = $state(null);
 </script>
 
 {#if $PageHome.fetching}
@@ -44,26 +39,89 @@
 {:else}
 	{#if creating}
 		<form class="new" action="?/createApp" method="post">
-			<label for="new-group">
-				<span>Groupe responsable</span>
-			</label>
-			<input
-				id="new-group"
-				type="text"
-				name="group"
-				autocomplete="off"
-				list="churros-group-names"
-			/>
-			<label for="new-name">
-				<span>Nom de l'app</span>
-			</label>
-			<input id="new-name" type="text" name="name" />
-
-			<datalist id="churros-group-names">
-				{#each authentikGroups as { name }}
-					<option>{name}</option>
-				{/each}
-			</datalist>
+			<section class="side-by-side">
+				<section class="basic">
+					<label for="new-group">
+						<span>Groupe responsable</span>
+					</label>
+					<div class="input-with-pic">
+						{#await fetch(`https://churros.inpt.fr/${selectedGroup}.png`)}
+							<div class="placeholder-group-logo"></div>
+						{:then response}
+							{#if response.ok && authentikGroups.some((g) => g.name === selectedGroup)}
+								<img
+									src="https://churros.inpt.fr/{selectedGroup}.png"
+									alt="Logo de {selectedGroup}"
+								/>
+							{:else}
+								<div class="placeholder-group-logo"></div>
+							{/if}
+						{:catch}
+							<div class="placeholder-group-logo"></div>
+						{/await}
+						<input
+							id="new-group"
+							type="text"
+							name="group"
+							autocomplete="off"
+							list="churros-group-names"
+							bind:value={selectedGroup}
+						/>
+					</div>
+					<label for="new-name">
+						<span>Nom de l'app</span>
+					</label>
+					<div class="input-with-pic">
+						<!-- just there for alignment purposes -->
+						<div class="placeholder-group-logo"></div>
+						<input id="new-name" type="text" name="name" />
+					</div>
+					<datalist id="churros-group-names">
+						{#each authentikGroups as { name }}
+							<option>{name}</option>
+						{/each}
+					</datalist>
+				</section>
+				<fieldset class="client-type">
+					<legend>Type d'app</legend>
+					<label>
+						<input
+							type="radio"
+							name="type"
+							value="CONFIDENTIAL"
+							checked={selectedClientType === 'CONFIDENTIAL'}
+							on:change={() => (selectedClientType = 'CONFIDENTIAL')}
+						/>
+						Normal
+						<p class="client-type-explanation">
+							Nécéssite un serveur pour stocker un secret
+							<br />
+							Le plus commun
+						</p>
+					</label>
+					<label>
+						<input
+							type="radio"
+							name="type"
+							value="PUBLIC"
+							checked={selectedClientType === 'PUBLIC'}
+							on:change={() => (selectedClientType = 'PUBLIC')}
+						/>
+						Publique
+						<p class="client-type-explanation">
+							Ne nécéssite pas de serveur (Github Pages, par exemple).
+							<br />
+							Il faut utiliser le
+							<a
+								href="https://blog.postman.com/pkce-oauth-how-to/#:~:text=and%20browser%2Dbased%20apps.-,What%20is%20PKCE?,-%E2%80%9CPKCE%20(Proof%20Key"
+								target="_blank"
+							>
+								flow OAuth2 “PKCE” ↗
+							</a>
+						</p>
+					</label>
+				</fieldset>
+			</section>
 
 			<section class="submit">
 				<button type="submit">Créer</button>
@@ -89,13 +147,37 @@
 <style>
 	form.new {
 		display: flex;
-		flex-direction: column;
-		justify-content: center;
 		align-items: center;
+		flex-wrap: wrap;
 		padding: 3rem 1rem;
 		gap: 1rem 0;
-		max-width: 600px;
 		margin: 0 auto;
+		flex-direction: column;
+	}
+	form .side-by-side {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-wrap: wrap;
+	}
+	form.new .basic {
+		display: flex;
+		flex-direction: column;
+		padding: 3rem 1rem;
+		gap: 1rem 0;
+	}
+	form.new .submit {
+		margin-top: 2rem;
+	}
+	.input-with-pic {
+		display: flex;
+		align-items: center;
+		gap: 1em;
+	}
+	.input-with-pic :is(.placeholder-group-logo, img) {
+		height: 1.5em;
+		width: 1.5em;
+		object-fit: cover;
 	}
 	ul {
 		--itemsize: 10rem;
@@ -127,5 +209,25 @@
 	}
 	li img {
 		height: 1.5rem;
+	}
+
+	label input[type='radio'] {
+		display: none;
+	}
+	label:has(input[type='radio'])::before {
+		content: '';
+		width: 1rem;
+		height: 1rem;
+		border-radius: 50%;
+		display: inline-block;
+		vertical-align: middle;
+		background-color: black;
+		border: 1px solid var(--green);
+	}
+	label:has(input[type='radio']:checked)::before {
+		background-color: var(--green);
+	}
+	label:has(input[type='radio']:not(:checked)) p {
+		opacity: 0.5;
 	}
 </style>

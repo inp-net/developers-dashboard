@@ -228,8 +228,6 @@ scalar MutationInputAuthenticatorsAdminWebauthnCreateInputName @length(subgraph:
 
 scalar MutationInputAuthenticatorsAdminWebauthnPartialUpdateInputName @length(subgraph: "Authentik", min: 1, max: 200) @source(name: "mutationInput_authenticators_admin_webauthn_partial_update_input_name", subgraph: "Authentik") @join__type(graph: AUTHENTIK)
 
-scalar MutationInputCoreApplicationsCreateInputSlug @regexp(subgraph: "Authentik", pattern: "^[-a-zA-Z0-9_]+$") @typescript(subgraph: "Authentik", type: "string") @source(name: "mutationInput_core_applications_create_input_slug", subgraph: "Authentik") @join__type(graph: AUTHENTIK)
-
 scalar MutationInputCoreApplicationsPartialUpdateInputSlug @regexp(subgraph: "Authentik", pattern: "^[-a-zA-Z0-9_]+$") @typescript(subgraph: "Authentik", type: "string") @source(name: "mutationInput_core_applications_partial_update_input_slug", subgraph: "Authentik") @join__type(graph: AUTHENTIK)
 
 scalar MutationInputCoreTokensCreateInputIdentifier @regexp(subgraph: "Authentik", pattern: "^[-a-zA-Z0-9_]+$") @typescript(subgraph: "Authentik", type: "string") @source(name: "mutationInput_core_tokens_create_input_identifier", subgraph: "Authentik") @join__type(graph: AUTHENTIK)
@@ -18577,7 +18575,7 @@ input PatchedWebAuthnDeviceRequestInput @source(name: "PatchedWebAuthnDeviceRequ
 input ApplicationRequestInput @source(name: "ApplicationRequest_Input", subgraph: "Authentik") @join__type(graph: AUTHENTIK) {
   """Application's display Name."""
   name: NonEmptyString!
-  slug: MutationInputCoreApplicationsCreateInputSlug! @source(name: "slug", type: "mutationInput_core_applications_create_input_slug!", subgraph: "Authentik")
+  slug: String! @source(name: "slug", type: "mutationInput_core_applications_create_input_slug!", subgraph: "Authentik")
   provider: Int
   backchannelProviders: [Int] @source(name: "backchannel_providers", type: "[Int]", subgraph: "Authentik")
   """Open launch URL in a new browser tab or window."""
