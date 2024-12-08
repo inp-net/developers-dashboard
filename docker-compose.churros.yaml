@@ -41,7 +41,7 @@ services:
       - churros_postgres
       - churros_redis
   churros_app:
-    image: harbor.k8s.inpt.fr/net7/churros/app:v2.12.1
+    image: harbor.k8s.inpt.fr/net7/churros/app:v2.13.0
     ports:
       - "3000:3000"
     env_file:
