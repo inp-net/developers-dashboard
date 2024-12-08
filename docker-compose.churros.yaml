@@ -30,7 +30,7 @@ services:
     ports:
       - 6379:6379
   churros_api:
-    image: harbor.k8s.inpt.fr/net7/churros/api:v4.0.1
+    image: harbor.k8s.inpt.fr/net7/churros/api:v6.0.0
     ports:
       - "4000:4000"
     env_file:
