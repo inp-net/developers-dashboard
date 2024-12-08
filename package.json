@@ -20,7 +20,7 @@
 	"devDependencies": {
 		"@ewen-lbh/houdini": "^1.4.0",
 		"@graphql-mesh/compose-cli": "^1.1.8",
-		"@omnigraph/openapi": "^0.107.6",
+		"@omnigraph/openapi": "^0.108.0",
 		"@parcel/watcher": "^2.5.0",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
