@@ -44,7 +44,7 @@
 	"dependencies": {
 		"@graphql-hive/gateway": "^1.4.12",
 		"@graphql-mesh/migrate-config-cli": "^1.2.3",
-		"@graphql-mesh/transform-filter-schema": "^0.102.12",
+		"@graphql-mesh/transform-filter-schema": "^0.103.0",
 		"@graphql-mesh/transform-naming-convention": "^0.102.12",
 		"@graphql-mesh/transform-prefix": "^0.102.12",
 		"@graphql-mesh/transform-rename": "^0.102.12",
