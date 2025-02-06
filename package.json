@@ -23,7 +23,7 @@
 		"@omnigraph/openapi": "^0.107.8",
 		"@parcel/watcher": "^2.5.1",
 		"@sveltejs/kit": "^2.17.1",
-		"@sveltejs/vite-plugin-svelte": "^4.0.4",
+		"@sveltejs/vite-plugin-svelte": "^5.0.0",
 		"@types/eslint": "^9.6.1",
 		"@types/slug": "^5.0.9",
 		"concurrently": "^9.1.2",
