@@ -46,7 +46,7 @@
 		"@graphql-mesh/migrate-config-cli": "^1.4.10",
 		"@graphql-mesh/transform-filter-schema": "^0.102.13",
 		"@graphql-mesh/transform-naming-convention": "^0.102.13",
-		"@graphql-mesh/transform-prefix": "^0.102.13",
+		"@graphql-mesh/transform-prefix": "^0.104.0",
 		"@graphql-mesh/transform-rename": "^0.102.13",
 		"@graphql-mesh/transform-type-merging": "^0.102.13",
 		"@sveltejs/adapter-node": "^5.2.12",
