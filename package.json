@@ -42,7 +42,7 @@
 		"vite": "^5.4.14"
 	},
 	"dependencies": {
-		"@graphql-hive/gateway": "^1.9.4",
+		"@graphql-hive/gateway": "^2.0.0",
 		"@graphql-mesh/migrate-config-cli": "^1.4.10",
 		"@graphql-mesh/transform-filter-schema": "^0.102.13",
 		"@graphql-mesh/transform-naming-convention": "^0.102.13",
