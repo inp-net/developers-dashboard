@@ -50,7 +50,7 @@
 		"@graphql-mesh/transform-rename": "^0.102.13",
 		"@graphql-mesh/transform-type-merging": "^0.102.13",
 		"@sveltejs/adapter-node": "^5.2.12",
-		"arctic": "^2.3.4",
+		"arctic": "^3.0.0",
 		"dotenv": "^16.4.7",
 		"graphql": "^16.10.0",
 		"slug": "^10.0.0",
